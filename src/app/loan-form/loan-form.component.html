@@ -1,24 +1,48 @@
 <div class="container">
   <div class="img_box">
     <img class="bg_img" src="assets/img/landing_img_figma.jpeg" alt="img"/>
-<form class="loanForm" >
+    <div class="form-container">
+<form class="loanForm" [formGroup]="loanForm" (ngSubmit)="onLoanFormSubmit()" (reset)="onLoanFormReset()">
 <h1>Submit your Loan Details</h1>
-  <fieldset>
+
     <div>
       <label for="totalAmount">Total Amount:</label>
       <input type="text" formControlName = "totalAmount" id = "totalAmount">
+      <div class="error-message-text" *ngIf="totalAmount.errors && totalAmount.touched">
+        <div *ngIf="totalAmount.errors['required']">Amount is required</div>
+        <div *ngIf="totalAmount.errors['min']">Amount should atleast be 1000</div>
+      </div>
     </div>
     <br>
     <div>
       <label for="downPayment">Down Payment:</label>
       <input type="text" formControlName = "downPayment" id = "downPayment">
+      <div class="error-message-text" *ngIf="downPayment.errors && downPayment.touched">
+        <div *ngIf="downPayment.errors['required']">Down Payment cannot be empty</div>
+        <div *ngIf="downPayment.errors['min']">Down Payment should be atleast 15% of total amount</div>
+        <div *ngIf="downPayment.errors['max']">Down Payment should not exceed 90% of total amount</div>
+      </div>
     </div>
     <br>
     <div>
       <label for="termYears">Term Years: </label>
       <input type="text" formControlName = "termYears" id = "termYears">
+      <div class="error-message-text" *ngIf="termYears.errors && termYears.touched">
+        <div *ngIf="termYears.errors['required']">Term years cannot be empty</div>
+        <div *ngIf="termYears.errors['min']">Term year should atleast be 1</div>
+        <div *ngIf="termYears.errors['max']">Term years cannot exceed 30</div>
+      </div>
     </div>
-  </fieldset>
+    <div class="button-area">
+    <button type="submit"  mat-raised-button color="accent" class="calc-button">Calculate</button>
+    <button type="reset" mat-raised-button color="accent" class="reset-button">Reset</button>
+    </div>
+  <br>
+  <br>
+  <br>
+  <br>
+
 </form>
+    </div>
   </div>
 </div>

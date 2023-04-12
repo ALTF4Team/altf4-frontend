@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 html,
 body {
   height: 100%;
 }
+
 body,
 body * {
   margin: 0;
@@ -19,6 +21,7 @@ body * {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .img_box {
     min-height: 80vh;
     width: 100%;
@@ -26,6 +29,7 @@ body * {
     overflow: hidden;
     background-color: #242424;
     display: flex;
+
     .bg_img {
       opacity: 0.28;
       position: absolute;
@@ -37,6 +41,29 @@ body * {
     }
   }
 }
+
+  /* CSS */
+.button-34 {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}
+
 
 //@media (max-width: 1240px) {
 //  .landing_page_container {
