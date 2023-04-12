@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LandingComponent } from './landing/landing.component';
 import { MatButtonModule } from '@angular/material/button';
+import { LoanFormComponent } from './loan-form/loan-form.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
     HeaderComponent,
     FooterComponent,
     LandingComponent,
+    LoanFormComponent,
   ],
   imports: [
     BrowserModule,
