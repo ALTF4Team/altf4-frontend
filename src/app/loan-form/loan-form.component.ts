@@ -1,12 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { FloatLabelType } from '@angular/material/form-field';
+import {Observable, Subject} from 'rxjs';
+import {FloatLabelType} from '@angular/material/form-field';
+import {InterestCalculatorService} from "../services/interest-calculator.service";
+import {MonthlyInterest} from "../interfaces/monthlyInterest";
 
 @Component({
   selector: 'app-loan-form',
@@ -16,19 +18,22 @@ import { FloatLabelType } from '@angular/material/form-field';
 export class LoanFormComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   loanForm: FormGroup;
-  constructor(private fb: FormBuilder) {
+
+  monthlyInterest$?: Observable<MonthlyInterest>
+
+  constructor(private fb: FormBuilder, private interestService: InterestCalculatorService) {
     this.loanForm = this.fb.group({
-      totalAmount: ['', [Validators.required, Validators.min(10000), Validators.pattern("^[0-9]*$")]],
+      loanSize: ['', [Validators.required, Validators.min(10000), Validators.pattern("^[0-9]*$")]],
       downPayment: ['', [Validators.required]],
-      termYears: [
+      loanTermYears: [
         '',
         [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern("^[0-9]*$")],
       ],
     });
 
-    this.loanForm.get('totalAmount')!.valueChanges.subscribe((totalAmount) => {
+    this.loanForm.get('loanSize')!.valueChanges.subscribe((totalAmount) => {
       const downPaymentControl = this.loanForm.get('downPayment');
-      if (totalAmount >= 1000) {
+      if (totalAmount >= 10000) {
         if (!downPaymentControl?.value || downPaymentControl?.pristine) {
           const downPayment = totalAmount * 0.15;
           downPaymentControl?.setValue(downPayment);
@@ -45,35 +50,41 @@ export class LoanFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
   }
-  get totalAmount() {
-    return this.loanForm.get('totalAmount') as FormControl<number>;
+
+  get loanSize() {
+    return this.loanForm.get('loanSize') as FormControl<number>;
   }
 
   get downPayment() {
     return this.loanForm.get('downPayment') as FormControl<number>;
   }
 
-  get termYears() {
-    return this.loanForm.get('termYears') as FormControl<number>;
+  get loanTermYears() {
+    return this.loanForm.get('loanTermYears') as FormControl<number>;
   }
 
   getTotalAmountFloatLabelValue(): FloatLabelType {
-    return this.loanForm.get('totalAmount')!.value || 'auto';
+    return this.loanForm.get('loanSize')!.value || 'auto';
   }
+
   getDownPaymentFloatLabelValue(): FloatLabelType {
-    return this.loanForm.get('totalAmount')!.value || 'auto';
+    return this.loanForm.get('downPayment')!.value || 'auto';
   }
+
   getTermYearsFloatLabelValue(): FloatLabelType {
-    return this.loanForm.get('termYears')!.value || 'auto';
+    return this.loanForm.get('loanTermYears')!.value || 'auto';
   }
 
   onLoanFormSubmit() {
     if (this.loanForm.valid) {
-      console.log(this.loanForm.value);
+      this.interestService.getMonthlyInterest(this.loanForm.value).subscribe(value => console.log(value));
+
       this.loanForm.reset();
     }
   }
