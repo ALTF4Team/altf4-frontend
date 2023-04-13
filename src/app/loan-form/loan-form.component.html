@@ -31,7 +31,10 @@
                 Amount is required
               </div>
               <div *ngIf="totalAmount.errors['min']">
-                Amount should atleast be 1000
+                Amount should atleast be 10000
+              </div>
+              <div *ngIf="totalAmount.errors['pattern']">
+                Only numeric values allowed
               </div>
             </mat-error>
           </mat-form-field>
@@ -56,10 +59,13 @@
                 Down Payment cannot be empty
               </div>
               <div *ngIf="downPayment.errors['min']">
-                Down Payment should be atleast 15% of total amount
+                Down Payment should be atleast 15% of total
               </div>
               <div *ngIf="downPayment.errors['max']">
-                Down Payment should not exceed 90% of total amount
+                Down Payment should not exceed 99% of total
+              </div>
+              <div *ngIf="downPayment.errors['pattern']">
+                Only numeric values allowed
               </div>
             </mat-error>
           </mat-form-field>
@@ -88,6 +94,9 @@
               </div>
               <div *ngIf="termYears.errors['max']">
                 Term years cannot exceed 30
+              </div>
+              <div *ngIf="termYears.errors['pattern']">
+                Only numeric values allowed
               </div>
             </mat-error>
           </mat-form-field>

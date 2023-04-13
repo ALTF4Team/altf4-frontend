@@ -18,11 +18,11 @@ export class LoanFormComponent implements OnInit, OnDestroy {
   loanForm: FormGroup;
   constructor(private fb: FormBuilder) {
     this.loanForm = this.fb.group({
-      totalAmount: ['', [Validators.required, Validators.min(1000)]],
+      totalAmount: ['', [Validators.required, Validators.min(10000), Validators.pattern("^[0-9]*$")]],
       downPayment: ['', [Validators.required]],
       termYears: [
         '',
-        [Validators.required, Validators.min(1), Validators.max(30)],
+        [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern("^[0-9]*$")],
       ],
     });
 
@@ -36,7 +36,8 @@ export class LoanFormComponent implements OnInit, OnDestroy {
         downPaymentControl?.setValidators([
           Validators.required,
           Validators.min(totalAmount * 0.15),
-          Validators.max(totalAmount * 0.9),
+          Validators.max(totalAmount * 0.99),
+          Validators.pattern("^[0-9]*$")
         ]);
       } else {
         downPaymentControl?.reset();
