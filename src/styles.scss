@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 html,
 body {
   height: 100%;
 }
+
 body,
 body * {
   margin: 0;
@@ -12,4 +14,64 @@ body * {
   vertical-align: top;
   box-sizing: border-box;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --main-purple: #4f378b;
+  --main-white: #ffffff;
+  --light-blue: #75a3ce;
+  --dark-blue: #196ab4;
+}
+
+.container {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .img_box {
+    min-height: 80vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #242424;
+    display: flex;
+
+    .bg_img {
+      opacity: 0.28;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+// .btn {
+//   border-radius: 16px;
+//   padding: 16px;
+// }
+
+/* CSS */
+.button-34 {
+  background: #5e5df0;
+  border-radius: 999px;
+  box-shadow: #5e5df0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
 }
