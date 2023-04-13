@@ -1,6 +1,6 @@
-<div class="landing_page_container">
-  <div class="landing_img_box">
-    <img class="landing_bg_img" [src]="landingImgUrl" />
+<div class="container">
+  <div class="img_box">
+    <img class="bg_img" [src]="landingImgUrl" />
     <div class="landing_page_info">
       <h1 class="landing_page_title">Your <span>home</span> - your rules</h1>
       <h2 class="landing_page_description">
@@ -11,7 +11,12 @@
         <button mat-raised-button color="accent" class="btn-apply">
           Apply For Loan
         </button>
-        <button mat-raised-button color="accent" class="btn-calc">
+        <button
+          mat-raised-button
+          color="accent"
+          class="btn-calc"
+          routerLink="/loan"
+        >
           Calculate Mortgage
         </button>
       </div>
