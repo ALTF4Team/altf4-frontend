@@ -13,7 +13,7 @@ import { FloatLabelType } from '@angular/material/form-field';
   templateUrl: './loan-form.component.html',
   styleUrls: ['./loan-form.component.scss'],
 })
-export class LoanFormComponent implements OnInit, OnDestroy {
+export class LoanFormComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
   loanForm: FormGroup;
   constructor(private fb: FormBuilder) {
