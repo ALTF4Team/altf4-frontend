@@ -1,21 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup,
+  FormGroup, ValidationErrors, ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { FloatLabelType } from '@angular/material/form-field';
+import {Subject} from 'rxjs';
+import {FloatLabelType} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loan-form.component.html',
   styleUrls: ['./loan-form.component.scss'],
 })
-export class LoanFormComponent implements OnDestroy {
-  private destroy$ = new Subject<void>();
+export class LoanFormComponent  {
   loanForm: FormGroup;
+
   constructor(private fb: FormBuilder) {
     this.loanForm = this.fb.group({
       totalAmount: [
@@ -26,7 +27,7 @@ export class LoanFormComponent implements OnDestroy {
           Validators.pattern('^[0-9]*$'),
         ],
       ],
-      downPayment: ['', [Validators.required]],
+      downPayment: ['', [ Validators.required]],
       termYears: [
         '',
         [
@@ -37,6 +38,7 @@ export class LoanFormComponent implements OnDestroy {
         ],
       ],
     });
+
 
     this.loanForm.get('totalAmount')!.valueChanges.subscribe((totalAmount) => {
       const downPaymentControl = this.loanForm.get('downPayment');
@@ -55,11 +57,10 @@ export class LoanFormComponent implements OnDestroy {
         downPaymentControl?.reset();
       }
     });
+
+
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-  }
   get totalAmount() {
     return this.loanForm.get('totalAmount') as FormControl<number>;
   }
@@ -75,9 +76,11 @@ export class LoanFormComponent implements OnDestroy {
   getTotalAmountFloatLabelValue(): FloatLabelType {
     return this.loanForm.get('totalAmount')!.value || 'auto';
   }
+
   getDownPaymentFloatLabelValue(): FloatLabelType {
     return this.loanForm.get('totalAmount')!.value || 'auto';
   }
+
   getTermYearsFloatLabelValue(): FloatLabelType {
     return this.loanForm.get('termYears')!.value || 'auto';
   }
