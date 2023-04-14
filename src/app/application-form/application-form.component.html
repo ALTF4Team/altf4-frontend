@@ -10,15 +10,17 @@
         (ngSubmit)="onApplicationFormSubmit()"
         (reset)="onApplicationFormReset()"
       >
-        <div>{{ applicationForm.value | json }}</div>
-        <h1>Please fill this application form</h1>
-
-        <div formGroupName="customerInformation">
-          <mat-accordion multi>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title> Personal Information </mat-panel-title>
-              </mat-expansion-panel-header>
+        <!-- <div>{{ applicationForm.value | json }}</div>
+        <h1>Please fill this application form</h1> -->
+        <!-- --------------------------------------------------------------------------- -->
+        <mat-stepper
+          formArrayName="formArray"
+          orientation="vertical"
+          [linear]="isLinear"
+          #stepper
+        >
+          <mat-step formGroupName="0" [stepControl]="formArray.get([0])">
+            <div formGroupName="customerInformation">
               <mat-form-field
                 appearance="fill"
                 [floatLabel]="getPersonalInformationFloatLabelValue()"
@@ -138,16 +140,15 @@
                   </div>
                 </mat-error>
               </mat-form-field>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div>
-        <!-- -------------------------------------------------------------------------------------------- -->
-        <div formGroupName="loanForm">
-          <mat-accordion multi>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>Loan information</mat-panel-title>
-              </mat-expansion-panel-header>
+            </div>
+            <div>
+              <button mat-button matStepperNext type="button">Next</button>
+            </div>
+          </mat-step>
+
+          <!-- -------------------------------------------------------------------------------------------- -->
+          <mat-step formGroupName="1" [stepControl]="formArray.get([1])">
+            <div formGroupName="loanForm">
               <mat-form-field
                 appearance="fill"
                 [floatLabel]="getLoanFormFloatLabelValue()"
@@ -156,7 +157,6 @@
                 <mat-select
                   formControlName="loanPurpose"
                   id="loanPurpose"
-                  type="text"
                   required
                 >
                   <mat-option value="Mortgage">Mortgage</mat-option>
@@ -245,11 +245,58 @@
                   </div>
                 </mat-error>
               </mat-form-field>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div>
+            </div>
+          </mat-step>
+          <!-- ------------------------------------------------------------------------------------- -->
+          <mat-step formGroupName="2" [stepControl]="formArray.get([2])">
+            <div formGroupName="financialInformation">
+              <mat-form-field
+                appearance="fill"
+                [floatLabel]="getFinancialInformationFloatLabelValue()"
+              >
+                <mat-label for="employmentStatus">Employment Status</mat-label>
+                <mat-select
+                  formControlName="employmentStatus"
+                  id="employmentStatus"
+                  required
+                >
+                  <mat-option value="contract">Contract employment</mat-option>
+                  <mat-option value="selfEmployed">Self employed</mat-option>
+                  <mat-option value="unemployed">Unemployed</mat-option>
+                </mat-select>
 
-        <div class="application_form_btn_box">
+                <mat-error
+                  *ngIf="employmentStatus.errors && employmentStatus.touched"
+                >
+                  <div *ngIf="employmentStatus.errors['required']">
+                    Employment status is required
+                  </div>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field
+                appearance="fill"
+                [floatLabel]="getFinancialInformationFloatLabelValue()"
+              >
+                <mat-label for="currentEmployer">Current employer</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="currentEmployer"
+                  id="currentEmployer"
+                  placeholder="Current employer"
+                />
+                <mat-error
+                  *ngIf="currentEmployer.errors && currentEmployer.touched"
+                >
+                  <div *ngIf="currentEmployer.errors['required']">
+                    Current employer is required
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-step>
+
+          <!-- <div class="application_form_btn_box">
           <button
             type="submit"
             mat-raised-button
@@ -266,7 +313,8 @@
           >
             Reset
           </button>
-        </div>
+        </div> -->
+        </mat-stepper>
       </form>
     </div>
   </div>

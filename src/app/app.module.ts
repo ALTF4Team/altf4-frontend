@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatExpansionModule,
     MatSelectModule,
+    MatStepperModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

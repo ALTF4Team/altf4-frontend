@@ -55,6 +55,21 @@ export class ApplicationFormComponent {
           ],
         ],
       }),
+      financialInformation: this.fb.group({
+        employmentStatus: ['', Validators.required],
+        sourceOfIncome: ['', Validators.required],
+        yearsSelfEmployment: ['', Validators.required],
+        currentEmployer: ['', Validators.required],
+        employmentContractType: ['', Validators.required],
+        yearsCurrentEmployer: ['', Validators.required],
+        position: ['', Validators.required],
+        industry: ['', Validators.required],
+        education: ['', Validators.required],
+        maritalStatus: ['', Validators.required],
+        underageDependentsCount: ['', Validators.required],
+        monthlyIncome: ['', Validators.required],
+        coBorrower: ['', Validators.required],
+      }),
     });
 
     ///////////////////////////////////////////////////////
@@ -152,10 +167,91 @@ export class ApplicationFormComponent {
       .get('loanTerm') as FormControl<number>;
   }
 
+  get employmentStatus() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('employmentStatus') as FormControl<string>;
+  }
+
+  get sourceOfIncome() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('sourceOfIncome') as FormControl<string>;
+  }
+
+  get yearsSelfEmployment() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get(' yearsSelfEmployment') as FormControl<number>;
+  }
+
+  get currentEmployer() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('currentEmployer') as FormControl<string>;
+  }
+
+  get employmentContractType() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('employmentContractType') as FormControl<string>;
+  }
+
+  get yearsCurrentEmployer() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('yearsCurrentEmployer') as FormControl<string>;
+  }
+
+  get position() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('position') as FormControl<string>;
+  }
+
+  get industry() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('industry') as FormControl<string>;
+  }
+
+  get education() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('industry') as FormControl<string>;
+  }
+
+  get maritalStatus() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('maritalStatus') as FormControl<string>;
+  }
+
+  get underageDependentsCount() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('underageDependentsCount') as FormControl<string>;
+  }
+
+  get monthlyIncome() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('monthlyIncome') as FormControl<string>;
+  }
+
+  get coBorrower() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('monthlyIncome') as FormControl<string>;
+  }
+
   getPersonalInformationFloatLabelValue(): FloatLabelType {
     return this.applicationForm.get('customerInformation')!.value || 'auto';
   }
   getLoanFormFloatLabelValue(): FloatLabelType {
     return this.applicationForm.get('loanForm')!.value || 'auto';
+  }
+  getFinancialInformationFloatLabelValue(): FloatLabelType {
+    return this.applicationForm.get('financialInformation')!.value || 'auto';
   }
 }
