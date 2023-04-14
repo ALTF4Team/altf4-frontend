@@ -1,5 +1,5 @@
 export interface LoanFormValues{
-  loanSize: string;
+  totalAmount: string;
   downPayment: string;
-  loanTermYears: string;
+  termYears: string;
 }

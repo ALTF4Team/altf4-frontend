@@ -19,21 +19,21 @@
             <input
               matInput
               type="text"
-              formControlName="loanSize"
+              formControlName="totalAmount"
               id="totalAmount"
               placeholder="Total Amount"
             />
             <mat-error
               class="error-message-text"
-              *ngIf="loanSize.errors && loanSize.touched"
+              *ngIf="totalAmount.errors && totalAmount.touched"
             >
-              <div *ngIf="loanSize.errors['required']">
+              <div *ngIf="totalAmount.errors['required']">
                 Amount is required
               </div>
-              <div *ngIf="loanSize.errors['min']">
+              <div *ngIf="totalAmount.errors['min']">
                 Amount should atleast be 10000
               </div>
-              <div *ngIf="loanSize.errors['pattern']">
+              <div *ngIf="totalAmount.errors['pattern']">
                 Only numeric values allowed
               </div>
             </mat-error>
@@ -78,24 +78,24 @@
             <input
               matInput
               type="text"
-              formControlName="loanTermYears"
+              formControlName="termYears"
               id="termYears"
               placeholder="Loan Term Years"
             />
             <mat-error
               class="error-message-text"
-              *ngIf="loanTermYears.errors && loanTermYears.touched"
+              *ngIf="termYears.errors && termYears.touched"
             >
-              <div *ngIf="loanTermYears.errors['required']">
+              <div *ngIf="termYears.errors['required']">
                 Term years cannot be empty
               </div>
-              <div *ngIf="loanTermYears.errors['min']">
+              <div *ngIf="termYears.errors['min']">
                 Term year should atleast be 1
               </div>
-              <div *ngIf="loanTermYears.errors['max']">
+              <div *ngIf="termYears.errors['max']">
                 Term years cannot exceed 30
               </div>
-              <div *ngIf="loanTermYears.errors['pattern']">
+              <div *ngIf="termYears.errors['pattern']">
                 Only numeric values allowed
               </div>
             </mat-error>
@@ -120,6 +120,18 @@
           </div>
         </form>
       </div>
+      <div class="calculation-container" *ngIf="savedData">
+      <div  class="calc-text" *ngIf="monthlyInterest$ | async as info">
+      <p>Total Amount: {{savedData.totalAmount}}</p>
+      <p>Down Payment: {{savedData.downPayment}}</p>
+      <p>Term Years: {{savedData.termYears}}</p>
+      <p>Loan Amount: {{info.loanAmount}}</p>
+      <p>Interest Rate: {{info.interestRate}}</p>
+      <p>Interest Paid: {{info.totalInterestAmount}}</p>
+      <p>Monthly Payment: {{info.monthlyPaymentAmount}}</p>
+      <p>Total Amount Paid: {{info.totalPaymentSum}}</p>
+      </div>
+    </div>
     </div>
   </div>
 </div>

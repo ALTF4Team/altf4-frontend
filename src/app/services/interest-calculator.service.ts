@@ -7,7 +7,7 @@ import {MonthlyInterest} from "../interfaces/monthlyInterest";
   providedIn: 'root'
 })
 export class InterestCalculatorService {
-  apiURL: string  = "http://localhost:8080/api/loan-calculator/annuity"
+  apiURL: string  = "http://localhost:8080/api/loan-calculator"
   constructor(private httpClient: HttpClient) { }
 
   getMonthlyInterest(loanParameters: LoanFormValues){
