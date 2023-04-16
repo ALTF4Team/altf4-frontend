@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,25 +6,48 @@ import {
   Validators,
 } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
+import { ApplicationFormService } from './application-form-service.service';
+import { map, Observable, startWith } from 'rxjs';
+import { Country } from './country';
+import { ApplicationFormValues } from './application-form-values';
+import { MatDialog } from '@angular/material/dialog';
+import { PreviewComponent } from './preview/preview.component';
 
 @Component({
   selector: 'app-application-form',
   templateUrl: './application-form.component.html',
   styleUrls: ['./application-form.component.scss'],
 })
-export class ApplicationFormComponent {
+export class ApplicationFormComponent implements OnInit {
   applicationForm: FormGroup;
-  constructor(private fb: FormBuilder) {
+  formData!: ApplicationFormValues;
+  countries: Country[] = [];
+  filteredCountries!: Observable<Country[]>;
+  startDate = new Date(1980, 0, 1);
+  maxDate: Date;
+  percentage!: number;
+  isPreviewed: boolean = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private applicationFormService: ApplicationFormService,
+    public dialog: MatDialog
+  ) {
     this.applicationForm = this.fb.group({
       customerInformation: this.fb.group({
         name: ['', [Validators.required]],
         surname: ['', [Validators.required]],
         countryOfCitizenship: ['', [Validators.required]],
-        yearOfBirth: [
+        dateOfBirth: ['', [Validators.required]],
+        mobileNumber: [
           '',
-          [Validators.required, Validators.pattern('^[0-9]*$')],
+          [
+            Validators.required,
+            Validators.pattern(
+              '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
+            ),
+          ],
         ],
-        mobileNumber: ['', [Validators.required]],
         email: [
           '',
           [
@@ -44,7 +67,7 @@ export class ApplicationFormComponent {
             Validators.pattern('^[0-9]*$'),
           ],
         ],
-        downPayment: [''],
+        downPayment: ['', Validators.required],
         loanTerm: [
           '',
           [
@@ -57,13 +80,13 @@ export class ApplicationFormComponent {
       }),
       financialInformation: this.fb.group({
         employmentStatus: ['', Validators.required],
-        sourceOfIncome: ['', Validators.required],
-        yearsSelfEmployment: ['', Validators.required],
-        currentEmployer: ['', Validators.required],
-        employmentContractType: ['', Validators.required],
-        yearsCurrentEmployer: ['', Validators.required],
-        position: ['', Validators.required],
-        industry: ['', Validators.required],
+        sourceOfIncome: new FormControl(null, Validators.required),
+        yearsSelfEmployment: new FormControl(null, Validators.required),
+        currentEmployer: new FormControl(null, Validators.required),
+        employmentContractType: new FormControl(null, Validators.required),
+        yearsCurrentEmployer: new FormControl(null, Validators.required),
+        position: new FormControl(null, Validators.required),
+        industry: new FormControl(null, Validators.required),
         education: ['', Validators.required],
         maritalStatus: ['', Validators.required],
         underageDependentsCount: ['', Validators.required],
@@ -72,30 +95,32 @@ export class ApplicationFormComponent {
       }),
     });
 
-    ///////////////////////////////////////////////////////
+    this.maxDate = new Date();
+    this.setDownPayment();
+    this.setPercentage();
+  }
 
-    this.applicationForm
-      .get('loanForm')!
-      .get('totalAmount')!
-      .valueChanges.subscribe((totalAmount) => {
-        const downPaymentControl = this.applicationForm
-          .get('loanForm')!
-          .get('downPayment');
-        if (totalAmount >= 1000) {
-          if (!downPaymentControl?.value || downPaymentControl?.pristine) {
-            const downPayment = totalAmount * 0.15;
-            downPaymentControl?.setValue(downPayment);
-          }
-          downPaymentControl?.setValidators([
-            Validators.required,
-            Validators.min(totalAmount * 0.15),
-            Validators.max(totalAmount * 0.99),
-            Validators.pattern('^[0-9]*$'),
-          ]);
-        } else {
-          downPaymentControl?.reset();
-        }
+  ngOnInit() {
+    this.applicationFormService
+      .getCountriesList()
+      .subscribe((countriesList: Country[]) => {
+        this.countries = countriesList.sort(
+          (a, b) => a.name.common.charCodeAt(0) - b.name.common.charCodeAt(0)
+        );
       });
+
+    this.filteredCountries = this.countryOfCitizenship.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || ''))
+    );
+  }
+
+  private _filter(value: string): Country[] {
+    const filterValue = value.toLowerCase();
+
+    return this.countries.filter((option) =>
+      option.name.common.toLowerCase().includes(filterValue)
+    );
   }
 
   onApplicationFormSubmit() {
@@ -105,6 +130,23 @@ export class ApplicationFormComponent {
   }
   onApplicationFormReset() {
     this.applicationForm.reset();
+  }
+
+  preview() {
+    if (this.applicationForm) {
+      this.formData = this.applicationForm.value;
+      console.log(this.formData);
+      this.openDialog();
+    }
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(PreviewComponent, {
+      data: this.formData,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   get name() {
@@ -125,10 +167,10 @@ export class ApplicationFormComponent {
       .get('countryOfCitizenship') as FormControl<string>;
   }
 
-  get yearOfBirth() {
+  get dateOfBirth() {
     return this.applicationForm
       .get('customerInformation')!
-      .get('yearOfBirth') as FormControl<number>;
+      .get('dateOfBirth') as FormControl<string | Date>;
   }
 
   get mobileNumber() {
@@ -176,43 +218,43 @@ export class ApplicationFormComponent {
   get sourceOfIncome() {
     return this.applicationForm
       .get('financialInformation')!
-      .get('sourceOfIncome') as FormControl<string>;
+      .get('sourceOfIncome') as FormControl<string | null>;
   }
 
   get yearsSelfEmployment() {
     return this.applicationForm
       .get('financialInformation')!
-      .get(' yearsSelfEmployment') as FormControl<number>;
+      .get('yearsSelfEmployment') as FormControl<number | null>;
   }
 
   get currentEmployer() {
     return this.applicationForm
       .get('financialInformation')!
-      .get('currentEmployer') as FormControl<string>;
+      .get('currentEmployer') as FormControl<string | null>;
   }
 
   get employmentContractType() {
     return this.applicationForm
       .get('financialInformation')!
-      .get('employmentContractType') as FormControl<string>;
+      .get('employmentContractType') as FormControl<string | null>;
   }
 
   get yearsCurrentEmployer() {
     return this.applicationForm
       .get('financialInformation')!
-      .get('yearsCurrentEmployer') as FormControl<string>;
+      .get('yearsCurrentEmployer') as FormControl<string | null>;
   }
 
   get position() {
     return this.applicationForm
       .get('financialInformation')!
-      .get('position') as FormControl<string>;
+      .get('position') as FormControl<string | null>;
   }
 
   get industry() {
     return this.applicationForm
       .get('financialInformation')!
-      .get('industry') as FormControl<string>;
+      .get('industry') as FormControl<string | null>;
   }
 
   get education() {
@@ -245,6 +287,18 @@ export class ApplicationFormComponent {
       .get('monthlyIncome') as FormControl<string>;
   }
 
+  get customerInformation() {
+    return this.applicationForm.get('customerInformation') as FormControl<any>;
+  }
+
+  get loanForm() {
+    return this.applicationForm.get('loanForm') as FormControl<any>;
+  }
+
+  get financialInformation() {
+    return this.applicationForm.get('financialInformation') as FormControl<any>;
+  }
+
   getPersonalInformationFloatLabelValue(): FloatLabelType {
     return this.applicationForm.get('customerInformation')!.value || 'auto';
   }
@@ -253,5 +307,49 @@ export class ApplicationFormComponent {
   }
   getFinancialInformationFloatLabelValue(): FloatLabelType {
     return this.applicationForm.get('financialInformation')!.value || 'auto';
+  }
+
+  setDownPayment(): void {
+    this.applicationForm
+      .get('loanForm')!
+      .get('totalAmount')!
+      .valueChanges.subscribe((totalAmount) => {
+        const downPaymentControl = this.applicationForm
+          .get('loanForm')!
+          .get('downPayment');
+        if (totalAmount >= 1000) {
+          if (!downPaymentControl?.value || downPaymentControl?.pristine) {
+            const downPayment = totalAmount * 0.15;
+            downPaymentControl?.setValue(Math.round(downPayment));
+          }
+          downPaymentControl?.setValidators([
+            Validators.required,
+            Validators.min(Math.round(totalAmount * 0.15) - 0.1),
+            Validators.max(totalAmount * 0.99),
+            Validators.pattern('^[0-9]*$'),
+          ]);
+        } else {
+          downPaymentControl?.reset();
+        }
+      });
+  }
+
+  setPercentage(): void {
+    this.applicationForm
+      .get('loanForm')!
+      .get('downPayment')!
+      .valueChanges.subscribe((downPayment) => {
+        const downPaymentControl = this.applicationForm
+          .get('loanForm')!
+          .get('downPayment');
+        const totalAmount = this.applicationForm
+          .get('loanForm')
+          ?.get('totalAmount');
+        if (downPaymentControl && totalAmount?.value > 0) {
+          this.percentage = Math.round(
+            (downPaymentControl.value * 100) / totalAmount?.value
+          );
+        }
+      });
   }
 }
