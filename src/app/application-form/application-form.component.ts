@@ -12,6 +12,7 @@ import { Country } from './country';
 import { ApplicationFormValues } from './application-form-values';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewComponent } from './preview/preview.component';
+import { ValidationService } from './validation.service';
 
 @Component({
   selector: 'app-application-form',
@@ -31,6 +32,7 @@ export class ApplicationFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private applicationFormService: ApplicationFormService,
+    private validationService: ValidationService,
     public dialog: MatDialog
   ) {
     this.applicationForm = this.fb.group({
@@ -57,27 +59,30 @@ export class ApplicationFormComponent implements OnInit {
           ],
         ],
       }),
-      loanForm: this.fb.group({
-        loanPurpose: ['', [Validators.required]],
-        totalAmount: [
-          '',
-          [
-            Validators.required,
-            Validators.min(10000),
-            Validators.pattern('^[0-9]*$'),
+      loanForm: this.fb.group(
+        {
+          loanPurpose: ['', [Validators.required]],
+          totalAmount: [
+            '',
+            [
+              Validators.required,
+              Validators.min(10000),
+              Validators.pattern('^[0-9]*$'),
+            ],
           ],
-        ],
-        downPayment: ['', Validators.required],
-        loanTerm: [
-          '',
-          [
-            Validators.required,
-            Validators.min(1),
-            Validators.max(30),
-            Validators.pattern('^[0-9]*$'),
+          downPayment: ['', Validators.required],
+          loanTerm: [
+            '',
+            [
+              Validators.required,
+              Validators.min(1),
+              Validators.max(30),
+              Validators.pattern('^[0-9]*$'),
+            ],
           ],
-        ],
-      }),
+        },
+        { validators: this.validationService.downPaymentValidator }
+      ),
       financialInformation: this.fb.group({
         employmentStatus: ['', Validators.required],
         sourceOfIncome: new FormControl(null, Validators.required),
@@ -132,10 +137,9 @@ export class ApplicationFormComponent implements OnInit {
     this.applicationForm.reset();
   }
 
-  preview() {
+  onPreview() {
     if (this.applicationForm) {
       this.formData = this.applicationForm.value;
-      console.log(this.formData);
       this.openDialog();
     }
   }
@@ -318,16 +322,8 @@ export class ApplicationFormComponent implements OnInit {
           .get('loanForm')!
           .get('downPayment');
         if (totalAmount >= 1000) {
-          if (!downPaymentControl?.value || downPaymentControl?.pristine) {
-            const downPayment = totalAmount * 0.15;
-            downPaymentControl?.setValue(Math.round(downPayment));
-          }
-          downPaymentControl?.setValidators([
-            Validators.required,
-            Validators.min(Math.round(totalAmount * 0.15) - 0.1),
-            Validators.max(totalAmount * 0.99),
-            Validators.pattern('^[0-9]*$'),
-          ]);
+          const downPayment = totalAmount * 0.15;
+          downPaymentControl?.setValue(Math.round(downPayment));
         } else {
           downPaymentControl?.reset();
         }

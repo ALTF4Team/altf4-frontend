@@ -210,6 +210,7 @@
                     id="downPayment"
                     placeholder="Down payment"
                   />
+
                   <mat-error *ngIf="downPayment.errors && downPayment.touched">
                     <div *ngIf="downPayment.errors['required']">
                       Down payment is required
@@ -217,9 +218,11 @@
                     <div *ngIf="downPayment.errors['pattern']">
                       Only numeric values allowed
                     </div>
-                    <div *ngIf="downPayment.errors['min']">
-                      Down payment should at least be 15%
-                    </div>
+                  </mat-error>
+                  <mat-error
+                    *ngIf="loanForm.errors?.['downPaymentTooSmall'] && (loanForm.touched || loanForm.dirty)"
+                  >
+                    <div>Down payment should be at least 15 %</div>
                   </mat-error>
                 </mat-form-field>
                 <div class="percentage">{{ percentage }} %</div>
@@ -557,7 +560,7 @@
               <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button (click)="preview()" (click)="openDialog()">
+                <button mat-button (click)="onPreview()" (click)="openDialog()">
                   Preview
                 </button>
               </div>
