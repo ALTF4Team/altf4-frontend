@@ -9,7 +9,6 @@
         (reset)="onApplicationFormReset()"
       >
         <h1>Please fill this application form</h1>
-        <!-- --------------------------------------------------------------------------- -->
         <mat-stepper orientation="vertical" linear #stepper>
           <mat-step [stepControl]="customerInformation">
             <div formGroupName="customerInformation" class="form-section">
@@ -197,6 +196,7 @@
                   </div>
                 </mat-error>
               </mat-form-field>
+
               <div class="down_payment_field">
                 <mat-form-field
                   appearance="fill"
@@ -209,8 +209,8 @@
                     formControlName="downPayment"
                     id="downPayment"
                     placeholder="Down payment"
+                    [errorStateMatcher]="matcher"
                   />
-
                   <mat-error *ngIf="downPayment.errors && downPayment.touched">
                     <div *ngIf="downPayment.errors['required']">
                       Down payment is required
@@ -220,7 +220,7 @@
                     </div>
                   </mat-error>
                   <mat-error
-                    *ngIf="loanForm.errors?.['downPaymentTooSmall'] && (loanForm.touched || loanForm.dirty)"
+                    *ngIf="loanForm?.errors?.['downPaymentTooSmall'] && downPayment.touched"
                   >
                     <div>Down payment should be at least 15 %</div>
                   </mat-error>

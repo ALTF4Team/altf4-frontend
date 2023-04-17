@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  FormGroupDirective,
+  NgForm,
   Validators,
 } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
@@ -13,6 +16,20 @@ import { ApplicationFormValues } from './application-form-values';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewComponent } from './preview/preview.component';
 import { ValidationService } from './validation.service';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+export class CrossFieldErrorMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    if (control?.dirty && form?.invalid) {
+      return control?.dirty && form?.invalid;
+    } else {
+      return false;
+    }
+  }
+}
 
 @Component({
   selector: 'app-application-form',
@@ -28,6 +45,7 @@ export class ApplicationFormComponent implements OnInit {
   maxDate: Date;
   percentage!: number;
   isPreviewed: boolean = false;
+  matcher = new CrossFieldErrorMatcher();
 
   constructor(
     private fb: FormBuilder,
@@ -314,38 +332,32 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   setDownPayment(): void {
-    this.applicationForm
-      .get('loanForm')!
-      .get('totalAmount')!
-      .valueChanges.subscribe((totalAmount) => {
-        const downPaymentControl = this.applicationForm
-          .get('loanForm')!
-          .get('downPayment');
-        if (totalAmount >= 1000) {
-          const downPayment = totalAmount * 0.15;
-          downPaymentControl?.setValue(Math.round(downPayment));
-        } else {
-          downPaymentControl?.reset();
-        }
-      });
+    this.totalAmount.valueChanges.subscribe((totalAmount) => {
+      const downPaymentControl = this.applicationForm
+        .get('loanForm')!
+        .get('downPayment');
+      if (totalAmount >= 1000) {
+        const downPayment = totalAmount * 0.15;
+        downPaymentControl?.setValue(Math.round(downPayment));
+      } else {
+        downPaymentControl?.reset();
+      }
+    });
   }
 
   setPercentage(): void {
-    this.applicationForm
-      .get('loanForm')!
-      .get('downPayment')!
-      .valueChanges.subscribe((downPayment) => {
-        const downPaymentControl = this.applicationForm
-          .get('loanForm')!
-          .get('downPayment');
-        const totalAmount = this.applicationForm
-          .get('loanForm')
-          ?.get('totalAmount');
-        if (downPaymentControl && totalAmount?.value > 0) {
-          this.percentage = Math.round(
-            (downPaymentControl.value * 100) / totalAmount?.value
-          );
-        }
-      });
+    this.downPayment.valueChanges.subscribe((downPayment) => {
+      const downPaymentControl = this.applicationForm
+        .get('loanForm')!
+        .get('downPayment');
+      const totalAmount = this.applicationForm
+        .get('loanForm')
+        ?.get('totalAmount');
+      if (downPaymentControl && totalAmount?.value > 0) {
+        this.percentage = Math.round(
+          (downPaymentControl.value * 100) / totalAmount?.value
+        );
+      }
+    });
   }
 }
