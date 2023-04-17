@@ -133,5 +133,8 @@
       </div>
     </div>
     </div>
+    <div class="calc-text" class="pie-container" *ngIf="monthlyInterest$ | async">
+    <app-pie-loan [loanInfo]="monthlyInterest$" ></app-pie-loan>
+      </div>
   </div>
 </div>

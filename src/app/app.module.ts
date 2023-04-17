@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {HttpClientModule} from "@angular/common/http";
+import { PieLoanComponent } from './pie-loan/pie-loan.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {HttpClientModule} from "@angular/common/http";
     FooterComponent,
     LandingComponent,
     LoanFormComponent,
+    PieLoanComponent,
   ],
   imports: [
     BrowserModule,

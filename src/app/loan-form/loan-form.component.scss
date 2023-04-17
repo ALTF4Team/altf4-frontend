@@ -20,7 +20,7 @@
   min-width: 30%;
 }
 
-.calculation-container{ margin-left: 10%;
+.calculation-container{
   padding: 30px 30px 50px;
   display: flex;
   flex-direction: column;
@@ -38,7 +38,20 @@
   z-index: 2;
 }
 
-
+.pie-container{
+  margin-right: 5%;
+  padding: 30px 30px 50px;
+  display: flex;
+  flex-direction: column;
+  column-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  background-color: var(--light-blue);
+  color: var(--main-white);
+  min-height: 100%;
+  min-width: 30%;
+}
 
 
 .loan_form {
