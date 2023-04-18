@@ -23,11 +23,8 @@ export class CrossFieldErrorMatcher implements ErrorStateMatcher {
     control: FormControl | null,
     form: FormGroupDirective | NgForm | null
   ): boolean {
-    if (control?.dirty && form?.invalid) {
-      return control?.dirty && form?.invalid;
-    } else {
-      return false;
-    }
+    control?.updateValueAndValidity();
+    return !!(control && control.dirty && form?.invalid);
   }
 }
 
@@ -333,9 +330,7 @@ export class ApplicationFormComponent implements OnInit {
 
   setDownPayment(): void {
     this.totalAmount.valueChanges.subscribe((totalAmount) => {
-      const downPaymentControl = this.applicationForm
-        .get('loanForm')!
-        .get('downPayment');
+      const downPaymentControl = this.downPayment;
       if (totalAmount >= 1000) {
         const downPayment = totalAmount * 0.15;
         downPaymentControl?.setValue(Math.round(downPayment));
@@ -347,16 +342,15 @@ export class ApplicationFormComponent implements OnInit {
 
   setPercentage(): void {
     this.downPayment.valueChanges.subscribe((downPayment) => {
-      const downPaymentControl = this.applicationForm
-        .get('loanForm')!
-        .get('downPayment');
-      const totalAmount = this.applicationForm
-        .get('loanForm')
-        ?.get('totalAmount');
+      const downPaymentControl = this.downPayment;
+      const totalAmount = this.totalAmount;
       if (downPaymentControl && totalAmount?.value > 0) {
         this.percentage = Math.round(
           (downPaymentControl.value * 100) / totalAmount?.value
         );
+      }
+      if (this.percentage >= 15) {
+        downPaymentControl?.markAllAsTouched();
       }
     });
   }

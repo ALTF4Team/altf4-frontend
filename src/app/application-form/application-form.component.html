@@ -224,6 +224,9 @@
                   >
                     <div>Down payment should be at least 15 %</div>
                   </mat-error>
+                  {{ "downpayment error:" + downPayment.errors }}
+
+                  {{'loan form error:' + loanForm?.errors?.['downPaymentTooSmall']}}
                 </mat-form-field>
                 <div class="percentage">{{ percentage }} %</div>
               </div>
