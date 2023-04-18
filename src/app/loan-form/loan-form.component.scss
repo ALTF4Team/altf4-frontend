@@ -6,7 +6,6 @@
 }
 
 .form-container {
-  //margin-left: 10%;
   padding: 30px;
   padding-bottom: 50px;
   display: flex;
@@ -20,7 +19,7 @@
   min-width: 30%;
 }
 
-.calculation-container{
+.calculation-container {
   padding: 30px 30px 50px;
   display: flex;
   flex-direction: column;
@@ -32,13 +31,12 @@
   color: var(--main-white);
   min-height: 100%;
   min-width: 30%;
-
 }
-.calc-text{
+.calc-text {
   z-index: 2;
 }
 
-.pie-container{
+.pie-container {
   margin-right: 5%;
   padding: 30px 30px 50px;
   display: flex;
@@ -52,7 +50,6 @@
   min-height: 100%;
   min-width: 30%;
 }
-
 
 .loan_form {
   display: flex;
