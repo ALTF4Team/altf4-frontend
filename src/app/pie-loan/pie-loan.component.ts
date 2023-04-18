@@ -1,17 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {MonthlyInterest} from "../interfaces/monthlyInterest";
-import {Chart} from 'chart.js/auto';
-import {color} from "chart.js/helpers";
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { MonthlyInterest } from '../interfaces/monthlyInterest';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-pie-loan',
   templateUrl: './pie-loan.component.html',
-  styleUrls: ['./pie-loan.component.scss']
+  styleUrls: ['./pie-loan.component.scss'],
 })
-export class PieLoanComponent implements OnInit{
-@Input() loanInfo?: Observable<MonthlyInterest>;
-public chart: any;
+export class PieLoanComponent implements OnInit {
+  @Input() loanInfo?: Observable<MonthlyInterest>;
+  public chart: any;
 
   ngOnInit(): void {
     this.loanInfo?.subscribe((loan) => {
@@ -32,28 +31,27 @@ public chart: any;
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.dataset.label || '';
+                },
+              },
+            },
             legend: {
               position: 'bottom',
               labels: {
-                color: '#ffffff'
+                color: '#ffffff',
               },
             },
             title: {
               display: true,
               text: 'Loan Summary',
-              color: '#ffffff'
+              color: '#ffffff',
             },
-
           },
         },
       });
     });
   }
-
-
-
-
-
-
-
 }

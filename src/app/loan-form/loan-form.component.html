@@ -121,20 +121,23 @@
         </form>
       </div>
       <div class="calculation-container" *ngIf="savedData">
-      <div  class="calc-text" *ngIf="monthlyInterest$ | async as info">
-      <p>Total Amount: {{savedData.totalAmount}}</p>
-      <p>Down Payment: {{savedData.downPayment}}</p>
-      <p>Term Years: {{savedData.termYears}}</p>
-      <p>Loan Amount: {{info.loanAmount}}</p>
-      <p>Interest Rate: {{info.interestRate}}</p>
-      <p>Interest Paid: {{info.totalInterestAmount}}</p>
-      <p>Monthly Payment: {{info.monthlyPaymentAmount}}</p>
-      <p>Total Amount Paid: {{info.totalPaymentSum}}</p>
-      </div>
+
+        <div class="calc-data" *ngIf="monthlyInterest$ | async">
+          <app-pie-loan [loanInfo]="monthlyInterest$" ></app-pie-loan>
+        </div>
+
+        <div  class="calc-text" *ngIf="monthlyInterest$ | async as info">
+          <p class = "imp-text">Loan Amount: {{info.loanAmount}} EUR</p>
+          <p class = "imp-text">Interest Rate: {{covertToPercent(info.interestRate)}} %</p>
+          <p class = "imp-text">Interest Paid: {{info.totalInterestAmount}} EUR</p>
+          <p class = "imp-text">Monthly Payment: {{info.monthlyPaymentAmount}} EUR</p>
+          <p class = "imp-text">Total Amount Paid: {{info.totalPaymentSum}} EUR</p>
+          <p>Total Amount: {{savedData.totalAmount}} EUR</p>
+          <p>Down Payment: {{savedData.downPayment}} EUR</p>
+          <p>Term Years: {{savedData.termYears}} EUR</p>
+        </div>
     </div>
+
     </div>
-    <div class="calc-text" class="pie-container" *ngIf="monthlyInterest$ | async">
-    <app-pie-loan [loanInfo]="monthlyInterest$" ></app-pie-loan>
-      </div>
   </div>
 </div>

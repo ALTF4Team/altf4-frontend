@@ -6,7 +6,6 @@
 }
 
 .form-container {
-  //margin-left: 10%;
   padding: 30px;
   padding-bottom: 50px;
   display: flex;
@@ -24,7 +23,7 @@
   padding: 30px 30px 50px;
   display: flex;
   flex-direction: column;
-  column-gap: 20px;
+  column-gap: 40px;
   justify-content: center;
   align-items: center;
   font-size: 24px;
@@ -35,23 +34,17 @@
 
 }
 .calc-text{
+  margin-top: 50px;
   z-index: 2;
+  font-size: 14px;
+  color: #949494;
 }
 
-.pie-container{
-  margin-right: 5%;
-  padding: 30px 30px 50px;
-  display: flex;
-  flex-direction: column;
-  column-gap: 20px;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  background-color: var(--light-blue);
-  color: var(--main-white);
-  min-height: 100%;
-  min-width: 30%;
+.imp-text{
+  font-size: 18px;
+  color: #ffffff;
 }
+
 
 
 .loan_form {
@@ -100,6 +93,11 @@ mat-error {
   }
 }
 
+@media (max-width: 700px){
+  .loan_calculation_page{
+    flex-direction: column;
+  }
+}
 // .form-container label {
 //   width: 150px;
 //   text-align: right;

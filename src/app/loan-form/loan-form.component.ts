@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {Observable, Subject} from 'rxjs';
-import {FloatLabelType} from '@angular/material/form-field';
-import {InterestCalculatorService} from "../services/interest-calculator.service";
-import {MonthlyInterest} from "../interfaces/monthlyInterest";
-import {LoanFormValues} from "../interfaces/loanFormValues";
+import { Observable, Subject } from 'rxjs';
+import { FloatLabelType } from '@angular/material/form-field';
+import { InterestCalculatorService } from '../services/interest-calculator.service';
+import { MonthlyInterest } from '../interfaces/monthlyInterest';
+import { LoanFormValues } from '../interfaces/loanFormValues';
 
 @Component({
   selector: 'app-loan-form',
@@ -17,18 +17,32 @@ import {LoanFormValues} from "../interfaces/loanFormValues";
   styleUrls: ['./loan-form.component.scss'],
 })
 export class LoanFormComponent {
-
   loanForm: FormGroup;
   savedData?: LoanFormValues;
-  monthlyInterest$?: Observable<MonthlyInterest>
+  monthlyInterest$?: Observable<MonthlyInterest>;
 
-  constructor(private fb: FormBuilder, private interestService: InterestCalculatorService) {
+  constructor(
+    private fb: FormBuilder,
+    private interestService: InterestCalculatorService
+  ) {
     this.loanForm = this.fb.group({
-      totalAmount: ['', [Validators.required, Validators.min(10000), Validators.pattern("^[0-9]*$")]],
+      totalAmount: [
+        '',
+        [
+          Validators.required,
+          Validators.min(10000),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
       downPayment: ['', [Validators.required]],
       termYears: [
         '',
-        [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern("^[0-9]*$")],
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(30),
+          Validators.pattern('^[0-9]*$'),
+        ],
       ],
     });
 
@@ -43,14 +57,13 @@ export class LoanFormComponent {
           Validators.required,
           Validators.min(totalAmount * 0.15),
           Validators.max(totalAmount * 0.99),
-          Validators.pattern("^[0-9]*$")
+          Validators.pattern('^[0-9]*$'),
         ]);
       } else {
         downPaymentControl?.reset();
       }
     });
   }
-
 
   get totalAmount() {
     return this.loanForm.get('totalAmount') as FormControl<number>;
@@ -79,11 +92,17 @@ export class LoanFormComponent {
   onLoanFormSubmit() {
     if (this.loanForm.valid) {
       this.savedData = this.loanForm.value;
-      this.monthlyInterest$ = this.interestService.getMonthlyInterest(this.loanForm.value);
+      this.monthlyInterest$ = this.interestService.getMonthlyInterest(
+        this.loanForm.value
+      );
     }
   }
 
   onLoanFormReset() {
     this.loanForm.reset();
+  }
+
+  covertToPercent(interestRate: string) {
+    return parseFloat(interestRate) * 100;
   }
 }
