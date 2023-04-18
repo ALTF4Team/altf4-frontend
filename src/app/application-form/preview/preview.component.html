@@ -1,0 +1,61 @@
+<div class="preview_container">
+  <h3>Personal information</h3>
+  <ul>
+    <li>Name: {{ data.customerInformation.name }}</li>
+    <li>Surname: {{ data.customerInformation.surname }}</li>
+    <li>
+      Country of citizenship:
+      {{ data.customerInformation.countryOfCitizenship }}
+    </li>
+    <li>Date of Birth: {{ data.customerInformation.dateOfBirth }}</li>
+    <li>Mobile number: {{ data.customerInformation.mobileNumber }}</li>
+    <li>Email: {{ data.customerInformation.email }}</li>
+  </ul>
+  <h3>Loan information</h3>
+  <ul>
+    <li>Loan purpose: {{ data.loanForm.loanPurpose }}</li>
+    <li>Total amount: {{ data.loanForm.totalAmount }}</li>
+    <li>
+      Down payment:
+      {{ data.loanForm.downPayment }}
+    </li>
+    <li>Loan term: {{ data.loanForm.loanTerm }}</li>
+  </ul>
+  <h3>Financial information</h3>
+  <ul>
+    <li>Employment status: {{ data.financialInformation.employmentStatus }}</li>
+    <li *ngIf="data.financialInformation.sourceOfIncome">
+      Source of income: {{ data.financialInformation.sourceOfIncome }}
+    </li>
+    <li *ngIf="data.financialInformation.yearsSelfEmployment">
+      Years of self employment:
+      {{ data.financialInformation.yearsSelfEmployment }}
+    </li>
+    <li *ngIf="data.financialInformation.currentEmployer">
+      Current employer: {{ data.financialInformation.currentEmployer }}
+    </li>
+    <li *ngIf="data.financialInformation.employmentContractType">
+      Contract type: {{ data.financialInformation.employmentContractType }}
+    </li>
+    <li *ngIf="data.financialInformation.yearsCurrentEmployer">
+      Years with current employer:
+      {{ data.financialInformation.yearsCurrentEmployer }}
+    </li>
+    <li *ngIf="data.financialInformation.position">
+      Position: {{ data.financialInformation.position }}
+    </li>
+    <li *ngIf="data.financialInformation.industry">
+      Industry: {{ data.financialInformation.industry }}
+    </li>
+    <li>Education: {{ data.financialInformation.education }}</li>
+    <li>Marital status: {{ data.financialInformation.maritalStatus }}</li>
+    <li>
+      Number of underage dependents:
+      {{ data.financialInformation.underageDependentsCount }}
+    </li>
+    <li>
+      Monthly income after tax: {{ data.financialInformation.monthlyIncome }}
+    </li>
+    <li>Co-borrower?: {{ data.financialInformation.coBorrower }}</li>
+  </ul>
+</div>
