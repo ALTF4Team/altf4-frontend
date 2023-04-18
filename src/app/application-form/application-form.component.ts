@@ -23,7 +23,6 @@ export class CrossFieldErrorMatcher implements ErrorStateMatcher {
     control: FormControl | null,
     form: FormGroupDirective | NgForm | null
   ): boolean {
-    control?.updateValueAndValidity();
     return !!(control && control.dirty && form?.invalid);
   }
 }
@@ -311,7 +310,7 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   get loanForm() {
-    return this.applicationForm.get('loanForm') as FormControl<any>;
+    return this.applicationForm.get('loanForm') as FormGroup<any>;
   }
 
   get financialInformation() {

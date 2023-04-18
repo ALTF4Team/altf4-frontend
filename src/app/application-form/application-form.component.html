@@ -152,7 +152,7 @@
 
           <!-- -------------------------------------------------------------------------------------------- -->
           <mat-step [stepControl]="loanForm">
-            <div formGroupName="loanForm" class="form-section">
+            <div [formGroup]="loanForm" class="form-section">
               <mat-form-field
                 appearance="fill"
                 [floatLabel]="getLoanFormFloatLabelValue()"
@@ -225,8 +225,8 @@
                     <div>Down payment should be at least 15 %</div>
                   </mat-error>
                   {{ "downpayment error:" + downPayment.errors }}
-
                   {{'loan form error:' + loanForm?.errors?.['downPaymentTooSmall']}}
+                  {{ "loan form errors:" + loanForm?.errors }}
                 </mat-form-field>
                 <div class="percentage">{{ percentage }} %</div>
               </div>
