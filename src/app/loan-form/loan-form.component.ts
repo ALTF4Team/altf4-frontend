@@ -51,8 +51,6 @@ export class LoanFormComponent {
     });
   }
 
-  ngOnInit(): void {
-  }
 
   get totalAmount() {
     return this.loanForm.get('totalAmount') as FormControl<number>;
