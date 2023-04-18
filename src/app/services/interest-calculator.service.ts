@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {LoanFormValues} from "../interfaces/loanFormValues";
 import {MonthlyInterest} from "../interfaces/monthlyInterest";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterestCalculatorService {
-  apiURL: string  = "http://localhost:8080/api/loan-calculator"
+  apiURL: string  = environment.apiUrl;
   constructor(private httpClient: HttpClient) { }
 
   getMonthlyInterest(loanParameters: LoanFormValues){
