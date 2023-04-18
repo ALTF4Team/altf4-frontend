@@ -1,0 +1,67 @@
+.form-container {
+  padding: 30px;
+  padding-bottom: 50px;
+  display: flex;
+  column-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: var(--main-white);
+  min-height: 80%;
+  width: 100%;
+}
+
+.application_form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 80%;
+  h1 {
+    font-size: 32px;
+    z-index: 2;
+    font-weight: 500;
+    padding-bottom: 16px;
+  }
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-error {
+  line-height: 0;
+  font-size: 10px;
+}
+.date_picker {
+  width: 30%;
+}
+
+.percentage {
+  font-size: 16px;
+  color: var(--dark-blue);
+}
+
+.down_payment_field {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.application_form_btn_box {
+  padding-top: 28px;
+  display: flex;
+  gap: 40px;
+  > * {
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .btn-submit {
+    background-color: var(--main-white);
+    color: var(--main-purple);
+  }
+  .btn-reset {
+    background-color: var(--main-purple);
+    color: var(--main-white);
+  }
+}

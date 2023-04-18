@@ -1,21 +1,28 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup,
+  FormGroup, ValidationErrors, ValidatorFn,
   Validators,
 } from '@angular/forms';
+
 import {Observable, Subject} from 'rxjs';
 import {FloatLabelType} from '@angular/material/form-field';
 import {InterestCalculatorService} from "../services/interest-calculator.service";
 import {MonthlyInterest} from "../interfaces/monthlyInterest";
 import {LoanFormValues} from "../interfaces/loanFormValues";
 
+import {Subject} from 'rxjs';
+import {FloatLabelType} from '@angular/material/form-field';
+
+
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loan-form.component.html',
   styleUrls: ['./loan-form.component.scss'],
 })
+
 export class LoanFormComponent {
 
   loanForm: FormGroup;
@@ -23,14 +30,28 @@ export class LoanFormComponent {
   monthlyInterest$?: Observable<MonthlyInterest>
 
   constructor(private fb: FormBuilder, private interestService: InterestCalculatorService) {
+
     this.loanForm = this.fb.group({
-      totalAmount: ['', [Validators.required, Validators.min(10000), Validators.pattern("^[0-9]*$")]],
-      downPayment: ['', [Validators.required]],
+      totalAmount: [
+        '',
+        [
+          Validators.required,
+          Validators.min(10000),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
+      downPayment: ['', [ Validators.required]],
       termYears: [
         '',
-        [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern("^[0-9]*$")],
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(30),
+          Validators.pattern('^[0-9]*$'),
+        ],
       ],
     });
+
 
     this.loanForm.get('totalAmount')!.valueChanges.subscribe((totalAmount) => {
       const downPaymentControl = this.loanForm.get('downPayment');
@@ -43,12 +64,15 @@ export class LoanFormComponent {
           Validators.required,
           Validators.min(totalAmount * 0.15),
           Validators.max(totalAmount * 0.99),
-          Validators.pattern("^[0-9]*$")
+          Validators.pattern('^[0-9]*$'),
         ]);
       } else {
         downPaymentControl?.reset();
       }
     });
+
+
+
   }
 
 
