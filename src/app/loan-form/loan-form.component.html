@@ -74,7 +74,7 @@
             appearance="fill"
             [floatLabel]="getTermYearsFloatLabelValue()"
           >
-            <mat-label for="termYears">Term Years: </mat-label>
+            <mat-label for="termYears">Term Years:</mat-label>
             <input
               matInput
               type="text"
@@ -121,20 +121,24 @@
         </form>
       </div>
       <div class="calculation-container" *ngIf="savedData">
-      <div  class="calc-text" *ngIf="monthlyInterest$ | async as info">
-      <p>Total Amount: {{savedData.totalAmount}}</p>
-      <p>Down Payment: {{savedData.downPayment}}</p>
-      <p>Term Years: {{savedData.termYears}}</p>
-      <p>Loan Amount: {{info.loanAmount}}</p>
-      <p>Interest Rate: {{info.interestRate}}</p>
-      <p>Interest Paid: {{info.totalInterestAmount}}</p>
-      <p>Monthly Payment: {{info.monthlyPaymentAmount}}</p>
-      <p>Total Amount Paid: {{info.totalPaymentSum}}</p>
+        <div class="calc-text" *ngIf="monthlyInterest$ | async as info">
+          <p>Total Amount: {{ savedData.totalAmount }}</p>
+          <p>Down Payment: {{ savedData.downPayment }}</p>
+          <p>Term Years: {{ savedData.termYears }}</p>
+          <p>Loan Amount: {{ info.loanAmount }}</p>
+          <p>Interest Rate: {{ info.interestRate }}</p>
+          <p>Interest Paid: {{ info.totalInterestAmount }}</p>
+          <p>Monthly Payment: {{ info.monthlyPaymentAmount }}</p>
+          <p>Total Amount Paid: {{ info.totalPaymentSum }}</p>
+        </div>
       </div>
     </div>
+    <div
+      class="calc-text"
+      class="pie-container"
+      *ngIf="monthlyInterest$ | async"
+    >
+      <app-pie-loan [loanInfo]="monthlyInterest$ | async"></app-pie-loan>
     </div>
-    <div class="calc-text" class="pie-container" *ngIf="monthlyInterest$ | async">
-    <app-pie-loan [loanInfo]="monthlyInterest$" ></app-pie-loan>
-      </div>
   </div>
 </div>
