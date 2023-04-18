@@ -13,10 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-import {HttpClientModule} from "@angular/common/http";
 import { PieLoanComponent } from './pie-loan/pie-loan.component';
-=======
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -27,7 +24,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { PreviewComponent } from './application-form/preview/preview.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,12 +31,9 @@ import { PreviewComponent } from './application-form/preview/preview.component';
     FooterComponent,
     LandingComponent,
     LoanFormComponent,
-
     PieLoanComponent,
-
     ApplicationFormComponent,
     PreviewComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -51,9 +44,7 @@ import { PreviewComponent } from './application-form/preview/preview.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-
-    HttpClientModule
-
+    HttpClientModule,
     MatExpansionModule,
     MatSelectModule,
     MatStepperModule,
@@ -61,7 +52,6 @@ import { PreviewComponent } from './application-form/preview/preview.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent],
