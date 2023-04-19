@@ -1,23 +1,34 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup, ValidationErrors, ValidatorFn,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import {Subject} from 'rxjs';
-import {FloatLabelType} from '@angular/material/form-field';
+
+import { Observable, Subject } from 'rxjs';
+import { FloatLabelType } from '@angular/material/form-field';
+import { InterestCalculatorService } from '../services/interest-calculator.service';
+import { MonthlyInterest } from '../interfaces/monthlyInterest';
+import { LoanFormValues } from '../interfaces/loanFormValues';
 
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loan-form.component.html',
   styleUrls: ['./loan-form.component.scss'],
 })
-export class LoanFormComponent  {
+export class LoanFormComponent {
   loanForm: FormGroup;
+  savedData?: LoanFormValues;
+  monthlyInterest$?: Observable<MonthlyInterest>;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private interestService: InterestCalculatorService
+  ) {
     this.loanForm = this.fb.group({
       totalAmount: [
         '',
@@ -27,7 +38,7 @@ export class LoanFormComponent  {
           Validators.pattern('^[0-9]*$'),
         ],
       ],
-      downPayment: ['', [ Validators.required]],
+      downPayment: ['', [Validators.required]],
       termYears: [
         '',
         [
@@ -39,10 +50,9 @@ export class LoanFormComponent  {
       ],
     });
 
-
     this.loanForm.get('totalAmount')!.valueChanges.subscribe((totalAmount) => {
       const downPaymentControl = this.loanForm.get('downPayment');
-      if (totalAmount >= 1000) {
+      if (totalAmount >= 10000) {
         if (!downPaymentControl?.value || downPaymentControl?.pristine) {
           const downPayment = totalAmount * 0.15;
           downPaymentControl?.setValue(downPayment);
@@ -57,8 +67,6 @@ export class LoanFormComponent  {
         downPaymentControl?.reset();
       }
     });
-
-
   }
 
   get totalAmount() {
@@ -78,7 +86,7 @@ export class LoanFormComponent  {
   }
 
   getDownPaymentFloatLabelValue(): FloatLabelType {
-    return this.loanForm.get('totalAmount')!.value || 'auto';
+    return this.loanForm.get('downPayment')!.value || 'auto';
   }
 
   getTermYearsFloatLabelValue(): FloatLabelType {
@@ -87,8 +95,10 @@ export class LoanFormComponent  {
 
   onLoanFormSubmit() {
     if (this.loanForm.valid) {
-      console.log(this.loanForm.value);
-      this.loanForm.reset();
+      this.savedData = this.loanForm.value;
+      this.monthlyInterest$ = this.interestService.getMonthlyInterest(
+        this.loanForm.value
+      );
     }
   }
 

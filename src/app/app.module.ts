@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { PieLoanComponent } from './pie-loan/pie-loan.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -20,7 +21,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
-
 import { PreviewComponent } from './application-form/preview/preview.component';
 
 @NgModule({
@@ -30,6 +30,7 @@ import { PreviewComponent } from './application-form/preview/preview.component';
     FooterComponent,
     LandingComponent,
     LoanFormComponent,
+    PieLoanComponent,
     ApplicationFormComponent,
     PreviewComponent,
   ],
@@ -42,6 +43,7 @@ import { PreviewComponent } from './application-form/preview/preview.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    HttpClientModule,
     MatExpansionModule,
     MatSelectModule,
     MatStepperModule,
