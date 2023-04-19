@@ -1,3 +1,71 @@
 .preview_container {
-  padding: 20px;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 20px;
+  background-color: rgb(164, 209, 233, 0.1);
+}
+
+.preview_section {
+  font-size: 20px;
+  padding: 16px;
+  background-color: rgb(162, 215, 41, 0.1);
+  border-radius: 12px;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  span {
+    color: rgb(95, 91, 91);
+  }
+}
+
+.preview_header {
+  font-size: 24px;
+  color: var(--dark-green);
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 12px;
+}
+
+.preview_btn_box {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 700px) {
+  .preview_container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .preview_container {
+    padding: 16px;
+  }
+  .preview_header {
+    font-size: 20px;
+  }
+  .preview_section {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .preview_container {
+    padding: 16px;
+  }
+  .preview_header {
+    font-size: 18px;
+    padding-bottom: 4px;
+  }
+  .preview_section {
+    font-size: 15px;
+  }
 }

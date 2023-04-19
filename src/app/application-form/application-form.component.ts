@@ -39,8 +39,8 @@ export class ApplicationFormComponent implements OnInit {
   filteredCountries!: Observable<Country[]>;
   startDate = new Date(1980, 0, 1);
   maxDate: Date;
-  percentage!: number;
-  isPreviewed: boolean = false;
+  //percentage!: number;
+  isPreviewed: boolean = true;
   matcher = new CrossFieldErrorMatcher();
 
   constructor(
@@ -85,6 +85,7 @@ export class ApplicationFormComponent implements OnInit {
             ],
           ],
           downPayment: ['', Validators.required],
+          percentage: [''],
           loanTerm: [
             '',
             [
@@ -115,8 +116,10 @@ export class ApplicationFormComponent implements OnInit {
     });
 
     this.maxDate = new Date();
-    this.setDownPayment();
+    this.setDownPaymentOnTotalAmountChange();
+    this.setDownPaymentOnPercentageChange();
     this.setPercentage();
+    //this.onPreview();
   }
 
   ngOnInit() {
@@ -161,6 +164,7 @@ export class ApplicationFormComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(PreviewComponent, {
       data: this.formData,
+      panelClass: 'preview_container',
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
@@ -219,6 +223,12 @@ export class ApplicationFormComponent implements OnInit {
     return this.applicationForm
       .get('loanForm')!
       .get('downPayment') as FormControl<number>;
+  }
+
+  get percentage() {
+    return this.applicationForm
+      .get('loanForm')!
+      .get('percentage') as FormControl<number>;
   }
 
   get loanTerm() {
@@ -327,29 +337,46 @@ export class ApplicationFormComponent implements OnInit {
     return this.applicationForm.get('financialInformation')!.value || 'auto';
   }
 
-  setDownPayment(): void {
+  setDownPaymentOnTotalAmountChange(): void {
+    const downPaymentControl = this.downPayment;
+    const totalAmountControl = this.totalAmount;
     this.totalAmount.valueChanges.subscribe((totalAmount) => {
-      const downPaymentControl = this.downPayment;
       if (totalAmount >= 1000) {
-        const downPayment = totalAmount * 0.15;
-        downPaymentControl?.setValue(Math.round(downPayment));
+        if (!downPaymentControl?.value || downPaymentControl?.pristine) {
+          const downPayment = totalAmount * 0.15;
+          downPaymentControl?.setValue(downPayment);
+        }
       } else {
         downPaymentControl?.reset();
       }
     });
   }
 
+  setDownPaymentOnPercentageChange(): void {
+    const downPaymentControl = this.downPayment;
+    const totalAmountControl = this.totalAmount;
+    this.percentage.valueChanges.subscribe((percentage) => {
+      if (percentage >= 0) {
+        const downPayment = totalAmountControl.value * (percentage / 100);
+        downPaymentControl?.setValue(Math.round(downPayment), {
+          emitEvent: false,
+        });
+      }
+    });
+  }
+
   setPercentage(): void {
     this.downPayment.valueChanges.subscribe((downPayment) => {
+      const percentageControl = this.percentage;
       const downPaymentControl = this.downPayment;
-      const totalAmount = this.totalAmount;
-      if (downPaymentControl && totalAmount?.value > 0) {
-        this.percentage = Math.round(
-          (downPaymentControl.value * 100) / totalAmount?.value
+      const totalAmountControl = this.totalAmount;
+      if (totalAmountControl?.value >= 0) {
+        percentageControl.setValue(
+          Math.round(
+            (downPaymentControl.value * 100) / totalAmountControl?.value
+          ),
+          { emitEvent: false }
         );
-      }
-      if (this.percentage >= 15) {
-        downPaymentControl?.markAllAsTouched();
       }
     });
   }

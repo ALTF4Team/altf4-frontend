@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+//@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "./theme";
 
 html,
 body {
@@ -21,6 +22,12 @@ body * {
   --main-white: #ffffff;
   --light-blue: #75a3ce;
   --dark-blue: #196ab4;
+
+  --navy-blue: #0f1923;
+  --light-blue: #a4d1e9;
+  --teal: #00aeb3;
+  --bright-green: #a2d729;
+  --dark-green: #30692c;
 }
 
 .container {

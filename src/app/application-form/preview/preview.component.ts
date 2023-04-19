@@ -8,5 +8,18 @@ import { ApplicationFormValues } from '../application-form-values';
   styleUrls: ['./preview.component.scss'],
 })
 export class PreviewComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues) {}
+  dob: string;
+  partner: string;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues) {
+    data.financialInformation.sourceOfIncome?.toUpperCase;
+    this.dob = data.customerInformation.dateOfBirth.toLocaleDateString('lt-LT');
+    if (data.financialInformation.coBorrower === 'true') {
+      this.partner = 'Yes';
+    } else {
+      this.partner = 'No';
+    }
+  }
+
+  onSubmit() {}
 }

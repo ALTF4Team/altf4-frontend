@@ -1,576 +1,572 @@
-<div class="container">
-  <div class="img_box">
-    <img class="bg_img" src="assets/img/landing_img_figma.jpeg" alt="img" />
-    <div class="form-container">
-      <form
-        class="application_form"
-        [formGroup]="applicationForm"
-        (ngSubmit)="onApplicationFormSubmit()"
-        (reset)="onApplicationFormReset()"
-      >
-        <h1>Please fill this application form</h1>
-        <mat-stepper orientation="vertical" linear #stepper>
-          <mat-step [stepControl]="customerInformation">
-            <div formGroupName="customerInformation" class="form-section">
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getPersonalInformationFloatLabelValue()"
+<div class="container container-application-form">
+  <div class="form-container green-theme">
+    <form
+      class="application_form"
+      [formGroup]="applicationForm"
+      (ngSubmit)="onApplicationFormSubmit()"
+      (reset)="onApplicationFormReset()"
+    >
+      <h1>Please fill this application form</h1>
+      <mat-stepper orientation="vertical" linear #stepper class="green-theme">
+        <mat-step [stepControl]="customerInformation">
+          <div formGroupName="customerInformation" class="form-section">
+            <mat-form-field
+              [floatLabel]="getPersonalInformationFloatLabelValue()"
+            >
+              <mat-label for="name">Name</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="name"
+                id="name"
+                placeholder="Name"
+              />
+              <mat-error *ngIf="name.errors && name.touched">
+                <div *ngIf="name.errors['required']" class="error-div">
+                  Name is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getPersonalInformationFloatLabelValue()"
+            >
+              <mat-label for="surname">Surname</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="surname"
+                id="surname"
+                placeholder="Surname"
+              />
+              <mat-error *ngIf="surname.errors && surname.touched">
+                <div *ngIf="surname.errors['required']">
+                  Surname is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getPersonalInformationFloatLabelValue()"
+            >
+              <mat-label for="countryOfCitizenship"
+                >Country of citizenship</mat-label
               >
-                <mat-label for="name">Name</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  formControlName="name"
-                  id="name"
-                  placeholder="Name"
-                />
-                <mat-error *ngIf="name.errors && name.touched">
-                  <div *ngIf="name.errors['required']">Name is required</div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getPersonalInformationFloatLabelValue()"
-              >
-                <mat-label for="surname">Surname</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  formControlName="surname"
-                  id="surname"
-                  placeholder="Surname"
-                />
-                <mat-error *ngIf="surname.errors && surname.touched">
-                  <div *ngIf="surname.errors['required']">
-                    Surname is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getPersonalInformationFloatLabelValue()"
-              >
-                <mat-label for="countryOfCitizenship"
-                  >Country of citizenship</mat-label
+              <input
+                type="text"
+                matInput
+                [formControl]="countryOfCitizenship"
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCountries | async"
+                  [value]="option.name.common"
                 >
-                <input
-                  type="text"
-                  matInput
-                  [formControl]="countryOfCitizenship"
-                  [matAutocomplete]="auto"
-                />
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option
-                    *ngFor="let option of filteredCountries | async"
-                    [value]="option.name.common"
-                  >
-                    {{ option.name.common }}
-                  </mat-option>
-                </mat-autocomplete>
-                <mat-error
-                  *ngIf="
-                    countryOfCitizenship.errors && countryOfCitizenship.touched
-                  "
-                >
-                  <div *ngIf="countryOfCitizenship.errors['required']">
-                    Country of citizenship is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getPersonalInformationFloatLabelValue()"
-                class="date_picker"
+                  {{ option.name.common }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="
+                  countryOfCitizenship.errors && countryOfCitizenship.touched
+                "
               >
-                <mat-label for="dateOfBirth">Date of birth</mat-label>
-                <input
-                  matInput
-                  [max]="maxDate"
-                  [matDatepicker]="picker"
-                  formControlName="dateOfBirth"
-                />
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
-                <mat-error *ngIf="dateOfBirth.errors && dateOfBirth.touched">
-                  <div *ngIf="dateOfBirth.errors['required']">
-                    Date of birth is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
+                <div *ngIf="countryOfCitizenship.errors['required']">
+                  Country of citizenship is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getPersonalInformationFloatLabelValue()"
+              class="date_picker"
+            >
+              <mat-label for="dateOfBirth">Date of birth</mat-label>
+              <input
+                matInput
+                [max]="maxDate"
+                [matDatepicker]="picker"
+                formControlName="dateOfBirth"
+              />
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+              <mat-error *ngIf="dateOfBirth.errors && dateOfBirth.touched">
+                <div *ngIf="dateOfBirth.errors['required']">
+                  Date of birth is required
+                </div>
+              </mat-error>
+            </mat-form-field>
 
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getPersonalInformationFloatLabelValue()"
-              >
-                <mat-label for="">Mobile number</mat-label>
-                <input
-                  matInput
-                  type="string"
-                  formControlName="mobileNumber"
-                  id="mobileNumber"
-                  placeholder="+370"
-                />
-                <mat-error *ngIf="mobileNumber.errors && mobileNumber.touched">
-                  <div *ngIf="mobileNumber.errors['required']">
-                    Mobile number is required
-                  </div>
-                  <div *ngIf="mobileNumber.errors['pattern']">
-                    Wrong mobile number format
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getPersonalInformationFloatLabelValue()"
-              >
-                <mat-label for="">E-mail</mat-label>
-                <input
-                  matInput
-                  type="email"
-                  formControlName="email"
-                  id="email"
-                  ngModel
-                  email
-                  placeholder="E-mail"
-                />
-                <mat-error *ngIf="email.errors && email.touched">
-                  <div *ngIf="email.errors['required']">E-mail is required</div>
-                  <div *ngIf="email.errors['email']">
-                    Email must be a valid email address
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getPersonalInformationFloatLabelValue()"
+            >
+              <mat-label for="">Mobile number</mat-label>
+              <input
+                matInput
+                type="string"
+                formControlName="mobileNumber"
+                id="mobileNumber"
+                placeholder="+370"
+              />
+              <mat-error *ngIf="mobileNumber.errors && mobileNumber.touched">
+                <div *ngIf="mobileNumber.errors['required']">
+                  Mobile number is required
+                </div>
+                <div *ngIf="mobileNumber.errors['pattern']">
+                  Wrong mobile number format
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getPersonalInformationFloatLabelValue()"
+            >
+              <mat-label for="">E-mail</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                id="email"
+                ngModel
+                email
+                placeholder="E-mail"
+              />
+              <mat-error *ngIf="email.errors && email.touched">
+                <div *ngIf="email.errors['required']">E-mail is required</div>
+                <div *ngIf="email.errors['email']">
+                  Email must be a valid email address
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext type="button">Next</button>
             </div>
-          </mat-step>
+          </div>
+        </mat-step>
 
-          <!-- -------------------------------------------------------------------------------------------- -->
-          <mat-step [stepControl]="loanForm">
-            <div [formGroup]="loanForm" class="form-section">
+        <!-- ------------------------------------------------------------------------------------------- -->
+        <mat-step [stepControl]="loanForm">
+          <div [formGroup]="loanForm" class="form-section">
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getLoanFormFloatLabelValue()"
+            >
+              <mat-label for="loanPurpose">Loan purpose</mat-label>
+              <mat-select
+                formControlName="loanPurpose"
+                id="loanPurpose"
+                required
+              >
+                <mat-option value="Mortgage">Mortgage</mat-option>
+              </mat-select>
+              <mat-error *ngIf="loanPurpose.errors && loanPurpose.touched">
+                <div *ngIf="loanPurpose.errors['required']">
+                  Loan purpose is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getLoanFormFloatLabelValue()"
+            >
+              <mat-label for="totalAmount">Total amount</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="totalAmount"
+                id="totalAmount"
+                placeholder="Total amount"
+              />
+              <mat-error *ngIf="totalAmount.errors && totalAmount.touched">
+                <div *ngIf="totalAmount.errors['required']">
+                  Total amount is required
+                </div>
+                <div *ngIf="totalAmount.errors['pattern']">
+                  Only numeric values allowed
+                </div>
+                <div *ngIf="totalAmount.errors['min']">
+                  Amount should at least be 10000
+                </div>
+              </mat-error>
+            </mat-form-field>
+
+            <div class="down_payment_field">
               <mat-form-field
                 appearance="fill"
                 [floatLabel]="getLoanFormFloatLabelValue()"
               >
-                <mat-label for="loanPurpose">Loan purpose</mat-label>
-                <mat-select
-                  formControlName="loanPurpose"
-                  id="loanPurpose"
-                  required
-                >
-                  <mat-option value="Mortgage">Mortgage</mat-option>
-                </mat-select>
-                <mat-error *ngIf="loanPurpose.errors && loanPurpose.touched">
-                  <div *ngIf="loanPurpose.errors['required']">
-                    Loan purpose is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getLoanFormFloatLabelValue()"
-              >
-                <mat-label for="totalAmount">Total amount</mat-label>
+                <mat-label for="downPayment">Down payment</mat-label>
                 <input
                   matInput
                   type="number"
-                  formControlName="totalAmount"
-                  id="totalAmount"
-                  placeholder="Total amount"
+                  formControlName="downPayment"
+                  id="downPayment"
+                  placeholder="Down payment"
+                  [errorStateMatcher]="matcher"
                 />
-                <mat-error *ngIf="totalAmount.errors && totalAmount.touched">
-                  <div *ngIf="totalAmount.errors['required']">
-                    Total amount is required
+                <mat-error *ngIf="downPayment.errors && downPayment.touched">
+                  <div *ngIf="downPayment.errors['required']">
+                    Down payment is required
                   </div>
-                  <div *ngIf="totalAmount.errors['pattern']">
+                  <div *ngIf="downPayment.errors['pattern']">
                     Only numeric values allowed
                   </div>
-                  <div *ngIf="totalAmount.errors['min']">
-                    Amount should at least be 10000
-                  </div>
+                </mat-error>
+                <mat-error
+                  *ngIf="loanForm?.errors?.['downPaymentTooSmall'] && downPayment.touched"
+                >
+                  <div>Down payment should be at least 15 %</div>
                 </mat-error>
               </mat-form-field>
-
-              <div class="down_payment_field">
-                <mat-form-field
-                  appearance="fill"
-                  [floatLabel]="getLoanFormFloatLabelValue()"
-                >
-                  <mat-label for="downPayment">Down payment</mat-label>
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="downPayment"
-                    id="downPayment"
-                    placeholder="Down payment"
-                    [errorStateMatcher]="matcher"
-                  />
-                  <mat-error *ngIf="downPayment.errors && downPayment.touched">
-                    <div *ngIf="downPayment.errors['required']">
-                      Down payment is required
-                    </div>
-                    <div *ngIf="downPayment.errors['pattern']">
-                      Only numeric values allowed
-                    </div>
-                  </mat-error>
-                  <mat-error
-                    *ngIf="loanForm?.errors?.['downPaymentTooSmall'] && downPayment.touched"
-                  >
-                    <div>Down payment should be at least 15 %</div>
-                  </mat-error>
-                  {{ "downpayment error:" + downPayment.errors }}
-                  {{'loan form error:' + loanForm?.errors?.['downPaymentTooSmall']}}
-                  {{ "loan form errors:" + loanForm?.errors }}
-                </mat-form-field>
-                <div class="percentage">{{ percentage }} %</div>
-              </div>
-
               <mat-form-field
                 appearance="fill"
                 [floatLabel]="getLoanFormFloatLabelValue()"
               >
-                <mat-label for="loanTerm">Loan term</mat-label>
+                <mat-label for="percentage">%</mat-label>
                 <input
                   matInput
                   type="number"
-                  formControlName="loanTerm"
-                  id="loanTerm"
-                  placeholder="Loan term"
+                  formControlName="percentage"
+                  id="percentage"
+                  placeholder="%"
                 />
-                <mat-error *ngIf="loanTerm.errors && loanTerm.touched">
-                  <div *ngIf="loanTerm.errors['required']">
-                    Loan term is required
-                  </div>
-                  <div *ngIf="loanTerm.errors['pattern']">
-                    Only numeric values allowed
-                  </div>
-                  <div *ngIf="loanTerm.errors['min']">
-                    Loan term should be at least 1 year
-                  </div>
-                  <div *ngIf="loanTerm.errors['max']">
-                    Loan term cannot exceed 30 years
-                  </div>
-                </mat-error>
               </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
             </div>
-          </mat-step>
-          <!-- ------------------------------------------------------------------------------------- -->
-          <mat-step [stepControl]="financialInformation">
-            <div formGroupName="financialInformation" class="form-section">
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-              >
-                <mat-label for="employmentStatus">Employment Status</mat-label>
-                <mat-select
-                  formControlName="employmentStatus"
-                  id="employmentStatus"
-                  required
-                >
-                  <mat-option value="contract">Contract employment</mat-option>
-                  <mat-option value="selfEmployed">Self employed</mat-option>
-                  <mat-option value="unemployed">Unemployed</mat-option>
-                </mat-select>
-                <mat-error
-                  *ngIf="employmentStatus.errors && employmentStatus.touched"
-                >
-                  <div *ngIf="employmentStatus.errors['required']">
-                    Employment status is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
 
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-                *ngIf="employmentStatus.value === 'contract'"
-              >
-                <mat-label for="currentEmployer">Current employer</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  formControlName="currentEmployer"
-                  id="currentEmployer"
-                  placeholder="Current employer"
-                />
-                <mat-error
-                  *ngIf="currentEmployer.errors && currentEmployer.touched"
-                >
-                  <div *ngIf="currentEmployer.errors['required']">
-                    Current employer is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-                *ngIf="employmentStatus.value === 'contract'"
-              >
-                <mat-label for="employmentContractType"
-                  >Contract type</mat-label
-                >
-                <mat-select
-                  formControlName="employmentContractType"
-                  id="employmentContractType"
-                  required
-                >
-                  <mat-option value="open-ended">Open-ended</mat-option>
-                  <mat-option value="fixed-term">Fixed-term</mat-option>
-                </mat-select>
-                <mat-error
-                  *ngIf="
-                    employmentContractType.errors &&
-                    employmentContractType.touched
-                  "
-                >
-                  <div *ngIf="employmentContractType.errors['required']">
-                    Contract type is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-                *ngIf="employmentStatus.value === 'contract'"
-              >
-                <mat-label for="yearsCurrentEmployer"
-                  >Years with current employer</mat-label
-                >
-                <input
-                  matInput
-                  type="number"
-                  formControlName="yearsCurrentEmployer"
-                  id="yearsCurrentEmployer"
-                  placeholder="Years with current employer"
-                />
-                <mat-error
-                  *ngIf="
-                    yearsCurrentEmployer.errors && yearsCurrentEmployer.touched
-                  "
-                >
-                  <div *ngIf="yearsCurrentEmployer.errors['required']">
-                    Years with current employer is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-                *ngIf="employmentStatus.value === 'contract'"
-              >
-                <mat-label for="position">Position</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  formControlName="position"
-                  id="position"
-                  placeholder="Position"
-                />
-                <mat-error *ngIf="position.errors && position.touched">
-                  <div *ngIf="position.errors['required']">
-                    Position is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-                *ngIf="employmentStatus.value === 'contract'"
-              >
-                <mat-label for="industry">Industry</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  formControlName="industry"
-                  id="industry"
-                  placeholder="Industry"
-                />
-                <mat-error *ngIf="industry.errors && industry.touched">
-                  <div *ngIf="industry.errors['required']">
-                    Industry is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-                *ngIf="employmentStatus.value === 'selfEmployed'"
-              >
-                <mat-label for="yearsSelfEmployment"
-                  >Years of self-employment</mat-label
-                >
-                <input
-                  matInput
-                  type="number"
-                  formControlName="yearsSelfEmployment"
-                  id="yearsSelfEmployment"
-                  placeholder="Years of self-employment"
-                />
-                <mat-error
-                  *ngIf="
-                    yearsSelfEmployment.errors && yearsSelfEmployment.touched
-                  "
-                >
-                  <div *ngIf="yearsSelfEmployment.errors['required']">
-                    Years of self-employment is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-                *ngIf="employmentStatus.value === 'unemployed'"
-              >
-                <mat-label for="sourceOfIncome">Source of income</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  formControlName="sourceOfIncome"
-                  id="sourceOfIncome"
-                  placeholder="Source of income"
-                />
-                <mat-error
-                  *ngIf="sourceOfIncome.errors && sourceOfIncome.touched"
-                >
-                  <div *ngIf="sourceOfIncome.errors['required']">
-                    Source of income is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-              >
-                <mat-label for="education">Education</mat-label>
-                <mat-select formControlName="education" id="education" required>
-                  <mat-option value="primary">Primary</mat-option>
-                  <mat-option value="secondary">Secondary</mat-option>
-                  <mat-option value="vocational">Vocational</mat-option>
-                  <mat-option value="bachelor"
-                    >Bachelor's or equivalent</mat-option
-                  >
-                  <mat-option value="master">Master's or equivalent</mat-option>
-                  <mat-option value="doctoral"
-                    >Doctoral or equivalent</mat-option
-                  >
-                </mat-select>
-                <mat-error *ngIf="education.errors && education.touched">
-                  <div *ngIf="education.errors['required']">
-                    Education is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-              >
-                <mat-label for="maritalStatus">Marital status</mat-label>
-                <mat-select
-                  formControlName="maritalStatus"
-                  id="maritalStatus"
-                  required
-                >
-                  <mat-option value="single">Single</mat-option>
-                  <mat-option value="married">Married</mat-option>
-                  <mat-option value="divorced">Divorced</mat-option>
-                  <mat-option value="widow">Widow</mat-option>
-                </mat-select>
-                <mat-error
-                  *ngIf="maritalStatus.errors && maritalStatus.touched"
-                >
-                  <div *ngIf="maritalStatus.errors['required']">
-                    Marital status is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-              >
-                <mat-label for="underageDependentsCount"
-                  >Number of underage dependents</mat-label
-                >
-                <input
-                  matInput
-                  type="number"
-                  formControlName="underageDependentsCount"
-                  id="underageDependentsCount"
-                  placeholder="Number of underage dependents"
-                />
-                <mat-error
-                  *ngIf="
-                    underageDependentsCount.errors &&
-                    underageDependentsCount.touched
-                  "
-                >
-                  <div *ngIf="underageDependentsCount.errors['required']">
-                    Number of underage dependents is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-              >
-                <mat-label for="underageDependentsCount"
-                  >Monthly income after tax</mat-label
-                >
-                <input
-                  matInput
-                  type="number"
-                  formControlName="monthlyIncome"
-                  id="monthlyIncome"
-                  placeholder="Monthly income after tax"
-                />
-                <mat-error
-                  *ngIf="monthlyIncome.errors && monthlyIncome.touched"
-                >
-                  <div *ngIf="monthlyIncome.errors['required']">
-                    Monthly income is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                appearance="fill"
-                [floatLabel]="getFinancialInformationFloatLabelValue()"
-              >
-                <mat-label for="coBorrower">Co-borrower?</mat-label>
-                <mat-select
-                  formControlName="coBorrower"
-                  id="coBorrower"
-                  required
-                >
-                  <mat-option value="true">Yes</mat-option>
-                  <mat-option value="false">No</mat-option>
-                </mat-select>
-                <mat-error *ngIf="coBorrower.errors && coBorrower.touched">
-                  <div *ngIf="coBorrower.errors['required']">
-                    Field is required
-                  </div>
-                </mat-error>
-              </mat-form-field>
-
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button (click)="onPreview()" (click)="openDialog()">
-                  Preview
-                </button>
-              </div>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getLoanFormFloatLabelValue()"
+            >
+              <mat-label for="loanTerm">Loan term</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="loanTerm"
+                id="loanTerm"
+                placeholder="Loan term"
+              />
+              <mat-error *ngIf="loanTerm.errors && loanTerm.touched">
+                <div *ngIf="loanTerm.errors['required']">
+                  Loan term is required
+                </div>
+                <div *ngIf="loanTerm.errors['pattern']">
+                  Only numeric values allowed
+                </div>
+                <div *ngIf="loanTerm.errors['min']">
+                  Loan term should be at least 1 year
+                </div>
+                <div *ngIf="loanTerm.errors['max']">
+                  Loan term cannot exceed 30 years
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext type="button">Next</button>
             </div>
-          </mat-step>
-        </mat-stepper>
-      </form>
-    </div>
+          </div>
+        </mat-step>
+
+        <!-- ------------------------------------------------------------------------------------------- -->
+        <mat-step [stepControl]="financialInformation">
+          <div formGroupName="financialInformation" class="form-section">
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+            >
+              <mat-label for="employmentStatus">Employment Status</mat-label>
+              <mat-select
+                formControlName="employmentStatus"
+                id="employmentStatus"
+                required
+              >
+                <mat-option value="Contract">Contract employment</mat-option>
+                <mat-option value="Self-employed">Self employed</mat-option>
+                <mat-option value="Unemployed">Unemployed</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="employmentStatus.errors && employmentStatus.touched"
+              >
+                <div *ngIf="employmentStatus.errors['required']">
+                  Employment status is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+              *ngIf="employmentStatus.value === 'Contract'"
+            >
+              <mat-label for="currentEmployer">Current employer</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="currentEmployer"
+                id="currentEmployer"
+                placeholder="Current employer"
+              />
+              <mat-error
+                *ngIf="currentEmployer.errors && currentEmployer.touched"
+              >
+                <div *ngIf="currentEmployer.errors['required']">
+                  Current employer is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+              *ngIf="employmentStatus.value === 'Contract'"
+            >
+              <mat-label for="employmentContractType">Contract type</mat-label>
+              <mat-select
+                formControlName="employmentContractType"
+                id="employmentContractType"
+                required
+              >
+                <mat-option value="Open-ended">Open-ended</mat-option>
+                <mat-option value="Fixed-term">Fixed-term</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  employmentContractType.errors &&
+                  employmentContractType.touched
+                "
+              >
+                <div *ngIf="employmentContractType.errors['required']">
+                  Contract type is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+              *ngIf="employmentStatus.value === 'Contract'"
+            >
+              <mat-label for="yearsCurrentEmployer"
+                >Years with current employer</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                formControlName="yearsCurrentEmployer"
+                id="yearsCurrentEmployer"
+                placeholder="Years with current employer"
+              />
+              <mat-error
+                *ngIf="
+                  yearsCurrentEmployer.errors && yearsCurrentEmployer.touched
+                "
+              >
+                <div *ngIf="yearsCurrentEmployer.errors['required']">
+                  Years with current employer is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+              *ngIf="employmentStatus.value === 'Contract'"
+            >
+              <mat-label for="position">Position</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="position"
+                id="position"
+                placeholder="Position"
+              />
+              <mat-error *ngIf="position.errors && position.touched">
+                <div *ngIf="position.errors['required']">
+                  Position is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+              *ngIf="employmentStatus.value === 'Contract'"
+            >
+              <mat-label for="industry">Industry</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="industry"
+                id="industry"
+                placeholder="Industry"
+              />
+              <mat-error *ngIf="industry.errors && industry.touched">
+                <div *ngIf="industry.errors['required']">
+                  Industry is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+              *ngIf="employmentStatus.value === 'Self-employed'"
+            >
+              <mat-label for="yearsSelfEmployment"
+                >Years of self-employment</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                formControlName="yearsSelfEmployment"
+                id="yearsSelfEmployment"
+                placeholder="Years of self-employment"
+              />
+              <mat-error
+                *ngIf="
+                  yearsSelfEmployment.errors && yearsSelfEmployment.touched
+                "
+              >
+                <div *ngIf="yearsSelfEmployment.errors['required']">
+                  Years of self-employment is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+              *ngIf="employmentStatus.value === 'Unemployed'"
+            >
+              <mat-label for="sourceOfIncome">Source of income</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="sourceOfIncome"
+                id="sourceOfIncome"
+                placeholder="Source of income"
+              />
+              <mat-error
+                *ngIf="sourceOfIncome.errors && sourceOfIncome.touched"
+              >
+                <div *ngIf="sourceOfIncome.errors['required']">
+                  Source of income is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+            >
+              <mat-label for="education">Education</mat-label>
+              <mat-select formControlName="education" id="education" required>
+                <mat-option value="Primary">Primary</mat-option>
+                <mat-option value="Secondary">Secondary</mat-option>
+                <mat-option value="Vocational">Vocational</mat-option>
+                <mat-option value="Bachelor"
+                  >Bachelor's or equivalent</mat-option
+                >
+                <mat-option value="Master">Master's or equivalent</mat-option>
+                <mat-option value="Doctoral">Doctoral or equivalent</mat-option>
+              </mat-select>
+              <mat-error *ngIf="education.errors && education.touched">
+                <div *ngIf="education.errors['required']">
+                  Education is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+            >
+              <mat-label for="maritalStatus">Marital status</mat-label>
+              <mat-select
+                formControlName="maritalStatus"
+                id="maritalStatus"
+                required
+              >
+                <mat-option value="Single">Single</mat-option>
+                <mat-option value="Married">Married</mat-option>
+                <mat-option value="Divorced">Divorced</mat-option>
+                <mat-option value="Widow">Widow</mat-option>
+              </mat-select>
+              <mat-error *ngIf="maritalStatus.errors && maritalStatus.touched">
+                <div *ngIf="maritalStatus.errors['required']">
+                  Marital status is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+            >
+              <mat-label for="underageDependentsCount"
+                >Number of underage dependents</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                formControlName="underageDependentsCount"
+                id="underageDependentsCount"
+                placeholder="Number of underage dependents"
+              />
+              <mat-error
+                *ngIf="
+                  underageDependentsCount.errors &&
+                  underageDependentsCount.touched
+                "
+              >
+                <div *ngIf="underageDependentsCount.errors['required']">
+                  Number of underage dependents is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+            >
+              <mat-label for="underageDependentsCount"
+                >Monthly income after tax</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                formControlName="monthlyIncome"
+                id="monthlyIncome"
+                placeholder="Monthly income after tax"
+              />
+              <mat-error *ngIf="monthlyIncome.errors && monthlyIncome.touched">
+                <div *ngIf="monthlyIncome.errors['required']">
+                  Monthly income is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getFinancialInformationFloatLabelValue()"
+            >
+              <mat-label for="coBorrower">Co-borrower?</mat-label>
+              <mat-select formControlName="coBorrower" id="coBorrower" required>
+                <mat-option value="true">Yes</mat-option>
+                <mat-option value="false">No</mat-option>
+              </mat-select>
+              <mat-error *ngIf="coBorrower.errors && coBorrower.touched">
+                <div *ngIf="coBorrower.errors['required']">
+                  Field is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+              <button mat-button (click)="onPreview()" (click)="openDialog()">
+                Preview
+              </button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </form>
   </div>
 </div>
