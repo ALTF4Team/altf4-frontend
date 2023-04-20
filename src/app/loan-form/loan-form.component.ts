@@ -105,4 +105,8 @@ export class LoanFormComponent {
   onLoanFormReset() {
     this.loanForm.reset();
   }
+
+  covertToPercent(interestRate: string) {
+    return parseFloat(interestRate) * 100;
+  }
 }

@@ -1,14 +1,7 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
-import { Observable } from 'rxjs';
+
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MonthlyInterest } from '../interfaces/monthlyInterest';
 import { Chart } from 'chart.js/auto';
-import { color } from 'chart.js/helpers';
 
 @Component({
   selector: 'app-pie-loan',
@@ -18,7 +11,7 @@ import { color } from 'chart.js/helpers';
 export class PieLoanComponent implements OnChanges {
   @Input() loanInfo?: MonthlyInterest | null;
   public chart: any;
-
+  
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['loanInfo'] && changes['loanInfo'].currentValue) {
       this.chart = new Chart('myChart', {
@@ -41,10 +34,29 @@ export class PieLoanComponent implements OnChanges {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  const value = context.formattedValue || context.raw;
+                  if (value) {
+                    label += value + ' EUR';
+                  }
+                  return label;
+                },
+              },
+            },
             legend: {
               position: 'bottom',
               labels: {
                 color: '#ffffff',
+                font: {
+                  size: 16,
+                },
+
               },
             },
             title: {

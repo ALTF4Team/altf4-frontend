@@ -1,6 +1,5 @@
 <div class="container">
   <div class="img_box">
-    <img class="bg_img" src="assets/img/landing_img_figma.jpeg" alt="img" />
     <div class="loan_calculation_page">
       <div class="form-container">
         <form
@@ -120,25 +119,59 @@
           </div>
         </form>
       </div>
+      <div *ngIf="monthlyInterest$">
+        <div class="vl"></div>
+      </div>
       <div class="calculation-container" *ngIf="savedData">
+        <div class="calc-data" *ngIf="monthlyInterest$ | async">
+          <app-pie-loan [loanInfo]="monthlyInterest$ | async"></app-pie-loan>
+        </div>
+
         <div class="calc-text" *ngIf="monthlyInterest$ | async as info">
-          <p>Total Amount: {{ savedData.totalAmount }}</p>
-          <p>Down Payment: {{ savedData.downPayment }}</p>
-          <p>Term Years: {{ savedData.termYears }}</p>
-          <p>Loan Amount: {{ info.loanAmount }}</p>
-          <p>Interest Rate: {{ info.interestRate }}</p>
-          <p>Interest Paid: {{ info.totalInterestAmount }}</p>
-          <p>Monthly Payment: {{ info.monthlyPaymentAmount }}</p>
-          <p>Total Amount Paid: {{ info.totalPaymentSum }}</p>
+          <div class="text-group">
+            <span class="imp-text">Loan Amount: </span>
+
+            <span class="amount">{{ info.loanAmount }} EUR</span>
+          </div>
+          <div class="text-group">
+            <span class="imp-text">Interest Rate: </span>
+
+            <span class="amount"
+              >{{ covertToPercent(info.interestRate) }} %</span
+            >
+          </div>
+          <div class="text-group">
+            <span class="imp-text">Interest Paid: </span>
+
+            <span class="amount">{{ info.totalInterestAmount }} EUR</span>
+          </div>
+          <div class="text-group">
+            <span class="imp-text">Monthly Payment:</span>
+
+            <span class="amount">{{ info.monthlyPaymentAmount }} EUR</span>
+          </div>
+          <div class="text-group">
+            <span class="imp-text">Total Amount Paid:</span>
+
+            <span class="amount">{{ info.totalPaymentSum }} EUR</span>
+          </div>
+          <div class="text-group">
+            <span class="imp-text">Total Amount:</span>
+
+            <span class="amount">{{ savedData.totalAmount }} EUR</span>
+          </div>
+          <div class="text-group">
+            <span class="imp-text">Down Payment:</span>
+
+            <span class="amount">{{ savedData.downPayment }} EUR</span>
+          </div>
+          <div class="text-group">
+            <span class="imp-text">Term Years:</span>
+
+            <span class="amount">{{ savedData.termYears }} years</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="calc-text"
-      class="pie-container"
-      *ngIf="monthlyInterest$ | async"
-    >
-      <app-pie-loan [loanInfo]="monthlyInterest$ | async"></app-pie-loan>
     </div>
   </div>
 </div>
