@@ -8,7 +8,10 @@
         <span> Country of citizenship:</span>
         {{ data.customerInformation.countryOfCitizenship }}
       </li>
-      <li><span>Date of Birth:</span> {{ dob }}</li>
+      <li>
+        <span>Date of Birth:</span>
+        {{ data.customerInformation.dateOfBirth | date : "longDate" }}
+      </li>
       <li>
         <span>Mobile number:</span> {{ data.customerInformation.mobileNumber }}
       </li>

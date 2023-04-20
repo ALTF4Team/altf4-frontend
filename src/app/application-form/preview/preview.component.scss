@@ -27,6 +27,7 @@ ul {
 .preview_header {
   font-size: 24px;
   color: var(--dark-green);
+  padding-bottom: 8px;
 }
 
 ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
@@ -63,7 +64,7 @@ ul {
   }
   .preview_header {
     font-size: 18px;
-    padding-bottom: 4px;
+    padding-bottom: 5px;
   }
   .preview_section {
     font-size: 15px;

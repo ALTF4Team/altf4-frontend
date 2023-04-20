@@ -13,7 +13,6 @@ export class ValidationService {
     const totalAmount = control.get('totalAmount');
     const downPayment = control.get('downPayment');
     const percentage = control.get('percentage');
-    console.log('validation working');
     return totalAmount &&
       downPayment &&
       percentage &&
