@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MonthlyInterest } from '../interfaces/monthlyInterest';
 import { Chart } from 'chart.js/auto';
 
@@ -8,19 +7,21 @@ import { Chart } from 'chart.js/auto';
   templateUrl: './pie-loan.component.html',
   styleUrls: ['./pie-loan.component.scss'],
 })
-export class PieLoanComponent implements OnInit {
-  @Input() loanInfo?: Observable<MonthlyInterest>;
+export class PieLoanComponent implements OnChanges {
+  @Input() loanInfo?: MonthlyInterest | null;
   public chart: any;
-
-  ngOnInit(): void {
-    this.loanInfo?.subscribe((loan) => {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['loanInfo'] && changes['loanInfo'].currentValue) {
       this.chart = new Chart('myChart', {
         type: 'pie',
         data: {
           labels: ['Loan Amount', 'Total Interest Paid'],
           datasets: [
             {
-              data: [loan.loanAmount, loan.totalInterestAmount],
+              data: [
+                changes['loanInfo'].currentValue.loanAmount,
+                changes['loanInfo'].currentValue.totalInterestAmount,
+              ],
               backgroundColor: ['#0883ff', '#f3067c'],
               borderWidth: 1,
               borderColor: '#fff', // Change border color to white
@@ -34,7 +35,15 @@ export class PieLoanComponent implements OnInit {
             tooltip: {
               callbacks: {
                 label: function (context) {
-                  return context.dataset.label || '';
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  const value = context.formattedValue || context.raw;
+                  if (value) {
+                    label += value + ' EUR';
+                  }
+                  return label;
                 },
               },
             },
@@ -42,6 +51,9 @@ export class PieLoanComponent implements OnInit {
               position: 'bottom',
               labels: {
                 color: '#ffffff',
+                font: {
+                  size: 16,
+                },
               },
             },
             title: {
@@ -52,6 +64,6 @@ export class PieLoanComponent implements OnInit {
           },
         },
       });
-    });
+    }
   }
 }
