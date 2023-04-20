@@ -39,8 +39,7 @@ export class ApplicationFormComponent implements OnInit {
   filteredCountries!: Observable<Country[]>;
   startDate = new Date(1980, 0, 1);
   maxDate: Date;
-  percentage!: number;
-  isPreviewed: boolean = false;
+  isPreviewed: boolean = true;
   matcher = new CrossFieldErrorMatcher();
 
   constructor(
@@ -85,6 +84,7 @@ export class ApplicationFormComponent implements OnInit {
             ],
           ],
           downPayment: ['', Validators.required],
+          percentage: [''],
           loanTerm: [
             '',
             [
@@ -115,7 +115,8 @@ export class ApplicationFormComponent implements OnInit {
     });
 
     this.maxDate = new Date();
-    this.setDownPayment();
+    this.setDownPaymentOnTotalAmountChange();
+    this.setDownPaymentOnPercentageChange();
     this.setPercentage();
   }
 
@@ -161,6 +162,7 @@ export class ApplicationFormComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(PreviewComponent, {
       data: this.formData,
+      panelClass: 'preview_container',
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
@@ -171,138 +173,6 @@ export class ApplicationFormComponent implements OnInit {
     return this.applicationForm
       .get('customerInformation')!
       .get('name') as FormControl<string>;
-  }
-
-  get surname() {
-    return this.applicationForm
-      .get('customerInformation')!
-      .get('surname') as FormControl<string>;
-  }
-
-  get countryOfCitizenship() {
-    return this.applicationForm
-      .get('customerInformation')!
-      .get('countryOfCitizenship') as FormControl<string>;
-  }
-
-  get dateOfBirth() {
-    return this.applicationForm
-      .get('customerInformation')!
-      .get('dateOfBirth') as FormControl<string | Date>;
-  }
-
-  get mobileNumber() {
-    return this.applicationForm
-      .get('customerInformation')!
-      .get('mobileNumber') as FormControl<string>;
-  }
-
-  get email() {
-    return this.applicationForm
-      .get('customerInformation')!
-      .get('email') as FormControl<string>;
-  }
-
-  get loanPurpose() {
-    return this.applicationForm
-      .get('loanForm')!
-      .get('loanPurpose') as FormControl<string>;
-  }
-
-  get totalAmount() {
-    return this.applicationForm
-      .get('loanForm')!
-      .get('totalAmount') as FormControl<number>;
-  }
-
-  get downPayment() {
-    return this.applicationForm
-      .get('loanForm')!
-      .get('downPayment') as FormControl<number>;
-  }
-
-  get loanTerm() {
-    return this.applicationForm
-      .get('loanForm')!
-      .get('loanTerm') as FormControl<number>;
-  }
-
-  get employmentStatus() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('employmentStatus') as FormControl<string>;
-  }
-
-  get sourceOfIncome() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('sourceOfIncome') as FormControl<string | null>;
-  }
-
-  get yearsSelfEmployment() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('yearsSelfEmployment') as FormControl<number | null>;
-  }
-
-  get currentEmployer() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('currentEmployer') as FormControl<string | null>;
-  }
-
-  get employmentContractType() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('employmentContractType') as FormControl<string | null>;
-  }
-
-  get yearsCurrentEmployer() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('yearsCurrentEmployer') as FormControl<string | null>;
-  }
-
-  get position() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('position') as FormControl<string | null>;
-  }
-
-  get industry() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('industry') as FormControl<string | null>;
-  }
-
-  get education() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('industry') as FormControl<string>;
-  }
-
-  get maritalStatus() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('maritalStatus') as FormControl<string>;
-  }
-
-  get underageDependentsCount() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('underageDependentsCount') as FormControl<string>;
-  }
-
-  get monthlyIncome() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('monthlyIncome') as FormControl<string>;
-  }
-
-  get coBorrower() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('monthlyIncome') as FormControl<string>;
   }
 
   get customerInformation() {
@@ -317,6 +187,126 @@ export class ApplicationFormComponent implements OnInit {
     return this.applicationForm.get('financialInformation') as FormControl<any>;
   }
 
+  get surname() {
+    return this.customerInformation.get('surname') as FormControl<string>;
+  }
+
+  get countryOfCitizenship() {
+    return this.customerInformation.get(
+      'countryOfCitizenship'
+    ) as FormControl<string>;
+  }
+
+  get dateOfBirth() {
+    return this.customerInformation.get('dateOfBirth') as FormControl<
+      string | Date
+    >;
+  }
+
+  get mobileNumber() {
+    return this.customerInformation.get('mobileNumber') as FormControl<string>;
+  }
+
+  get email() {
+    return this.customerInformation.get('email') as FormControl<string>;
+  }
+
+  get loanPurpose() {
+    return this.loanForm.get('loanPurpose') as FormControl<string>;
+  }
+
+  get totalAmount() {
+    return this.loanForm.get('totalAmount') as FormControl<number>;
+  }
+
+  get downPayment() {
+    return this.loanForm.get('downPayment') as FormControl<number>;
+  }
+
+  get percentage() {
+    return this.loanForm.get('percentage') as FormControl<number>;
+  }
+
+  get loanTerm() {
+    return this.loanForm.get('loanTerm') as FormControl<number>;
+  }
+
+  get employmentStatus() {
+    return this.financialInformation.get(
+      'employmentStatus'
+    ) as FormControl<string>;
+  }
+
+  get sourceOfIncome() {
+    return this.financialInformation.get('sourceOfIncome') as FormControl<
+      string | null
+    >;
+  }
+
+  get yearsSelfEmployment() {
+    return this.financialInformation.get('yearsSelfEmployment') as FormControl<
+      number | null
+    >;
+  }
+
+  get currentEmployer() {
+    return this.financialInformation.get('currentEmployer') as FormControl<
+      string | null
+    >;
+  }
+
+  get employmentContractType() {
+    return this.financialInformation.get(
+      'employmentContractType'
+    ) as FormControl<string | null>;
+  }
+
+  get yearsCurrentEmployer() {
+    return this.financialInformation.get('yearsCurrentEmployer') as FormControl<
+      string | null
+    >;
+  }
+
+  get position() {
+    return this.financialInformation.get('position') as FormControl<
+      string | null
+    >;
+  }
+
+  get industry() {
+    return this.financialInformation.get('industry') as FormControl<
+      string | null
+    >;
+  }
+
+  get education() {
+    return this.financialInformation.get('industry') as FormControl<string>;
+  }
+
+  get maritalStatus() {
+    return this.applicationForm
+      .get('financialInformation')!
+      .get('maritalStatus') as FormControl<string>;
+  }
+
+  get underageDependentsCount() {
+    return this.financialInformation.get(
+      'underageDependentsCount'
+    ) as FormControl<string>;
+  }
+
+  get monthlyIncome() {
+    return this.financialInformation.get(
+      'monthlyIncome'
+    ) as FormControl<string>;
+  }
+
+  get coBorrower() {
+    return this.financialInformation.get(
+      'monthlyIncome'
+    ) as FormControl<string>;
+  }
+
   getPersonalInformationFloatLabelValue(): FloatLabelType {
     return this.applicationForm.get('customerInformation')!.value || 'auto';
   }
@@ -327,29 +317,45 @@ export class ApplicationFormComponent implements OnInit {
     return this.applicationForm.get('financialInformation')!.value || 'auto';
   }
 
-  setDownPayment(): void {
+  setDownPaymentOnTotalAmountChange(): void {
+    const downPaymentControl = this.downPayment;
     this.totalAmount.valueChanges.subscribe((totalAmount) => {
-      const downPaymentControl = this.downPayment;
       if (totalAmount >= 1000) {
-        const downPayment = totalAmount * 0.15;
-        downPaymentControl?.setValue(Math.round(downPayment));
+        if (!downPaymentControl?.value || downPaymentControl?.pristine) {
+          const downPayment = totalAmount * 0.15;
+          downPaymentControl?.setValue(downPayment);
+        }
       } else {
         downPaymentControl?.reset();
       }
     });
   }
 
+  setDownPaymentOnPercentageChange(): void {
+    const downPaymentControl = this.downPayment;
+    const totalAmountControl = this.totalAmount;
+    this.percentage.valueChanges.subscribe((percentage) => {
+      if (percentage >= 0) {
+        const downPayment = totalAmountControl.value * (percentage / 100);
+        downPaymentControl?.setValue(Math.round(downPayment), {
+          emitEvent: false,
+        });
+      }
+    });
+  }
+
   setPercentage(): void {
     this.downPayment.valueChanges.subscribe((downPayment) => {
+      const percentageControl = this.percentage;
       const downPaymentControl = this.downPayment;
-      const totalAmount = this.totalAmount;
-      if (downPaymentControl && totalAmount?.value > 0) {
-        this.percentage = Math.round(
-          (downPaymentControl.value * 100) / totalAmount?.value
+      const totalAmountControl = this.totalAmount;
+      if (totalAmountControl?.value >= 0) {
+        percentageControl.setValue(
+          Math.round(
+            (downPaymentControl.value * 100) / totalAmountControl?.value
+          ),
+          { emitEvent: false }
         );
-      }
-      if (this.percentage >= 15) {
-        downPaymentControl?.markAllAsTouched();
       }
     });
   }

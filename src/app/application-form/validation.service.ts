@@ -12,10 +12,12 @@ export class ValidationService {
   ): ValidationErrors | null => {
     const totalAmount = control.get('totalAmount');
     const downPayment = control.get('downPayment');
-    console.log('validation working');
+    const percentage = control.get('percentage');
     return totalAmount &&
       downPayment &&
-      downPayment.value < totalAmount.value * 0.15
+      percentage &&
+      downPayment.value < totalAmount.value * 0.15 &&
+      percentage.value < 15
       ? { downPaymentTooSmall: true }
       : null;
   };

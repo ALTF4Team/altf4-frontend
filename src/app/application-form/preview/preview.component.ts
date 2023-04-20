@@ -8,5 +8,12 @@ import { ApplicationFormValues } from '../application-form-values';
   styleUrls: ['./preview.component.scss'],
 })
 export class PreviewComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues) {}
+  partner: string;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues) {
+    this.partner =
+      data.financialInformation.coBorrower === 'true' ? 'Yes' : 'No';
+  }
+
+  onSubmit() {}
 }
