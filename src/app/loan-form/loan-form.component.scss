@@ -11,6 +11,7 @@
 }
 
 .form-container {
+
   padding: 30px 30px 50px;
   display: flex;
   column-gap: 20px;
@@ -22,9 +23,12 @@
   height: 100%;
 }
 
+
 .loan_form {
+
   display: flex;
   justify-content: center;
+
   flex-direction: column;
   gap: 12px;
   h1 {
@@ -36,6 +40,7 @@
 }
 
 .calculation-container {
+
   padding: 30px 30px 50px;
   display: flex;
   flex-direction: column;
@@ -56,6 +61,7 @@
   font-weight: 400;
 }
 
+
 @media (min-width: 900px) {
   .loan_calculation_page {
     flex-direction: row;
@@ -64,6 +70,7 @@
   .vl {
     border-left: 1px solid var(--black);
     height: 500px;
+
   }
 }
 
@@ -95,6 +102,7 @@ mat-error {
   justify-content: space-between;
 }
 
+
 .imp-text {
   order: 1;
   font-size: 18px;
@@ -105,3 +113,4 @@ mat-error {
   font-size: 16px;
   order: 2;
 }
+

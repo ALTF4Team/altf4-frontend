@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
+
 import { Observable, Subject } from 'rxjs';
 import { FloatLabelType } from '@angular/material/form-field';
 import { InterestCalculatorService } from '../services/interest-calculator.service';

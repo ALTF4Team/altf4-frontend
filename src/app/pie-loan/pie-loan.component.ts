@@ -1,3 +1,4 @@
+
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MonthlyInterest } from '../interfaces/monthlyInterest';
 import { Chart } from 'chart.js/auto';
@@ -10,6 +11,7 @@ import { Chart } from 'chart.js/auto';
 export class PieLoanComponent implements OnChanges {
   @Input() loanInfo?: MonthlyInterest | null;
   public chart: any;
+  
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['loanInfo'] && changes['loanInfo'].currentValue) {
       this.chart = new Chart('myChart', {
@@ -54,6 +56,7 @@ export class PieLoanComponent implements OnChanges {
                 font: {
                   size: 16,
                 },
+
               },
             },
             title: {

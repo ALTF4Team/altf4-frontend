@@ -1,4 +1,4 @@
-#logo-img {
+.logo-img {
   object-fit: cover;
   margin: 1px;
   width: 60px;
@@ -7,7 +7,6 @@
 
 .header-container {
   width: 100%;
-  //max-height: 80px;
   height: 10vh;
   background: var(--dark-blue);
   margin: 0;
@@ -19,7 +18,7 @@
   color: var(--main-white);
 }
 
-#calculate-link {
+.calculate-link {
   font-size: 20px;
   text-decoration: none;
   color: var(--main-white);
