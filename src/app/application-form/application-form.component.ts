@@ -286,9 +286,9 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   get maritalStatus() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('maritalStatus') as FormControl<string>;
+    return this.financialInformation.get(
+      'maritalStatus'
+    ) as FormControl<string>;
   }
 
   get underageDependentsCount() {
@@ -304,9 +304,7 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   get coBorrower() {
-    return this.financialInformation.get(
-      'monthlyIncome'
-    ) as FormControl<string>;
+    return this.financialInformation.get('coBorrower') as FormControl<string>;
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {
