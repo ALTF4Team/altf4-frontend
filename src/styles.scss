@@ -1,5 +1,4 @@
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
-
+@import "./theme";
 html,
 body {
   height: 100%;
@@ -28,7 +27,6 @@ body * {
   --teal: #00aeb3;
   --bright-green: #a2d729;
   --dark-green: #30692c;
-
 }
 
 .container {
@@ -36,6 +34,7 @@ body * {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 80vh;
 
   .img_box {
     min-height: 80vh;

@@ -46,7 +46,7 @@ export class ApplicationFormComponent implements OnInit {
     private fb: FormBuilder,
     private applicationFormService: ApplicationFormService,
     private validationService: ValidationService,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) {
     this.applicationForm = this.fb.group({
       customerInformation: this.fb.group({
@@ -162,6 +162,8 @@ export class ApplicationFormComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(PreviewComponent, {
       data: this.formData,
+      height: '900px',
+      width: '700px',
       panelClass: 'preview_container',
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -284,9 +286,9 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   get maritalStatus() {
-    return this.applicationForm
-      .get('financialInformation')!
-      .get('maritalStatus') as FormControl<string>;
+    return this.financialInformation.get(
+      'maritalStatus'
+    ) as FormControl<string>;
   }
 
   get underageDependentsCount() {
@@ -302,9 +304,7 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   get coBorrower() {
-    return this.financialInformation.get(
-      'monthlyIncome'
-    ) as FormControl<string>;
+    return this.financialInformation.get('coBorrower') as FormControl<string>;
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {

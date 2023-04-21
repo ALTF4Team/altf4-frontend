@@ -16,9 +16,12 @@
   font-size: 24px;
   font-family: Roboto, sans-serif;
   color: var(--main-white);
+  span {
+    cursor: pointer;
+  }
 }
 
-.calculate-link {
+.nav-link {
   font-size: 20px;
   text-decoration: none;
   color: var(--main-white);
