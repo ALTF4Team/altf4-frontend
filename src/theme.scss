@@ -1,18 +1,32 @@
-@import "@angular/material/theming";
-@include mat-core();
-
-$green-theme-primary: mat-palette($mat-app-green, 900, 900, 900, 900);
-$green-theme-accent: mat-palette($mat-app-bright-green, 400, 500, 500, 900);
-$green-theme-warn: mat-palette($mat-red);
-
-$green-theme: mat-light-theme(
+//@import "@angular/material/theming";
+//@include mat-core();
+//
+//$green-theme-primary: mat-palette($mat-app-green, 900, 900, 900, 900);
+//$green-theme-accent: mat-palette($mat-app-bright-green, 400, 500, 500, 900);
+//$green-theme-warn: mat-palette($mat-red);
+//
+//$green-theme: mat-light-theme(
+//  (
+//    color: (
+//      primary: $green-theme-primary,
+//      accent: $green-theme-accent,
+//      warn: $green-theme-warn,
+//    ),
+//  )
+//);
+//
+//@include angular-material-theme($green-theme);
+@use "@angular/material" as mat;
+@include mat.core();
+$my-primary: mat.define-palette(mat.$indigo-palette, 500);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$my-theme: mat.define-light-theme(
   (
     color: (
-      primary: $green-theme-primary,
-      accent: $green-theme-accent,
-      warn: $green-theme-warn,
+      primary: $my-primary,
+      accent: $my-accent,
     ),
   )
 );
-
-@include angular-material-theme($green-theme);
+// Emit theme-dependent styles for common features used across multiple components.
+@include mat.core-theme($my-theme);
