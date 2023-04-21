@@ -21,7 +21,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 import { PreviewComponent } from './application-form/preview/preview.component';
+import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
+import { MaxFormComponent } from './max-form/max-form.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,8 @@ import { PreviewComponent } from './application-form/preview/preview.component';
     PieLoanComponent,
     ApplicationFormComponent,
     PreviewComponent,
+    CalculatorsPageComponent,
+    MaxFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +56,7 @@ import { PreviewComponent } from './application-form/preview/preview.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

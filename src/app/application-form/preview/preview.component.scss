@@ -1,3 +1,7 @@
+mat-dialog-content {
+  height: 800px;
+}
+
 .preview_container {
   padding: 60px;
   display: flex;
@@ -32,6 +36,10 @@ ul {
 
 ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 12px;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__content {
+  min-height: 900px;
 }
 
 .preview_btn_box {

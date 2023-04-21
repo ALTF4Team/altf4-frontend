@@ -162,6 +162,8 @@ export class ApplicationFormComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(PreviewComponent, {
       data: this.formData,
+      height: '900px',
+      width: '700px',
       panelClass: 'preview_container',
     });
     dialogRef.afterClosed().subscribe((result) => {

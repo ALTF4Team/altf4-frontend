@@ -1,4 +1,4 @@
-<div class="preview_container">
+<mat-dialog-content class="preview_container">
   <div class="preview_section preview_section_2">
     <h3 class="preview_header">Personal information</h3>
     <ul>
@@ -79,8 +79,8 @@
       <li><span>Co-borrower?:</span> {{ partner }}</li>
     </ul>
   </div>
-  <div class="preview_btn_box">
-    <button mat-button>Back</button>
-    <button mat-button>Submit</button>
-  </div>
-</div>
+  <mat-dialog-actions align="end" class="preview_btn_box">
+    <button mat-button mat-dialog-close>Back</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
+  </mat-dialog-actions>
+</mat-dialog-content>

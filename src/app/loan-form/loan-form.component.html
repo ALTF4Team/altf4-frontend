@@ -1,177 +1,173 @@
 <div class="container">
-  <div class="img_box">
-    <div class="loan_calculation_page">
-      <div class="form-container">
-        <form
-          class="loan_form"
-          [formGroup]="loanForm"
-          (ngSubmit)="onLoanFormSubmit()"
-          (reset)="onLoanFormReset()"
+  <!-- <div class="img_box"> -->
+  <div class="loan_calculation_page">
+    <div class="form-container">
+      <form
+        class="loan_form"
+        [formGroup]="loanForm"
+        (ngSubmit)="onLoanFormSubmit()"
+        (reset)="onLoanFormReset()"
+      >
+        <h1>Provide Loan Details</h1>
+
+        <mat-form-field
+          appearance="fill"
+          [floatLabel]="getTotalAmountFloatLabelValue()"
         >
-          <h1>Submit your Loan Details</h1>
-
-          <mat-form-field
-            appearance="fill"
-            [floatLabel]="getTotalAmountFloatLabelValue()"
+          <mat-label for="totalAmount">Total Amount:</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="totalAmount"
+            id="totalAmount"
+            placeholder="Total Amount"
+          />
+          <mat-error
+            class="error-message-text"
+            *ngIf="totalAmount.errors && totalAmount.touched"
           >
-            <mat-label for="totalAmount">Total Amount:</mat-label>
-            <input
-              matInput
-              type="text"
-              formControlName="totalAmount"
-              id="totalAmount"
-              placeholder="Total Amount"
-            />
-            <mat-error
-              class="error-message-text"
-              *ngIf="totalAmount.errors && totalAmount.touched"
-            >
-              <div *ngIf="totalAmount.errors['required']">
-                Amount is required
-              </div>
-              <div *ngIf="totalAmount.errors['min']">
-                Amount should atleast be 10000
-              </div>
-              <div *ngIf="totalAmount.errors['pattern']">
-                Only numeric values allowed
-              </div>
-            </mat-error>
-          </mat-form-field>
+            <div *ngIf="totalAmount.errors['required']">Amount is required</div>
+            <div *ngIf="totalAmount.errors['min']">
+              Amount should atleast be 10000
+            </div>
+            <div *ngIf="totalAmount.errors['pattern']">
+              Only numeric values allowed
+            </div>
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field
-            appearance="fill"
-            [floatLabel]="getDownPaymentFloatLabelValue()"
+        <mat-form-field
+          appearance="fill"
+          [floatLabel]="getDownPaymentFloatLabelValue()"
+        >
+          <mat-label for="downPayment">Down Payment:</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="downPayment"
+            id="downPayment"
+            placeholder="Down Payment"
+          />
+          <mat-error
+            class="error-message-text"
+            *ngIf="downPayment.errors && downPayment.touched"
           >
-            <mat-label for="downPayment">Down Payment:</mat-label>
-            <input
-              matInput
-              type="text"
-              formControlName="downPayment"
-              id="downPayment"
-              placeholder="Down Payment"
-            />
-            <mat-error
-              class="error-message-text"
-              *ngIf="downPayment.errors && downPayment.touched"
-            >
-              <div *ngIf="downPayment.errors['required']">
-                Down Payment cannot be empty
-              </div>
-              <div *ngIf="downPayment.errors['min']">
-                Down Payment should be atleast 15% of total
-              </div>
-              <div *ngIf="downPayment.errors['max']">
-                Down Payment should not exceed 99% of total
-              </div>
-              <div *ngIf="downPayment.errors['pattern']">
-                Only numeric values allowed
-              </div>
-            </mat-error>
-          </mat-form-field>
+            <div *ngIf="downPayment.errors['required']">
+              Down Payment cannot be empty
+            </div>
+            <div *ngIf="downPayment.errors['min']">
+              Down Payment should be atleast 15% of total
+            </div>
+            <div *ngIf="downPayment.errors['max']">
+              Down Payment should not exceed 99% of total
+            </div>
+            <div *ngIf="downPayment.errors['pattern']">
+              Only numeric values allowed
+            </div>
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field
-            appearance="fill"
-            [floatLabel]="getTermYearsFloatLabelValue()"
+        <mat-form-field
+          appearance="fill"
+          [floatLabel]="getTermYearsFloatLabelValue()"
+        >
+          <mat-label for="termYears">Term Years:</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="termYears"
+            id="termYears"
+            placeholder="Loan Term Years"
+          />
+          <mat-error
+            class="error-message-text"
+            *ngIf="termYears.errors && termYears.touched"
           >
-            <mat-label for="termYears">Term Years:</mat-label>
-            <input
-              matInput
-              type="text"
-              formControlName="termYears"
-              id="termYears"
-              placeholder="Loan Term Years"
-            />
-            <mat-error
-              class="error-message-text"
-              *ngIf="termYears.errors && termYears.touched"
-            >
-              <div *ngIf="termYears.errors['required']">
-                Term years cannot be empty
-              </div>
-              <div *ngIf="termYears.errors['min']">
-                Term year should atleast be 1
-              </div>
-              <div *ngIf="termYears.errors['max']">
-                Term years cannot exceed 30
-              </div>
-              <div *ngIf="termYears.errors['pattern']">
-                Only numeric values allowed
-              </div>
-            </mat-error>
-          </mat-form-field>
-          <div class="button-area loan_form_btn_box">
-            <button
-              type="submit"
-              mat-raised-button
-              color="accent"
-              class="btn-calc"
-            >
-              Calculate
-            </button>
-            <button
-              type="reset"
-              mat-raised-button
-              color="accent"
-              class="btn-reset"
-            >
-              Reset
-            </button>
-          </div>
-        </form>
-      </div>
-      <div *ngIf="monthlyInterest$">
-        <div class="vl"></div>
-      </div>
-      <div class="calculation-container" *ngIf="savedData">
-        <div class="calc-data" *ngIf="monthlyInterest$ | async">
-          <app-pie-loan [loanInfo]="monthlyInterest$ | async"></app-pie-loan>
+            <div *ngIf="termYears.errors['required']">
+              Term years cannot be empty
+            </div>
+            <div *ngIf="termYears.errors['min']">
+              Term year should atleast be 1
+            </div>
+            <div *ngIf="termYears.errors['max']">
+              Term years cannot exceed 30
+            </div>
+            <div *ngIf="termYears.errors['pattern']">
+              Only numeric values allowed
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <div class="button-area loan_form_btn_box">
+          <button
+            type="submit"
+            mat-raised-button
+            color="accent"
+            class="btn-calc"
+          >
+            Calculate
+          </button>
+          <button
+            type="reset"
+            mat-raised-button
+            color="accent"
+            class="btn-reset"
+          >
+            Reset
+          </button>
         </div>
+      </form>
+    </div>
+    <div *ngIf="monthlyInterest$">
+      <div class="vl"></div>
+    </div>
+    <div class="calculation-container" *ngIf="savedData">
+      <div class="calc-data" *ngIf="monthlyInterest$ | async">
+        <app-pie-loan [loanInfo]="monthlyInterest$ | async"></app-pie-loan>
+      </div>
 
-        <div class="calc-text" *ngIf="monthlyInterest$ | async as info">
-          <div class="text-group">
-            <span class="imp-text">Loan Amount: </span>
+      <div class="calc-text" *ngIf="monthlyInterest$ | async as info">
+        <div class="text-group">
+          <span class="imp-text">Loan Amount: </span>
 
-            <span class="amount">{{ info.loanAmount }} EUR</span>
-          </div>
-          <div class="text-group">
-            <span class="imp-text">Interest Rate: </span>
+          <span class="amount">{{ info.loanAmount }} EUR</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Interest Rate: </span>
 
-            <span class="amount"
-              >{{ covertToPercent(info.interestRate) }} %</span
-            >
-          </div>
-          <div class="text-group">
-            <span class="imp-text">Interest Paid: </span>
+          <span class="amount">{{ covertToPercent(info.interestRate) }} %</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Interest Paid: </span>
 
-            <span class="amount">{{ info.totalInterestAmount }} EUR</span>
-          </div>
-          <div class="text-group">
-            <span class="imp-text">Monthly Payment:</span>
+          <span class="amount">{{ info.totalInterestAmount }} EUR</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Monthly Payment:</span>
 
-            <span class="amount">{{ info.monthlyPaymentAmount }} EUR</span>
-          </div>
-          <div class="text-group">
-            <span class="imp-text">Total Amount Paid:</span>
+          <span class="amount">{{ info.monthlyPaymentAmount }} EUR</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Total Amount Paid:</span>
 
-            <span class="amount">{{ info.totalPaymentSum }} EUR</span>
-          </div>
-          <div class="text-group">
-            <span class="imp-text">Total Amount:</span>
+          <span class="amount">{{ info.totalPaymentSum }} EUR</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Total Amount:</span>
 
-            <span class="amount">{{ savedData.totalAmount }} EUR</span>
-          </div>
-          <div class="text-group">
-            <span class="imp-text">Down Payment:</span>
+          <span class="amount">{{ savedData.totalAmount }} EUR</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Down Payment:</span>
 
-            <span class="amount">{{ savedData.downPayment }} EUR</span>
-          </div>
-          <div class="text-group">
-            <span class="imp-text">Term Years:</span>
+          <span class="amount">{{ savedData.downPayment }} EUR</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Term Years:</span>
 
-            <span class="amount">{{ savedData.termYears }} years</span>
-          </div>
+          <span class="amount">{{ savedData.termYears }} years</span>
         </div>
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </div>
