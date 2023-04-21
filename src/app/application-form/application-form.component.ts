@@ -46,7 +46,7 @@ export class ApplicationFormComponent implements OnInit {
     private fb: FormBuilder,
     private applicationFormService: ApplicationFormService,
     private validationService: ValidationService,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) {
     this.applicationForm = this.fb.group({
       customerInformation: this.fb.group({
