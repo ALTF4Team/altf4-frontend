@@ -314,7 +314,7 @@ export class ApplicationFormComponent implements OnInit {
     return this.applicationForm.get('loanForm')!.value || 'auto';
   }
   getFinancialInformationFloatLabelValue(): FloatLabelType {
-    return this.applicationForm.get('financialInformation')!.value || 'auto';
+    return this.financialInformation.value || 'auto';
   }
 
   setDownPaymentOnTotalAmountChange(): void {
