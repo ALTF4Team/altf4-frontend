@@ -3,13 +3,12 @@
     <form
       class="application_form"
       [formGroup]="applicationForm"
-      (ngSubmit)="onApplicationFormSubmit()"
       (reset)="onApplicationFormReset()"
     >
       <h1>Please fill this application form</h1>
       <mat-stepper orientation="vertical" linear #stepper class="green-theme">
-        <mat-step [stepControl]="customerInformation">
-          <div formGroupName="customerInformation" class="form-section">
+        <mat-step [stepControl]="customer">
+          <div formGroupName="customer" class="form-section">
             <mat-form-field
               [floatLabel]="getPersonalInformationFloatLabelValue()"
             >
@@ -81,12 +80,12 @@
               [floatLabel]="getPersonalInformationFloatLabelValue()"
               class="date_picker"
             >
-              <mat-label for="dateOfBirth">Date of birth</mat-label>
+              <mat-label for="birthDate">Date of birth</mat-label>
               <input
                 matInput
                 [max]="maxDate"
                 [matDatepicker]="picker"
-                formControlName="dateOfBirth"
+                formControlName="birthDate"
               />
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle
@@ -94,8 +93,8 @@
                 [for]="picker"
               ></mat-datepicker-toggle>
               <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
-              <mat-error *ngIf="dateOfBirth.errors && dateOfBirth.touched">
-                <div *ngIf="dateOfBirth.errors['required']">
+              <mat-error *ngIf="birthDate.errors && birthDate.touched">
+                <div *ngIf="birthDate.errors['required']">
                   Date of birth is required
                 </div>
               </mat-error>
@@ -150,8 +149,8 @@
         </mat-step>
 
         <!-- ------------------------------------------------------------------------------------------- -->
-        <mat-step [stepControl]="loanForm">
-          <div [formGroup]="loanForm" class="form-section">
+        <mat-step [stepControl]="loan">
+          <div [formGroup]="loan" class="form-section">
             <mat-form-field
               appearance="fill"
               [floatLabel]="getLoanFormFloatLabelValue()"
@@ -219,7 +218,7 @@
                   </div>
                 </mat-error>
                 <mat-error
-                  *ngIf="loanForm?.errors?.['downPaymentTooSmall'] && downPayment.touched"
+                  *ngIf="loan?.errors?.['downPaymentTooSmall'] && downPayment.touched"
                 >
                   <div>Down payment should be at least 15 %</div>
                 </mat-error>
@@ -243,25 +242,25 @@
               appearance="fill"
               [floatLabel]="getLoanFormFloatLabelValue()"
             >
-              <mat-label for="loanTerm">Loan term</mat-label>
+              <mat-label for="termYears">Loan term</mat-label>
               <input
                 matInput
                 type="number"
-                formControlName="loanTerm"
-                id="loanTerm"
+                formControlName="termYears"
+                id="termYears"
                 placeholder="Loan term"
               />
-              <mat-error *ngIf="loanTerm.errors && loanTerm.touched">
-                <div *ngIf="loanTerm.errors['required']">
+              <mat-error *ngIf="termYears.errors && termYears.touched">
+                <div *ngIf="termYears.errors['required']">
                   Loan term is required
                 </div>
-                <div *ngIf="loanTerm.errors['pattern']">
+                <div *ngIf="termYears.errors['pattern']">
                   Only numeric values allowed
                 </div>
-                <div *ngIf="loanTerm.errors['min']">
+                <div *ngIf="termYears.errors['min']">
                   Loan term should be at least 1 year
                 </div>
-                <div *ngIf="loanTerm.errors['max']">
+                <div *ngIf="termYears.errors['max']">
                   Loan term cannot exceed 30 years
                 </div>
               </mat-error>
@@ -286,9 +285,11 @@
                 id="employmentStatus"
                 required
               >
-                <mat-option value="Contract">Contract employment</mat-option>
-                <mat-option value="Self-employed">Self employed</mat-option>
-                <mat-option value="Unemployed">Unemployed</mat-option>
+                <mat-option value="CONTRACT_EMPLOYMENT"
+                  >Contract employment</mat-option
+                >
+                <mat-option value="SELF_EMPLOYED">Self employed</mat-option>
+                <mat-option value="UNEMPLOYED">Unemployed</mat-option>
               </mat-select>
               <mat-error
                 *ngIf="employmentStatus.errors && employmentStatus.touched"
@@ -302,7 +303,7 @@
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
-              *ngIf="employmentStatus.value === 'Contract'"
+              *ngIf="employmentStatus.value === 'CONTRACT_EMPLOYMENT'"
             >
               <mat-label for="currentEmployer">Current employer</mat-label>
               <input
@@ -323,7 +324,7 @@
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
-              *ngIf="employmentStatus.value === 'Contract'"
+              *ngIf="employmentStatus.value === 'CONTRACT_EMPLOYMENT'"
             >
               <mat-label for="employmentContractType">Contract type</mat-label>
               <mat-select
@@ -331,8 +332,8 @@
                 id="employmentContractType"
                 required
               >
-                <mat-option value="Open-ended">Open-ended</mat-option>
-                <mat-option value="Fixed-term">Fixed-term</mat-option>
+                <mat-option value="OPEN_ENDED">Open-ended</mat-option>
+                <mat-option value="FIXED_TERM">Fixed-term</mat-option>
               </mat-select>
               <mat-error
                 *ngIf="
@@ -348,7 +349,7 @@
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
-              *ngIf="employmentStatus.value === 'Contract'"
+              *ngIf="employmentStatus.value === 'CONTRACT_EMPLOYMENT'"
             >
               <mat-label for="yearsCurrentEmployer"
                 >Years with current employer</mat-label
@@ -368,12 +369,15 @@
                 <div *ngIf="yearsCurrentEmployer.errors['required']">
                   Years with current employer is required
                 </div>
+                <div *ngIf="yearsCurrentEmployer.errors['min']">
+                  Years with current employer can't be less than 0
+                </div>
               </mat-error>
             </mat-form-field>
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
-              *ngIf="employmentStatus.value === 'Contract'"
+              *ngIf="employmentStatus.value === 'CONTRACT_EMPLOYMENT'"
             >
               <mat-label for="position">Position</mat-label>
               <input
@@ -392,7 +396,7 @@
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
-              *ngIf="employmentStatus.value === 'Contract'"
+              *ngIf="employmentStatus.value === 'CONTRACT_EMPLOYMENT'"
             >
               <mat-label for="industry">Industry</mat-label>
               <input
@@ -411,7 +415,7 @@
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
-              *ngIf="employmentStatus.value === 'Self-employed'"
+              *ngIf="employmentStatus.value === 'SELF_EMPLOYED'"
             >
               <mat-label for="yearsSelfEmployment"
                 >Years of self-employment</mat-label
@@ -431,12 +435,15 @@
                 <div *ngIf="yearsSelfEmployment.errors['required']">
                   Years of self-employment is required
                 </div>
+                <div *ngIf="yearsSelfEmployment.errors['min']">
+                  Years of self-employment can't be less than 0
+                </div>
               </mat-error>
             </mat-form-field>
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
-              *ngIf="employmentStatus.value === 'Unemployed'"
+              *ngIf="employmentStatus.value === 'UNEMPLOYED'"
             >
               <mat-label for="sourceOfIncome">Source of income</mat-label>
               <input
@@ -519,13 +526,19 @@
                 <div *ngIf="underageDependentsCount.errors['required']">
                   Number of underage dependents is required
                 </div>
+                <div *ngIf="underageDependentsCount.errors['min']">
+                  Number of underage dependents can't be less than 0
+                </div>
+                <div *ngIf="underageDependentsCount.errors['max']">
+                  Number of underage dependents can't be more than 10
+                </div>
               </mat-error>
             </mat-form-field>
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
             >
-              <mat-label for="underageDependentsCount"
+              <mat-label for="monthlyIncome"
                 >Monthly income after tax</mat-label
               >
               <input
@@ -538,6 +551,12 @@
               <mat-error *ngIf="monthlyIncome.errors && monthlyIncome.touched">
                 <div *ngIf="monthlyIncome.errors['required']">
                   Monthly income is required
+                </div>
+                <div *ngIf="monthlyIncome.errors['min']">
+                  Monthly income can't be less than 0
+                </div>
+                <div *ngIf="monthlyIncome.errors['max']">
+                  Monthly income can't be more than 100000
                 </div>
               </mat-error>
             </mat-form-field>
@@ -559,9 +578,11 @@
 
             <div>
               <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
               <button mat-button (click)="onPreview()" (click)="openDialog()">
-                Preview
+                Next
+              </button>
+              <button mat-button (click)="stepper.reset()" type="reset">
+                Reset
               </button>
             </div>
           </div>

@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent {
-  landingImgUrl = 'assets/img/landing_img_figma.jpeg';
+  landingImgUrl = 'assets/img/house_res.jpg';
 }

@@ -81,6 +81,13 @@
   </div>
   <mat-dialog-actions align="end" class="preview_btn_box">
     <button mat-button mat-dialog-close>Back</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
-  </mat-dialog-actions>  
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      (click)="onApplicationFormSubmit()"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
 </mat-dialog-content>

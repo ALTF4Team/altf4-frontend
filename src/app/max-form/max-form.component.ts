@@ -38,7 +38,6 @@ export class MaxFormComponent {
       // this.maxAmounts$ = this.maxAmountService.getMaxAmounts(
       //   this.maxForm.value
       // );
-      // console.log(this.maxForm.value);
     }
   }
   onMaxFormReset() {
