@@ -311,13 +311,13 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {
-    return this.applicationForm.get('customer')!.value || 'auto';
+    return this.customer.value || 'auto';
   }
   getLoanFormFloatLabelValue(): FloatLabelType {
-    return this.applicationForm.get('loan')!.value || 'auto';
+    return this.loan.value || 'auto';
   }
   getFinancialInformationFloatLabelValue(): FloatLabelType {
-    return this.applicationForm.get('financialInformation')!.value || 'auto';
+    return this.financialInformation.value || 'auto';
   }
 
   setDownPaymentOnTotalAmountChange(): void {
