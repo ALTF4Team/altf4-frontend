@@ -308,7 +308,7 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {
-    return this.applicationForm.get('customerInformation')!.value || 'auto';
+    return this.customerInformation.value || 'auto';
   }
   getLoanFormFloatLabelValue(): FloatLabelType {
     return this.applicationForm.get('loanForm')!.value || 'auto';
