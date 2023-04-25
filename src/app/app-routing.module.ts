@@ -4,6 +4,7 @@ import { LandingComponent } from './landing/landing.component';
 import { LoanFormComponent } from './loan-form/loan-form.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
+import { SubmittedComponent } from './submitted/submitted.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'loan', component: LoanFormComponent },
   { path: 'apply', component: ApplicationFormComponent },
   { path: 'calculate', component: CalculatorsPageComponent },
+  { path: 'submitted', component: SubmittedComponent },
 ];
 
 @NgModule({

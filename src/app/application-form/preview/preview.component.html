@@ -2,32 +2,30 @@
   <div class="preview_section preview_section_2">
     <h3 class="preview_header">Personal information</h3>
     <ul>
-      <li><span>Name:</span> {{ data.customerInformation.name }}</li>
-      <li><span>Surname:</span> {{ data.customerInformation.surname }}</li>
+      <li><span>Name:</span> {{ data.customer.name }}</li>
+      <li><span>Surname:</span> {{ data.customer.surname }}</li>
       <li>
         <span> Country of citizenship:</span>
-        {{ data.customerInformation.countryOfCitizenship }}
+        {{ data.customer.countryOfCitizenship }}
       </li>
       <li>
         <span>Date of Birth:</span>
-        {{ data.customerInformation.dateOfBirth | date : "longDate" }}
+        {{ data.customer.yearOfBirth | date : "longDate" }}
       </li>
-      <li>
-        <span>Mobile number:</span> {{ data.customerInformation.mobileNumber }}
-      </li>
-      <li><span>Email:</span> {{ data.customerInformation.email }}</li>
+      <li><span>Mobile number:</span> {{ data.customer.mobileNumber }}</li>
+      <li><span>Email:</span> {{ data.customer.email }}</li>
     </ul>
   </div>
   <div class="preview_section preview_section_2">
     <h3 class="preview_header">Loan information</h3>
     <ul>
-      <li><span>Loan purpose:</span> {{ data.loanForm.loanPurpose }}</li>
-      <li><span>Total amount:</span> {{ data.loanForm.totalAmount }}</li>
+      <li><span>Loan purpose:</span> {{ data.loan.loanPurpose }}</li>
+      <li><span>Total amount:</span> {{ data.loan.totalAmount }}</li>
       <li>
         <span> Down payment:</span>
-        {{ data.loanForm.downPayment }}
+        {{ data.loan.downPayment }}
       </li>
-      <li><span>Loan term:</span> {{ data.loanForm.loanTerm }}</li>
+      <li><span>Loan term:</span> {{ data.loan.loanTerm }}</li>
     </ul>
   </div>
   <div class="preview_section preview_section_3">
@@ -81,6 +79,14 @@
   </div>
   <mat-dialog-actions align="end" class="preview_btn_box">
     <button mat-button mat-dialog-close>Back</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
-  </mat-dialog-actions>  
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      (click)="onApplicationFormSubmit()"
+      type="submit"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
 </mat-dialog-content>

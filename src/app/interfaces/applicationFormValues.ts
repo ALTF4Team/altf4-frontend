@@ -1,13 +1,13 @@
 export interface ApplicationFormValues {
-  customerInformation: {
+  customer: {
     name: string;
     surname: string;
     countryOfCitizenship: string;
-    dateOfBirth: Date;
+    yearOfBirth: Date;
     mobileNumber: string;
     email: string;
   };
-  loanForm: {
+  loan: {
     loanPurpose: string;
     totalAmount: number;
     downPayment: number;

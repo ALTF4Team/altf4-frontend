@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ApplicationFormValues } from '../application-form-values';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ApplicationFormValues } from '../../interfaces/applicationFormValues';
+import { ApplicationFormService } from 'src/app/services/application-form-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-preview',
@@ -10,10 +12,20 @@ import { ApplicationFormValues } from '../application-form-values';
 export class PreviewComponent {
   partner: string;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues,
+    private applicationFormService: ApplicationFormService,
+    private router: Router
+  ) {
     this.partner =
       data.financialInformation.coBorrower === 'true' ? 'Yes' : 'No';
   }
 
-  onSubmit() {}
+  onApplicationFormSubmit() {
+    console.log(this.data);
+    this.applicationFormService.postFormData(this.data).subscribe((res) => {
+      console.log(res);
+      this.router.navigate(['submitted']);
+    });
+  }
 }

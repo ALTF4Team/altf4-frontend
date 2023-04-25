@@ -35,18 +35,28 @@
   }
 }
 
-.loan_form {
-  display: flex;
-  //justify-content: center;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  h1 {
-    font-size: 32px;
-    z-index: 2;
-    font-weight: 500;
-    padding-bottom: 16px;
+@media (min-width: 900px) {
+  .max_calculation_page {
+    flex-direction: row;
+    overflow-y: hidden;
   }
+  .vl {
+    border-left: 1px solid var(--black);
+    height: 500px;
+  }
+}
+
+.max_amount_img {
+  height: 100px;
+  width: auto;
+}
+
+.calc-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
 }
 
 mat-error {
@@ -58,18 +68,17 @@ mat-error {
   padding-top: 28px;
   display: flex;
   gap: 32px;
-  // > * {
-  //   border-radius: 16px;
-  //   padding: 16px;
-  // }
-  // .btn-calc {
-  //   background-color: var(--main-white);
-  //   color: var(--main-purple);
-  // }
-  // .btn-reset {
-  //   background-color: var(--main-purple);
-  //   color: var(--main-white);
-  // }
+}
+
+.text-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.imp-text {
+  order: 1;
+  font-size: 18px;
+  color: #ffffff;
 }
 
 @media (max-width: 500px) {

@@ -9,13 +9,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
-import { ApplicationFormService } from './application-form-service.service';
+import { ApplicationFormService } from '../services/application-form-service.service';
 import { map, Observable, startWith } from 'rxjs';
-import { Country } from './country';
-import { ApplicationFormValues } from './application-form-values';
+import { Country } from '../interfaces/country';
+import { ApplicationFormValues } from '../interfaces/applicationFormValues';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewComponent } from './preview/preview.component';
-import { ValidationService } from './validation.service';
+import { ValidationService } from '../services/validation.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 export class CrossFieldErrorMatcher implements ErrorStateMatcher {
@@ -49,11 +49,11 @@ export class ApplicationFormComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.applicationForm = this.fb.group({
-      customerInformation: this.fb.group({
+      customer: this.fb.group({
         name: ['', [Validators.required]],
         surname: ['', [Validators.required]],
         countryOfCitizenship: ['', [Validators.required]],
-        dateOfBirth: ['', [Validators.required]],
+        birthDate: ['', [Validators.required]],
         mobileNumber: [
           '',
           [
@@ -72,7 +72,7 @@ export class ApplicationFormComponent implements OnInit {
           ],
         ],
       }),
-      loanForm: this.fb.group(
+      loan: this.fb.group(
         {
           loanPurpose: ['', [Validators.required]],
           totalAmount: [
@@ -85,7 +85,7 @@ export class ApplicationFormComponent implements OnInit {
           ],
           downPayment: ['', Validators.required],
           percentage: [''],
-          loanTerm: [
+          termYears: [
             '',
             [
               Validators.required,
@@ -100,16 +100,28 @@ export class ApplicationFormComponent implements OnInit {
       financialInformation: this.fb.group({
         employmentStatus: ['', Validators.required],
         sourceOfIncome: new FormControl(null, Validators.required),
-        yearsSelfEmployment: new FormControl(null, Validators.required),
+        yearsSelfEmployment: new FormControl(null, [
+          Validators.required,
+          Validators.min(0),
+        ]),
         currentEmployer: new FormControl(null, Validators.required),
         employmentContractType: new FormControl(null, Validators.required),
-        yearsCurrentEmployer: new FormControl(null, Validators.required),
+        yearsCurrentEmployer: new FormControl(null, [
+          Validators.required,
+          Validators.min(0),
+        ]),
         position: new FormControl(null, Validators.required),
         industry: new FormControl(null, Validators.required),
         education: ['', Validators.required],
         maritalStatus: ['', Validators.required],
-        underageDependentsCount: ['', Validators.required],
-        monthlyIncome: ['', Validators.required],
+        underageDependentsCount: [
+          '',
+          [Validators.required, Validators.min(0), Validators.max(10)],
+        ],
+        monthlyIncome: [
+          '',
+          [Validators.required, Validators.min(0), Validators.max(100000)],
+        ],
         coBorrower: ['', Validators.required],
       }),
     });
@@ -143,17 +155,12 @@ export class ApplicationFormComponent implements OnInit {
     );
   }
 
-  onApplicationFormSubmit() {
-    if (this.applicationForm.valid) {
-      console.log(this.applicationForm.value);
-    }
-  }
   onApplicationFormReset() {
     this.applicationForm.reset();
   }
 
   onPreview() {
-    if (this.applicationForm) {
+    if (!this.applicationForm.errors) {
       this.formData = this.applicationForm.value;
       this.openDialog();
     }
@@ -171,66 +178,60 @@ export class ApplicationFormComponent implements OnInit {
     });
   }
 
-  get name() {
-    return this.applicationForm
-      .get('customerInformation')!
-      .get('name') as FormControl<string>;
+  get customer() {
+    return this.applicationForm.get('customer') as FormControl<any>;
   }
 
-  get customerInformation() {
-    return this.applicationForm.get('customerInformation') as FormControl<any>;
-  }
-
-  get loanForm() {
-    return this.applicationForm.get('loanForm') as FormGroup<any>;
+  get loan() {
+    return this.applicationForm.get('loan') as FormGroup<any>;
   }
 
   get financialInformation() {
     return this.applicationForm.get('financialInformation') as FormControl<any>;
   }
 
+  get name() {
+    return this.customer.get('name') as FormControl<string>;
+  }
+
   get surname() {
-    return this.customerInformation.get('surname') as FormControl<string>;
+    return this.customer.get('surname') as FormControl<string>;
   }
 
   get countryOfCitizenship() {
-    return this.customerInformation.get(
-      'countryOfCitizenship'
-    ) as FormControl<string>;
+    return this.customer.get('countryOfCitizenship') as FormControl<string>;
   }
 
-  get dateOfBirth() {
-    return this.customerInformation.get('dateOfBirth') as FormControl<
-      string | Date
-    >;
+  get birthDate() {
+    return this.customer.get('birthDate') as FormControl<string | Date>;
   }
 
   get mobileNumber() {
-    return this.customerInformation.get('mobileNumber') as FormControl<string>;
+    return this.customer.get('mobileNumber') as FormControl<string>;
   }
 
   get email() {
-    return this.customerInformation.get('email') as FormControl<string>;
+    return this.customer.get('email') as FormControl<string>;
   }
 
   get loanPurpose() {
-    return this.loanForm.get('loanPurpose') as FormControl<string>;
+    return this.loan.get('loanPurpose') as FormControl<string>;
   }
 
   get totalAmount() {
-    return this.loanForm.get('totalAmount') as FormControl<number>;
+    return this.loan.get('totalAmount') as FormControl<number>;
   }
 
   get downPayment() {
-    return this.loanForm.get('downPayment') as FormControl<number>;
+    return this.loan.get('downPayment') as FormControl<number>;
   }
 
   get percentage() {
-    return this.loanForm.get('percentage') as FormControl<number>;
+    return this.loan.get('percentage') as FormControl<number>;
   }
 
-  get loanTerm() {
-    return this.loanForm.get('loanTerm') as FormControl<number>;
+  get termYears() {
+    return this.loan.get('termYears') as FormControl<number>;
   }
 
   get employmentStatus() {
@@ -308,10 +309,10 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {
-    return this.customerInformation.value || 'auto';
+    return this.customer.value || 'auto';
   }
   getLoanFormFloatLabelValue(): FloatLabelType {
-    return this.loanForm.value || 'auto';
+    return this.loan.value || 'auto';
   }
   getFinancialInformationFloatLabelValue(): FloatLabelType {
     return this.financialInformation.value || 'auto';

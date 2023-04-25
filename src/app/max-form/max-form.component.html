@@ -97,5 +97,26 @@
         </div>
       </form>
     </div>
+    <div *ngIf="maxAmounts$">
+      <div class="vl"></div>
+    </div>
+    <div class="calculation-container">
+      <div class="calc-text">
+        <img src="../../assets/img/flat.png" class="max_amount_img" />
+        <div class="text-group">
+          <span class="imp-text">Maximum Loan Amount: </span>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="calculation-container" *ngIf="savedData">
+      <div class="calc-text" *ngIf="maxAmounts$ | async as results">
+        <img src="../../assets/img/flat.png" />
+        <div class="text-group">
+          <span class="imp-text">Maximum Loan Amount: </span>
+
+          <span class="amount">{{ results.maxLoanAmount }} EUR</span>
+        </div>
+      </div>
+    </div> -->
   </div>
 </div>

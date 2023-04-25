@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { PreviewComponent } from './application-form/preview/preview.component';
 import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
 import { MaxFormComponent } from './max-form/max-form.component';
+import { SubmittedComponent } from './submitted/submitted.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MaxFormComponent } from './max-form/max-form.component';
     PreviewComponent,
     CalculatorsPageComponent,
     MaxFormComponent,
+    SubmittedComponent,
   ],
   imports: [
     BrowserModule,
