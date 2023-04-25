@@ -174,7 +174,7 @@ export class ApplicationFormComponent implements OnInit {
       panelClass: 'preview_container',
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      dialogRef.close();
     });
   }
 
