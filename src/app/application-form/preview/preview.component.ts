@@ -11,18 +11,32 @@ import { Router } from '@angular/router';
 })
 export class PreviewComponent {
   partner: string;
+  contractType: string;
+  employmentStatus: string;
 
   constructor(
+    private dialogRef: MatDialogRef<PreviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues,
     private applicationFormService: ApplicationFormService,
     private router: Router
   ) {
     this.partner =
       data.financialInformation.coBorrower === 'true' ? 'Yes' : 'No';
+    this.contractType =
+      data.financialInformation.employmentContractType === 'OPEN_ENDED'
+        ? 'Open-ended'
+        : 'Fixed-term';
+    if (data.financialInformation.employmentStatus === 'CONTRACT_EMPLOYMENT') {
+      this.employmentStatus = 'Contract employment';
+    } else if (data.financialInformation.employmentStatus === 'SELF_EMPLOYED') {
+      this.employmentStatus = 'Self employed';
+    } else {
+      this.employmentStatus = 'Unemployed';
+    }
   }
 
   onApplicationFormSubmit() {
-    console.log(this.data);
+    this.dialogRef.close(true);
     this.applicationFormService.postFormData(this.data).subscribe((res) => {
       console.log(res);
       this.router.navigate(['submitted']);

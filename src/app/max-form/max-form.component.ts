@@ -26,8 +26,8 @@ export class MaxFormComponent {
     private maxAmountService: MaxAmountCalculatorService
   ) {
     this.maxForm = this.fb.group({
-      monthlyIncomeAfterTaxes: ['', [Validators.required]],
-      existingLiabilities: ['', [Validators.required]],
+      monthlyIncomeAfterTaxes: ['', [Validators.required, Validators.min(0)]],
+      existingLiabilities: ['', [Validators.required, Validators.min(0)]],
       noOfDependents: ['', [Validators.required]],
     });
   }
