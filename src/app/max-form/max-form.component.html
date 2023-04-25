@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="max_calculation_page">
+    <div class="form-container green-theme">
+      <form
+        class="max_form"
+        [formGroup]="maxForm"
+        (ngSubmit)="onMaxFormSubmit()"
+        (reset)="onMaxFormReset()"
+      >
+        <h1>Provide Financial Details</h1>
+        <mat-form-field
+          appearance="fill"
+          [floatLabel]="getMaxFormFloatLabelValue()"
+        >
+          <mat-label for="monthlyIncomeAfterTaxes"
+            >Monthly income after tax</mat-label
+          >
+          <input
+            matInput
+            type="number"
+            formControlName="monthlyIncomeAfterTaxes"
+            id="monthlyIncomeAfterTaxes"
+            placeholder="Monthly income after tax"
+          />
+
+          <mat-error
+            *ngIf="
+              monthlyIncomeAfterTaxes.errors && monthlyIncomeAfterTaxes.touched
+            "
+          >
+            <div *ngIf="monthlyIncomeAfterTaxes.errors['required']">
+              Monthly income is required
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          appearance="fill"
+          [floatLabel]="getMaxFormFloatLabelValue()"
+        >
+          <mat-label for="existingLiabilities"
+            >Monthly payment for existing liabilities</mat-label
+          >
+          <input
+            matInput
+            type="number"
+            formControlName="existingLiabilities"
+            id="existingLiabilities"
+            placeholder="Monthly payment for existing liabilities"
+          />
+
+          <mat-error
+            *ngIf="existingLiabilities.errors && existingLiabilities.touched"
+          >
+            <div *ngIf="existingLiabilities.errors['required']">
+              Monthly payment for liabilities is required
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          appearance="fill"
+          [floatLabel]="getMaxFormFloatLabelValue()"
+        >
+          <mat-label for="noOfDependents"
+            >Number of underage dependents</mat-label
+          >
+          <input
+            matInput
+            type="number"
+            formControlName="noOfDependents"
+            id="noOfDependents"
+            placeholder="Monthly income after tax"
+          />
+
+          <mat-error *ngIf="noOfDependents.errors && noOfDependents.touched">
+            <div *ngIf="noOfDependents.errors['required']">
+              Number of underage dependents is required
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <div class="button-area max_form_btn_box">
+          <button
+            type="submit"
+            mat-raised-button
+            color="accent"
+            class="btn-calc"
+          >
+            Calculate
+          </button>
+          <button
+            type="reset"
+            mat-raised-button
+            color="accent"
+            class="btn-reset"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="maxAmounts$">
+      <div class="vl"></div>
+    </div>
+    <div class="calculation-container">
+      <div class="calc-text">
+        <img src="../../assets/img/flat.png" class="max_amount_img" />
+        <div class="text-group">
+          <span class="imp-text">Maximum Loan Amount: </span>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="calculation-container" *ngIf="savedData">
+      <div class="calc-text" *ngIf="maxAmounts$ | async as results">
+        <img src="../../assets/img/flat.png" />
+        <div class="text-group">
+          <span class="imp-text">Maximum Loan Amount: </span>
+
+          <span class="amount">{{ results.maxLoanAmount }} EUR</span>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

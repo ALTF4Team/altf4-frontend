@@ -1,7 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
-
+@import "./theme";
 html,
 body {
   height: 100%;
@@ -13,14 +10,23 @@ body * {
   padding: 0;
   vertical-align: top;
   box-sizing: border-box;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 :root {
   --main-purple: #4f378b;
   --main-white: #ffffff;
-  --light-blue: #75a3ce;
+  --light-blue: #a4d1e9;
   --dark-blue: #196ab4;
+  --sea-green: #00aeb3;
+  --green: #a2d729;
+  --dark-green: 30692c;
+  --black: #0f1923;
+  --navy-blue: #0f1923;
+  --light-blue: #a4d1e9;
+  --teal: #00aeb3;
+  --bright-green: #a2d729;
+  --dark-green: #30692c;
 }
 
 .container {
@@ -28,6 +34,7 @@ body * {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 80vh;
 
   .img_box {
     min-height: 80vh;
@@ -45,6 +52,8 @@ body * {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: flex;
+      justify-content: center;
     }
   }
 }
