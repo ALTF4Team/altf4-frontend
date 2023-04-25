@@ -178,12 +178,6 @@ export class ApplicationFormComponent implements OnInit {
     });
   }
 
-  get name() {
-    return this.applicationForm
-      .get('customer')!
-      .get('name') as FormControl<string>;
-  }
-
   get customer() {
     return this.applicationForm.get('customer') as FormControl<any>;
   }
@@ -194,6 +188,10 @@ export class ApplicationFormComponent implements OnInit {
 
   get financialInformation() {
     return this.applicationForm.get('financialInformation') as FormControl<any>;
+  }
+
+  get name() {
+    return this.customer.get('name') as FormControl<string>;
   }
 
   get surname() {

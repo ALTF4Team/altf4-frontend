@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Country } from '../interfaces/country';
 import { ApplicationFormValues } from '../interfaces/applicationFormValues';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicationFormService {
   countriesdApiURL: string = 'https://restcountries.com/v3.1/all?fields=name';
-  apiURL: string = 'https://alt-f4-backend.onrender.com/api/loan-application';
+  apiURL: string = environment.apiURL + '/api/loan-application';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -20,8 +21,4 @@ export class ApplicationFormService {
     console.log('posting...');
     return this.httpClient.post(this.apiURL, applicationFormParameters);
   }
-
-  // getMaxAmounts(maxAmountParameters: MaxFormValues) {
-  //   // return this.httpClient.post<MaxAmounts>(this.apiURL, maxAmountParameters);
-  // }
 }

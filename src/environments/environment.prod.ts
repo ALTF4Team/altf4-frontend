@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://alt-f4-backend.onrender.com/api/loan-calculator'
+  apiURL: 'https://alt-f4-backend.onrender.com',
+  // apiUrl: 'https://alt-f4-backend.onrender.com/api/loan-calculator'
 };
