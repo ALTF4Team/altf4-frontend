@@ -9,6 +9,9 @@
       <mat-stepper orientation="vertical" linear #stepper class="green-theme">
         <mat-step [stepControl]="customer">
           <div formGroupName="customer" class="form-section">
+            <ng-template matStepLabel class="section-label"
+              >Personal Information</ng-template
+            >
             <mat-form-field
               [floatLabel]="getPersonalInformationFloatLabelValue()"
             >
@@ -151,6 +154,9 @@
         <!-- ------------------------------------------------------------------------------------------- -->
         <mat-step [stepControl]="loan">
           <div [formGroup]="loan" class="form-section">
+            <ng-template matStepLabel class="section-label"
+              >Loan Information</ng-template
+            >
             <mat-form-field
               appearance="fill"
               [floatLabel]="getLoanFormFloatLabelValue()"
@@ -275,6 +281,9 @@
         <!-- ------------------------------------------------------------------------------------------- -->
         <mat-step [stepControl]="financialInformation">
           <div formGroupName="financialInformation" class="form-section">
+            <ng-template matStepLabel class="section-label"
+              >Financial Information</ng-template
+            >
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
@@ -578,12 +587,7 @@
 
             <div>
               <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="onPreview()" (click)="openDialog()">
-                Next
-              </button>
-              <button mat-button (click)="stepper.reset()" type="reset">
-                Reset
-              </button>
+              <button mat-button (click)="onPreview()">Next</button>
             </div>
           </div>
         </mat-step>
