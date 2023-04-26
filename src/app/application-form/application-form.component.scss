@@ -42,7 +42,7 @@
 }
 
 .date_picker {
-  width: 30%;
+  width: 100%;
 }
 
 .percentage {
@@ -111,18 +111,6 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px whitesmoke inset !important;
 }
 
-@media (max-width: 1200px) {
-  .date_picker {
-    width: 40%;
-  }
-}
-
-@media (max-width: 1000px) {
-  .date_picker {
-    width: 50%;
-  }
-}
-
 @media (max-width: 800px) {
   .form-container {
     padding: 20px;
@@ -139,9 +127,6 @@ input:-webkit-autofill:active {
 @media (max-width: 500px) {
   .form-container {
     padding: 20px 5px 5px 5px;
-  }
-  .date_picker {
-    width: 100%;
   }
   .container-application-form {
     height: auto;
