@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class InterestCalculatorService {
-  apiURL: string = environment.apiURL + '/api/loan-calculator';
+  apiURL: string = environment.apiURL + 'api/loan-calculator';
   constructor(private httpClient: HttpClient) {}
 
   getMonthlyInterest(loanParameters: LoanFormValues) {

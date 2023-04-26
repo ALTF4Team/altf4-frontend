@@ -1,0 +1,51 @@
+.notFound-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+  min-height: 85vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--navy-blue);
+  width: 100%;
+  background-color: rgb(164, 209, 233, 0.7);
+  opacity: 1;
+  z-index: 2;
+}
+
+.title {
+  font-size: 82px;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 42px;
+}
+h6 {
+  font-size: 20px;
+}
+
+.homepage-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .notFound-container {
+    justify-content: flex-start;
+    padding: 100px 20px 0 20px;
+  }
+  .title {
+    font-size: 76px;
+    font-weight: 900;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+  h6 {
+    font-size: 16px;
+  }
+}
