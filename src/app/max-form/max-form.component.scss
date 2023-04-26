@@ -56,8 +56,11 @@
   margin-top: 50px;
   z-index: 2;
   font-size: 14px;
-  width: 90%;
+  width: 100%;
   font-weight: 400;
+  > * {
+    padding-bottom: 10px;
+  }
 }
 
 mat-error {
@@ -107,6 +110,18 @@ mat-error {
     height: 500px;
   }
   .calc-text {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .calc-text {
     width: 70%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .calc-text {
+    width: 60%;
   }
 }

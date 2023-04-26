@@ -24,6 +24,7 @@ export class LoanFormComponent {
   loanForm: FormGroup;
   savedData?: LoanFormValues;
   monthlyInterest$?: Observable<MonthlyInterest>;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -94,12 +95,16 @@ export class LoanFormComponent {
   }
 
   onLoanFormSubmit() {
-    if (this.loanForm.valid) {
-      this.savedData = this.loanForm.value;
-      this.monthlyInterest$ = this.interestService.getMonthlyInterest(
-        this.loanForm.value
-      );
-    }
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+      if (this.loanForm.valid) {
+        this.savedData = this.loanForm.value;
+        this.monthlyInterest$ = this.interestService.getMonthlyInterest(
+          this.loanForm.value
+        );
+      }
+    }, 1500);
   }
 
   onLoanFormReset() {

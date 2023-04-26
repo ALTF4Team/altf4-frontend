@@ -20,9 +20,9 @@ body * {
   --dark-blue: #196ab4;
   --sea-green: #00aeb3;
   --green: #a2d729;
-  --dark-green: 30692c;
+  --dark-green: #30692c;
   --black: #0f1923;
-  --navy-blue: #0f1923;
+  --navy-blue: #164a7e;
   --light-blue: #a4d1e9;
   --teal: #00aeb3;
   --bright-green: #a2d729;
@@ -34,10 +34,10 @@ body * {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 80vh;
+  min-height: 85vh;
 
   .img_box {
-    min-height: 80vh;
+    min-height: 85vh;
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -55,5 +55,20 @@ body * {
       display: flex;
       justify-content: center;
     }
+  }
+}
+
+.spinner-7 {
+  width: 50px;
+  aspect-ratio: 1;
+  --_c: radial-gradient(farthest-side, #a2d729 92%, #0000);
+  background: var(--_c) top, var(--_c) left, var(--_c) right, var(--_c) bottom;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  animation: s7 1s infinite;
+}
+@keyframes s7 {
+  to {
+    transform: rotate(0.5turn);
   }
 }

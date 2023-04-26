@@ -8,21 +8,34 @@
 .header-container {
   width: 100%;
   height: 10vh;
-  background: var(--dark-blue);
+  background: var(--navy-blue);
   margin: 0;
   display: flex;
   align-items: center;
-  gap: 20px;
   font-size: 24px;
   font-family: Roboto, sans-serif;
   color: var(--main-white);
+  justify-content: space-between;
   span {
     cursor: pointer;
   }
+}
+
+.nav-links {
+  padding-right: 60px;
+  display: flex;
+  gap: 24px;
 }
 
 .nav-link {
   font-size: 20px;
   text-decoration: none;
   color: var(--main-white);
+}
+
+.nav-info {
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  gap: 24px;
 }

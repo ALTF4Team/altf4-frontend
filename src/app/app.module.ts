@@ -26,6 +26,8 @@ import { PreviewComponent } from './application-form/preview/preview.component';
 import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
 import { MaxFormComponent } from './max-form/max-form.component';
 import { SubmittedComponent } from './submitted/submitted.component';
+import { ErrorComponent } from './error/error.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { SubmittedComponent } from './submitted/submitted.component';
     CalculatorsPageComponent,
     MaxFormComponent,
     SubmittedComponent,
+    ErrorComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
