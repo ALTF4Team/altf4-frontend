@@ -48,12 +48,9 @@ export class PreviewComponent {
       .postFormData(this.data)
       .pipe(
         tap((res: HttpResponse<any>) => {
-          if (res.status === 200) {
-            this.router.navigate(['submitted']);
-          }
+          this.router.navigate(['submitted']);
         }),
         catchError((error) => {
-          console.log('Error: ' + error);
           const dialogRef = this.dialog.open(ErrorComponent, {
             width: '400px',
             data: { message: 'Error: ' + error.message },
