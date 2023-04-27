@@ -1,7 +1,4 @@
-<mat-dialog-content
-  class="preview_container"
-  (submit)="onApplicationFormSubmit()"
->
+<mat-dialog-content class="preview_container">
   <div class="preview_section preview_section_1">
     <h3 class="preview_header">Personal information</h3>
     <ul>
@@ -13,7 +10,7 @@
       </li>
       <li>
         <span>Date of Birth:</span>
-        {{ data.customer.yearOfBirth | date : "longDate" }}
+        {{ data.customer.birthDate | date : "longDate" }}
       </li>
       <li><span>Mobile number:</span> {{ data.customer.mobileNumber }}</li>
       <li><span>Email:</span> {{ data.customer.email }}</li>
@@ -28,7 +25,7 @@
         <span> Down payment:</span>
         {{ data.loan.downPayment }}
       </li>
-      <li><span>Loan term:</span> {{ data.loan.loanTerm }}</li>
+      <li><span>Loan term:</span> {{ data.loan.termYears }}</li>
     </ul>
   </div>
   <div class="preview_section preview_section_3">
@@ -36,7 +33,7 @@
     <ul>
       <li>
         <span> Employment status:</span>
-        {{ employmentStatus }}
+        {{ data.financialInformation.employmentStatus }}
       </li>
       <li *ngIf="data.financialInformation.sourceOfIncome">
         <span> Source of income:</span>
@@ -52,7 +49,7 @@
       </li>
       <li *ngIf="data.financialInformation.employmentContractType">
         <span> Contract type:</span>
-        {{ contractType }}
+        {{ data.financialInformation.employmentContractType }}
       </li>
       <li *ngIf="data.financialInformation.yearsCurrentEmployer">
         <span> Years with current employer:</span>
@@ -101,14 +98,21 @@
     </ul>
   </div>
   <mat-dialog-actions align="end" class="preview_btn_box">
-    <button mat-button mat-dialog-close>Back</button>
     <button
       mat-button
       [mat-dialog-close]="true"
-      (click)="onApplicationFormSubmit()"
-      type="submit"
+      (click)="approve(data)"
+      class="approve-btn"
     >
-      Submit
+      Approve
+    </button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      (click)="deny(data)"
+      class="deny-btn"
+    >
+      Deny
     </button>
   </mat-dialog-actions>
 </mat-dialog-content>

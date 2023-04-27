@@ -1,9 +1,11 @@
-export interface ApplicationFormValues {
+export interface UserApplicationValues {
+  id: number;
+  applicationStatus: string;
   customer: {
     name: string;
     surname: string;
     countryOfCitizenship: string;
-    yearOfBirth: Date;
+    birthDate: Date;
     mobileNumber: string;
     email: string;
   };
@@ -11,7 +13,7 @@ export interface ApplicationFormValues {
     loanPurpose: string;
     totalAmount: number;
     downPayment: number;
-    loanTerm: number;
+    termYears: number;
   };
   financialInformation: {
     employmentStatus: string;
