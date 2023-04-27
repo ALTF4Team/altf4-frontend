@@ -26,6 +26,14 @@ export interface ApplicationFormValues {
     maritalStatus: string;
     underageDependentsCount: number;
     monthlyIncome: number;
-    coBorrower: string;
+    coBorrowed: string;
+  };
+  coBorrower: {
+    coName: string | null;
+    coSurname: string | null;
+    coCountryOfCitizenship: string | null;
+    coYearOfBirth: Date | null;
+    coMobileNumber: string | null;
+    coEmail: string | null;
   };
 }

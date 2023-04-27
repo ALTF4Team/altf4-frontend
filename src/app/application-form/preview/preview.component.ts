@@ -29,7 +29,7 @@ export class PreviewComponent {
     private dialog: MatDialog
   ) {
     this.partner =
-      data.financialInformation.coBorrower === 'true' ? 'Yes' : 'No';
+      data.financialInformation.coBorrowed === 'true' ? 'Yes' : 'No';
     this.contractType =
       data.financialInformation.employmentContractType === 'OPEN_ENDED'
         ? 'Open-ended'

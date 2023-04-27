@@ -2,7 +2,7 @@
   class="preview_container"
   (submit)="onApplicationFormSubmit()"
 >
-  <div class="preview_section preview_section_2">
+  <div class="preview_section preview_section_1">
     <h3 class="preview_header">Personal information</h3>
     <ul>
       <li><span>Name:</span> {{ data.customer.name }}</li>
@@ -78,6 +78,26 @@
         {{ data.financialInformation.monthlyIncome }}
       </li>
       <li><span>Co-borrower?:</span> {{ partner }}</li>
+    </ul>
+  </div>
+  <div
+    *ngIf="data.financialInformation.coBorrowed === 'true'"
+    class="preview_section preview_section_4"
+  >
+    <h3 class="preview_header">Co borrower's information</h3>
+    <ul>
+      <li><span>Name:</span> {{ data.coBorrower.coName }}</li>
+      <li><span>Surname:</span> {{ data.coBorrower.coSurname }}</li>
+      <li>
+        <span> Country of citizenship:</span>
+        {{ data.coBorrower.coCountryOfCitizenship }}
+      </li>
+      <li>
+        <span>Date of Birth:</span>
+        {{ data.coBorrower.coYearOfBirth | date : "longDate" }}
+      </li>
+      <li><span>Mobile number:</span> {{ data.coBorrower.coMobileNumber }}</li>
+      <li><span>Email:</span> {{ data.coBorrower.coEmail }}</li>
     </ul>
   </div>
   <mat-dialog-actions align="end" class="preview_btn_box">

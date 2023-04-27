@@ -99,19 +99,13 @@ export class ApplicationFormComponent implements OnInit {
       ),
       financialInformation: this.fb.group({
         employmentStatus: ['', Validators.required],
-        sourceOfIncome: new FormControl(null, Validators.required),
-        yearsSelfEmployment: new FormControl(null, [
-          Validators.required,
-          Validators.min(0),
-        ]),
-        currentEmployer: new FormControl(null, Validators.required),
-        employmentContractType: new FormControl(null, Validators.required),
-        yearsCurrentEmployer: new FormControl(null, [
-          Validators.required,
-          Validators.min(0),
-        ]),
-        position: new FormControl(null, Validators.required),
-        industry: new FormControl(null, Validators.required),
+        sourceOfIncome: new FormControl(null),
+        yearsSelfEmployment: new FormControl(null, [Validators.min(0)]),
+        currentEmployer: new FormControl(null),
+        employmentContractType: new FormControl(null),
+        yearsCurrentEmployer: new FormControl(null, [Validators.min(0)]),
+        position: new FormControl(null),
+        industry: new FormControl(null),
         education: ['', Validators.required],
         maritalStatus: ['', Validators.required],
         underageDependentsCount: [
@@ -122,7 +116,24 @@ export class ApplicationFormComponent implements OnInit {
           '',
           [Validators.required, Validators.min(0), Validators.max(100000)],
         ],
-        coBorrower: ['', Validators.required],
+        coBorrowed: ['', Validators.required],
+      }),
+      coBorrower: this.fb.group({
+        coName: new FormControl(null, Validators.required),
+        coSurname: new FormControl(null, Validators.required),
+        coCountryOfCitizenship: new FormControl(null, Validators.required),
+        coBirthDate: new FormControl(null, Validators.required),
+        coMobileNumber: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(
+            '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
+          ),
+        ]),
+        coEmail: new FormControl(null, [
+          Validators.required,
+          Validators.email,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ]),
       }),
     });
 
@@ -140,7 +151,6 @@ export class ApplicationFormComponent implements OnInit {
           (a, b) => a.name.common.charCodeAt(0) - b.name.common.charCodeAt(0)
         );
       });
-
     this.filteredCountries = this.countryOfCitizenship.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || ''))
@@ -188,6 +198,10 @@ export class ApplicationFormComponent implements OnInit {
 
   get financialInformation() {
     return this.applicationForm.get('financialInformation') as FormControl<any>;
+  }
+
+  get coBorrower() {
+    return this.applicationForm.get('coBorrower') as FormControl<any>;
   }
 
   get name() {
@@ -304,8 +318,36 @@ export class ApplicationFormComponent implements OnInit {
     ) as FormControl<string>;
   }
 
-  get coBorrower() {
-    return this.financialInformation.get('coBorrower') as FormControl<string>;
+  get coBorrowed() {
+    return this.financialInformation.get('coBorrowed') as FormControl<string>;
+  }
+
+  get coName() {
+    return this.coBorrower.get('coName') as FormControl<string | null>;
+  }
+
+  get coSurname() {
+    return this.coBorrower.get('coSurname') as FormControl<string | null>;
+  }
+
+  get coCountryOfCitizenship() {
+    return this.coBorrower.get('coCountryOfCitizenship') as FormControl<
+      string | null
+    >;
+  }
+
+  get coBirthDate() {
+    return this.coBorrower.get('coBirthDate') as FormControl<
+      string | Date | null
+    >;
+  }
+
+  get coMobileNumber() {
+    return this.coBorrower.get('coMobileNumber') as FormControl<string | null>;
+  }
+
+  get coEmail() {
+    return this.coBorrower.get('coEmail') as FormControl<string | null>;
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {
@@ -316,6 +358,9 @@ export class ApplicationFormComponent implements OnInit {
   }
   getFinancialInformationFloatLabelValue(): FloatLabelType {
     return this.financialInformation.value || 'auto';
+  }
+  getCoBorrowerInformationFloatLabelValue(): FloatLabelType {
+    return this.coBorrower.value || 'auto';
   }
 
   setDownPaymentOnTotalAmountChange(): void {
