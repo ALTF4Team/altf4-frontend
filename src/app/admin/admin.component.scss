@@ -25,6 +25,22 @@
   }
 }
 
+mat-icon {
+  font-size: 30px;
+}
+
+.approved {
+  color: var(--bright-green);
+}
+.denied {
+  color: var(--red);
+}
+
+.status-box {
+  display: flex;
+  gap: 6px;
+}
+
 @media (max-width: 1600px) {
   .admin-container {
     width: 70%;
