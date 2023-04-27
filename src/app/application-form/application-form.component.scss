@@ -14,7 +14,7 @@
   font-size: 30px;
   color: var(--main-white);
   min-height: 80%;
-  width: 100%;
+  width: 60%;
 }
 
 .application_form {
@@ -42,7 +42,7 @@
 }
 
 .date_picker {
-  width: 30%;
+  width: 100%;
 }
 
 .percentage {
@@ -111,21 +111,22 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px whitesmoke inset !important;
 }
 
-@media (max-width: 1200px) {
-  .date_picker {
-    width: 40%;
-  }
-}
-
-@media (max-width: 1000px) {
-  .date_picker {
-    width: 50%;
-  }
-}
-
-@media (max-width: 800px) {
+@media (max-width: 1600px) {
   .form-container {
-    padding: 20px;
+    width: 70%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .form-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 850px) {
+  .form-container {
+    padding: 40px;
+    width: 90%;
   }
   .application_form {
     h1 {
@@ -139,9 +140,6 @@ input:-webkit-autofill:active {
 @media (max-width: 500px) {
   .form-container {
     padding: 20px 5px 5px 5px;
-  }
-  .date_picker {
-    width: 100%;
   }
   .container-application-form {
     height: auto;
