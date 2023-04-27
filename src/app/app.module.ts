@@ -22,6 +22,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 import { PreviewComponent } from './application-form/preview/preview.component';
 import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
 import { MaxFormComponent } from './max-form/max-form.component';
@@ -63,6 +65,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatNativeDateModule,
     MatDialogModule,
     MatTabsModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

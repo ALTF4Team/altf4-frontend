@@ -39,3 +39,22 @@
   padding-left: 40px;
   gap: 24px;
 }
+
+.nav-links-icon {
+  display: none;
+}
+
+::ng-deep .customize {
+  background-color: var(--navy-blue);
+}
+
+@media (max-width: 600px) {
+  .nav-links-icon {
+    display: block;
+    padding-right: 20px;
+    font-size: 30px;
+  }
+  .nav-links {
+    display: none;
+  }
+}
