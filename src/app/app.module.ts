@@ -24,12 +24,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { PreviewComponent } from './application-form/preview/preview.component';
 import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
 import { MaxFormComponent } from './max-form/max-form.component';
 import { SubmittedComponent } from './submitted/submitted.component';
 import { ErrorComponent } from './error/error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserPreviewComponent } from './admin/user-preview/user-preview.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     SubmittedComponent,
     ErrorComponent,
     NotFoundComponent,
+    AdminComponent,
+    UserPreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +72,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatTabsModule,
     MatMenuModule,
     MatIconModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

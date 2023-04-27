@@ -6,16 +6,17 @@ import { ApplicationFormComponent } from './application-form/application-form.co
 import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
 import { SubmittedComponent } from './submitted/submitted.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingComponent,
   },
-  { path: 'loan', component: LoanFormComponent },
   { path: 'apply', component: ApplicationFormComponent },
   { path: 'calculate', component: CalculatorsPageComponent },
   { path: 'submitted', component: SubmittedComponent },
+  { path: 'admin', component: AdminComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

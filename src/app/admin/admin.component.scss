@@ -1,0 +1,51 @@
+.admin-container {
+  padding: 100px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  column-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: var(--main-white);
+  min-height: 80%;
+  width: 60%;
+}
+
+.sort-box {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 16px;
+  h5 {
+    color: var(--navy-blue);
+  }
+  button {
+    padding: 4px 6px;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .admin-container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .admin-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 850px) {
+  .admin-container {
+    padding: 40px;
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px) {
+  .admin-container {
+    padding: 20px 5px 5px 5px;
+  }
+}
