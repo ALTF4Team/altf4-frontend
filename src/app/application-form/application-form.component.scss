@@ -85,23 +85,15 @@
   line-height: 1 !important;
 }
 
-::ng-deep .mat-mdc-button .mat-mdc-button-ripple,
-.mat-mdc-button .mat-mdc-button-persistent-ripple,
-.mat-mdc-button .mat-mdc-button-persistent-ripple::before,
-.mat-mdc-unelevated-button .mat-mdc-button-ripple,
-.mat-mdc-unelevated-button .mat-mdc-button-persistent-ripple,
-.mat-mdc-unelevated-button .mat-mdc-button-persistent-ripple::before,
-.mat-mdc-raised-button .mat-mdc-button-ripple,
-.mat-mdc-raised-button .mat-mdc-button-persistent-ripple,
-.mat-mdc-raised-button .mat-mdc-button-persistent-ripple::before,
-.mat-mdc-outlined-button .mat-mdc-button-ripple,
-.mat-mdc-outlined-button .mat-mdc-button-persistent-ripple,
-.mat-mdc-outlined-button .mat-mdc-button-persistent-ripple::before {
-  background-color: var(--bright-green);
+::ng-deep .mat-mdc-raised-button {
+  margin-right: 8px;
 }
 
-::ng-deep .mat-mdc-button {
-  margin-right: 8px;
+//.mat-mdc-raised-button:not(:disabled) {
+//  background-color: var(--bright-green);
+//}
+.mat-mdc-button:hover .mat-mdc-button:focus {
+  background-color: rgba(215, 41, 41, 0.57);
 }
 
 input:-webkit-autofill,
@@ -110,7 +102,6 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px whitesmoke inset !important;
 }
-
 
 @media (max-width: 1600px) {
   .form-container {

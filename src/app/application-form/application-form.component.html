@@ -146,7 +146,14 @@
               </mat-error>
             </mat-form-field>
             <div>
-              <button mat-button matStepperNext type="button">Next</button>
+              <button
+                mat-raised-button
+                color="accent"
+                matStepperNext
+                type="button"
+              >
+                Next
+              </button>
             </div>
           </div>
         </mat-step>
@@ -272,8 +279,17 @@
               </mat-error>
             </mat-form-field>
             <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext type="button">Next</button>
+              <button mat-raised-button color="accent" matStepperPrevious>
+                Back
+              </button>
+              <button
+                mat-raised-button
+                color="accent"
+                matStepperNext
+                type="button"
+              >
+                Next
+              </button>
             </div>
           </div>
         </mat-step>
@@ -587,12 +603,25 @@
           </div>
 
           <div *ngIf="coBorrowed.value === 'false'">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="onPreview()">Next</button>
+            <button mat-raised-button color="accent" matStepperPrevious>
+              Back
+            </button>
+            <button mat-raised-button color="accent" (click)="onPreview()">
+              Next
+            </button>
           </div>
           <div *ngIf="coBorrowed.value === 'true'">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext type="button">Next</button>
+            <button mat-raised-button color="accent" matStepperPrevious>
+              Back
+            </button>
+            <button
+              mat-raised-button
+              color="accent"
+              matStepperNext
+              type="button"
+            >
+              Next
+            </button>
           </div>
         </mat-step>
         <!-- ------------------------------------------------------------------------------------ -->
@@ -746,8 +775,12 @@
             </mat-form-field>
           </div>
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="onPreview()">Next</button>
+            <button mat-raised-button color="accent" matStepperPrevious>
+              Back
+            </button>
+            <button mat-raised-button color="accent" (click)="onPreview()">
+              Next
+            </button>
           </div>
         </mat-step>
       </mat-stepper>
