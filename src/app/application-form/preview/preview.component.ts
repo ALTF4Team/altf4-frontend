@@ -53,7 +53,8 @@ export class PreviewComponent {
         catchError((error) => {
           const dialogRef = this.dialog.open(ErrorComponent, {
             width: '400px',
-            data: { message: 'Error: ' + error.message },
+            height: '160px',
+            data: { message: 'Error: ' + error.error.message },
           });
           return of(null);
         })
