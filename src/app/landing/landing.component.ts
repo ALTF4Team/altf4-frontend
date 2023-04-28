@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class LandingComponent {
   landingImgUrl = 'assets/img/house_res.jpg';
-
-  constructor() {
-    localStorage.clear();
-  }
 }
