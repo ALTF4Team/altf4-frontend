@@ -86,18 +86,18 @@
   >
     <h3 class="preview_header">Co borrower's information</h3>
     <ul>
-      <li><span>Name:</span> {{ data.coBorrower.coName }}</li>
-      <li><span>Surname:</span> {{ data.coBorrower.coSurname }}</li>
+      <li><span>Name:</span> {{ data.coBorrower.name }}</li>
+      <li><span>Surname:</span> {{ data.coBorrower.surname }}</li>
       <li>
         <span> Country of citizenship:</span>
-        {{ data.coBorrower.coCountryOfCitizenship }}
+        {{ data.coBorrower.countryOfCitizenship }}
       </li>
       <li>
         <span>Date of Birth:</span>
-        {{ data.coBorrower.coYearOfBirth | date : "longDate" }}
+        {{ data.coBorrower.yearOfBirth | date : "longDate" }}
       </li>
-      <li><span>Mobile number:</span> {{ data.coBorrower.coMobileNumber }}</li>
-      <li><span>Email:</span> {{ data.coBorrower.coEmail }}</li>
+      <li><span>Mobile number:</span> {{ data.coBorrower.mobileNumber }}</li>
+      <li><span>Email:</span> {{ data.coBorrower.email }}</li>
     </ul>
   </div>
   <mat-dialog-actions align="end" class="preview_btn_box">
