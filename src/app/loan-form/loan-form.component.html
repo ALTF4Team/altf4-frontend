@@ -2,12 +2,7 @@
   <!-- <div class="img_box"> -->
   <div class="loan_calculation_page">
     <div class="form-container">
-      <form
-        class="loan_form"
-        [formGroup]="loanForm"
-        (ngSubmit)="onLoanFormSubmit()"
-        (reset)="onLoanFormReset()"
-      >
+      <form class="loan_form" [formGroup]="loanForm">
         <h1>Provide Loan Details</h1>
 
         <mat-form-field

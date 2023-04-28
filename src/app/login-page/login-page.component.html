@@ -1,0 +1,28 @@
+<div class="login-container">
+  <div class="title-text"><h1>Login</h1></div>
+
+  <form
+    class="login-box"
+    [formGroup]="loginForm"
+    (ngSubmit)="onLoanFormSubmit()"
+    (reset)="onLoanFormReset()"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label for="login">Login:</mat-label>
+      <input matInput type="email" id="login" formControlName="login" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label for="password">Password:</mat-label>
+      <input
+        matInput
+        type="password"
+        id="password"
+        formControlName="password"
+      />
+    </mat-form-field>
+    <div class="button-area">
+      <button type="submit" mat-raised-button>Submit</button>
+      <button type="reset" mat-raised-button>Reset</button>
+    </div>
+  </form>
+</div>
