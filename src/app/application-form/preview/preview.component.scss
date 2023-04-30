@@ -4,11 +4,22 @@ mat-dialog-content {
 
 .preview_container {
   padding: 60px;
+  background-color: rgb(164, 209, 233, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
   border-radius: 20px;
-  background-color: rgb(164, 209, 233, 0.1);
+}
+
+.preview-spinner {
+  padding-top: 150px;
 }
 
 .preview_section {
@@ -24,7 +35,7 @@ ul {
   gap: 12px;
   list-style: none;
   span {
-    color: rgb(95, 91, 91);
+    color: rgb(40, 39, 39);
   }
 }
 
@@ -38,7 +49,7 @@ ul {
   border-radius: 12px;
 }
 
-::ng-deep .preview_container {
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__content {
   min-height: 900px;
 }
 
@@ -57,24 +68,18 @@ ul {
 @media (max-width: 500px) {
   .preview_container {
     padding: 16px;
-  }
-  .preview_header {
-    font-size: 20px;
-  }
-  .preview_section {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 500px) {
-  .preview_container {
-    padding: 16px;
+    line-height: 1.1;
   }
   .preview_header {
     font-size: 18px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
   }
   .preview_section {
     font-size: 15px;
   }
+}
+
+.spinner-7 {
+  width: 100px;
+  background-size: 18px 18px;
 }
