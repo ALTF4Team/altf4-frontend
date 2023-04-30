@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -118,29 +117,14 @@ export class ApplicationFormComponent implements OnInit {
         ],
         coBorrowed: ['', Validators.required],
       }),
-      coBorrower: this.fb.group({
-        coName: new FormControl(null, Validators.required),
-        coSurname: new FormControl(null, Validators.required),
-        coCountryOfCitizenship: new FormControl(null, Validators.required),
-        coBirthDate: new FormControl(null, Validators.required),
-        coMobileNumber: new FormControl(null, [
-          Validators.required,
-          Validators.pattern(
-            '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
-          ),
-        ]),
-        coEmail: new FormControl(null, [
-          Validators.required,
-          Validators.email,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        ]),
-      }),
     });
 
     this.maxDate = new Date();
     this.setDownPaymentOnTotalAmountChange();
     this.setDownPaymentOnPercentageChange();
     this.setPercentage();
+    this.setCoBorrower();
+    this.setRequiredValidators();
   }
 
   ngOnInit() {
@@ -202,6 +186,10 @@ export class ApplicationFormComponent implements OnInit {
 
   get coBorrower() {
     return this.applicationForm.get('coBorrower') as FormControl<any>;
+  }
+
+  get coBorrowed() {
+    return this.financialInformation.get('coBorrowed') as FormControl<string>;
   }
 
   get name() {
@@ -318,36 +306,32 @@ export class ApplicationFormComponent implements OnInit {
     ) as FormControl<string>;
   }
 
-  get coBorrowed() {
-    return this.financialInformation.get('coBorrowed') as FormControl<string>;
-  }
-
   get coName() {
-    return this.coBorrower.get('coName') as FormControl<string | null>;
+    return this.coBorrower.get('name') as FormControl<string | null>;
   }
 
   get coSurname() {
-    return this.coBorrower.get('coSurname') as FormControl<string | null>;
+    return this.coBorrower.get('surname') as FormControl<string | null>;
   }
 
   get coCountryOfCitizenship() {
-    return this.coBorrower.get('coCountryOfCitizenship') as FormControl<
+    return this.coBorrower.get('countryOfCitizenship') as FormControl<
       string | null
     >;
   }
 
   get coBirthDate() {
-    return this.coBorrower.get('coBirthDate') as FormControl<
+    return this.coBorrower.get('birthDate') as FormControl<
       string | Date | null
     >;
   }
 
   get coMobileNumber() {
-    return this.coBorrower.get('coMobileNumber') as FormControl<string | null>;
+    return this.coBorrower.get('mobileNumber') as FormControl<string | null>;
   }
 
   get coEmail() {
-    return this.coBorrower.get('coEmail') as FormControl<string | null>;
+    return this.coBorrower.get('email') as FormControl<string | null>;
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {
@@ -360,7 +344,7 @@ export class ApplicationFormComponent implements OnInit {
     return this.financialInformation.value || 'auto';
   }
   getCoBorrowerInformationFloatLabelValue(): FloatLabelType {
-    return this.coBorrower.value || 'auto';
+    return this.coBorrower?.value || 'auto';
   }
 
   setDownPaymentOnTotalAmountChange(): void {
@@ -383,7 +367,7 @@ export class ApplicationFormComponent implements OnInit {
     this.percentage.valueChanges.subscribe((percentage) => {
       if (percentage >= 0) {
         const downPayment = totalAmountControl.value * (percentage / 100);
-        downPaymentControl?.setValue(Math.round(downPayment), {
+        downPaymentControl?.setValue(downPayment, {
           emitEvent: false,
         });
       }
@@ -397,11 +381,69 @@ export class ApplicationFormComponent implements OnInit {
       const totalAmountControl = this.totalAmount;
       if (totalAmountControl?.value >= 0) {
         percentageControl.setValue(
-          Math.round(
-            (downPaymentControl.value * 100) / totalAmountControl?.value
-          ),
+          (downPaymentControl.value * 100) / totalAmountControl?.value,
           { emitEvent: false }
         );
+      }
+    });
+  }
+
+  setCoBorrower(): void {
+    this.coBorrowed.valueChanges.subscribe((coBorrowed) => {
+      const coBorrowedControl = this.coBorrowed;
+      if (coBorrowedControl.value === 'true') {
+        this.applicationForm.addControl(
+          'coBorrower',
+          this.fb.group({
+            name: new FormControl(null, Validators.required),
+            surname: new FormControl(null, Validators.required),
+            countryOfCitizenship: new FormControl(null, Validators.required),
+            birthDate: new FormControl(null, Validators.required),
+            mobileNumber: new FormControl(null, [
+              Validators.required,
+              Validators.pattern(
+                '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
+              ),
+            ]),
+            email: new FormControl(null, [
+              Validators.required,
+              Validators.email,
+              Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+            ]),
+          })
+        );
+      } else if (coBorrowedControl.value === 'false') {
+        this.applicationForm.removeControl('coBorrower');
+      }
+    });
+  }
+
+  setRequiredValidators(): void {
+    this.employmentStatus.valueChanges.subscribe((employmentStatus) => {
+      if (employmentStatus === 'CONTRACT_EMPLOYMENT') {
+        this.currentEmployer.setValidators(Validators.required);
+        this.employmentContractType.setValidators(Validators.required);
+        this.yearsCurrentEmployer.setValidators(Validators.required);
+        this.position.setValidators(Validators.required);
+        this.industry.setValidators(Validators.required);
+        this.yearsSelfEmployment.removeValidators(Validators.required);
+        this.sourceOfIncome.removeValidators(Validators.required);
+      } else if (employmentStatus === 'SELF_EMPLOYED') {
+        this.yearsSelfEmployment.setValidators(Validators.required);
+        this.currentEmployer.removeValidators(Validators.required);
+        this.employmentContractType.removeValidators(Validators.required);
+        this.yearsCurrentEmployer.removeValidators(Validators.required);
+        this.position.removeValidators(Validators.required);
+        this.industry.removeValidators(Validators.required);
+        this.sourceOfIncome.removeValidators(Validators.required);
+      } else if (employmentStatus === 'UNEMPLOYED') {
+        this.sourceOfIncome.setValidators(Validators.required);
+        this.currentEmployer.removeValidators(Validators.required);
+        this.employmentContractType.removeValidators(Validators.required);
+        this.yearsCurrentEmployer.removeValidators(Validators.required);
+        this.position.removeValidators(Validators.required);
+        this.industry.removeValidators(Validators.required);
+        this.yearsSelfEmployment.removeValidators(Validators.required);
       }
     });
   }

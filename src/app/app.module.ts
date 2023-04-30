@@ -33,6 +33,7 @@ import { ErrorComponent } from './error/error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserPreviewComponent } from './admin/user-preview/user-preview.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { UserPreviewComponent } from './admin/user-preview/user-preview.componen
     NotFoundComponent,
     AdminComponent,
     UserPreviewComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,

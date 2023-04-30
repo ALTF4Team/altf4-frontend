@@ -233,7 +233,7 @@
                 <mat-error
                   *ngIf="loan?.errors?.['downPaymentTooSmall'] && downPayment.touched"
                 >
-                  <div>Down payment should be at least 15 %</div>
+                  <div>Must be at least 15 %</div>
                 </mat-error>
               </mat-form-field>
               <mat-form-field
@@ -602,21 +602,19 @@
             </mat-form-field>
           </div>
 
-          <div *ngIf="coBorrowed.value === 'false'">
-            <button mat-raised-button color="accent" matStepperPrevious>
-              Back
-            </button>
-            <button mat-raised-button color="accent" (click)="onPreview()">
+
+          <div>
+            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+            <button
+              *ngIf="coBorrowed.value === 'false' || coBorrowed.value === ''"
+              mat-button
+              (click)="onPreview()"
+            >
               Next
             </button>
-          </div>
-          <div *ngIf="coBorrowed.value === 'true'">
-            <button mat-raised-button color="accent" matStepperPrevious>
-              Back
-            </button>
             <button
-              mat-raised-button
-              color="accent"
+              *ngIf="coBorrowed.value === 'true'"
+              mat-raised-button color="accent"
               matStepperNext
               type="button"
             >
@@ -640,7 +638,7 @@
               <input
                 matInput
                 type="text"
-                formControlName="coName"
+                formControlName="name"
                 id="coName"
                 placeholder="Name"
               />
@@ -658,7 +656,7 @@
               <input
                 matInput
                 type="text"
-                formControlName="coSurname"
+                formControlName="surname"
                 id="coSurname"
                 placeholder="Surname"
               />
@@ -678,7 +676,7 @@
               <input
                 type="text"
                 matInput
-                [formControl]="coCountryOfCitizenship"
+                formControlName="countryOfCitizenship"
                 [matAutocomplete]="auto"
               />
               <mat-autocomplete #auto="matAutocomplete">
@@ -712,7 +710,7 @@
                 matInput
                 [max]="maxDate"
                 [matDatepicker]="picker"
-                formControlName="coBirthDate"
+                formControlName="birthDate"
               />
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle
@@ -737,7 +735,7 @@
               <input
                 matInput
                 type="string"
-                formControlName="coMobileNumber"
+                formControlName="mobileNumber"
                 id="coMobileNumber"
                 placeholder="+370"
               />
@@ -760,7 +758,7 @@
               <input
                 matInput
                 type="email"
-                formControlName="coEmail"
+                formControlName="email"
                 id="coEmail"
                 ngModel
                 email

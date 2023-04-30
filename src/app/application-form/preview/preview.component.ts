@@ -20,6 +20,7 @@ export class PreviewComponent {
   partner: string;
   contractType: string;
   employmentStatus: string;
+  isLoading: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<PreviewComponent>,
@@ -44,16 +45,20 @@ export class PreviewComponent {
   }
 
   onApplicationFormSubmit() {
+    this.isLoading = true;
     this.applicationFormService
       .postFormData(this.data)
       .pipe(
         tap((res: HttpResponse<any>) => {
           this.router.navigate(['submitted']);
+          this.isLoading = false;
+          this.dialogRef.close();
         }),
         catchError((error) => {
           const dialogRef = this.dialog.open(ErrorComponent, {
             width: '400px',
-            data: { message: 'Error: ' + error.message },
+            height: '160px',
+            data: { message: 'Error: ' + error.error.message },
           });
           return of(null);
         })

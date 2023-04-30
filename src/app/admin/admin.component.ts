@@ -13,13 +13,7 @@ import { UserPreviewComponent } from './user-preview/user-preview.component';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent {
-  displayedColumns: string[] = [
-    'position',
-    'name',
-    'surname',
-    'status',
-    'preview',
-  ];
+  displayedColumns: string[] = ['date', 'name', 'surname', 'status', 'preview'];
   formData!: UserApplicationValues;
   applicationList$?: Observable<UserApplicationValues[]>;
   dataSource: CdkTableDataSourceInput<UserApplicationValues> =
@@ -29,6 +23,7 @@ export class AdminComponent {
     this.applicationList$ = adminService.getApplicationsList();
     this.applicationList$.subscribe(
       (data) => (this.dataSource = data),
+
       (error) => console.error(error)
     );
   }
@@ -46,15 +41,13 @@ export class AdminComponent {
       width: '700px',
       panelClass: 'preview_container',
     });
-    dialogRef.afterClosed().subscribe((result) => {
-      dialogRef.close();
-    });
+    dialogRef.afterClosed().subscribe((data) => {});
   }
 
   sortByStatus() {
     this.applicationList$?.subscribe((items) => {
       this.dataSource = items.sort((a, b) =>
-        a.applicationStatus.localeCompare(b.applicationStatus)
+        b.applicationStatus.localeCompare(a.applicationStatus)
       );
     });
   }

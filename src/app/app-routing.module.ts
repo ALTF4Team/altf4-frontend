@@ -7,6 +7,8 @@ import { CalculatorsPageComponent } from './calculators-page/calculators-page.co
 import { SubmittedComponent } from './submitted/submitted.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AdminComponent } from './admin/admin.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { AuthGuard } from './authorisation/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +18,8 @@ const routes: Routes = [
   { path: 'apply', component: ApplicationFormComponent },
   { path: 'calculate', component: CalculatorsPageComponent },
   { path: 'submitted', component: SubmittedComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginPageComponent },
   { path: '**', component: NotFoundComponent },
 ];
 
