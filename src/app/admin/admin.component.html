@@ -7,10 +7,10 @@
       <button (click)="sortBySurname()">By surname</button>
     </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>No.</th>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
         <td mat-cell *matCellDef="let application">
-          {{ application.id }}
+          {{ application.localDateTime | date : "y-MM-d" }}
         </td>
       </ng-container>
 

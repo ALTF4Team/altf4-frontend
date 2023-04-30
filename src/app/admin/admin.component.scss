@@ -41,6 +41,19 @@ mat-icon {
   gap: 6px;
 }
 
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+  vertical-align: middle;
+}
+
+.mat-mdc-table .mdc-data-table__row {
+  font-size: 20px;
+}
+
+.mat-column-date {
+  min-width: 180px;
+}
+
 @media (max-width: 1600px) {
   .admin-container {
     width: 70%;

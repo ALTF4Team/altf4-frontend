@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { UserApplicationValues } from 'src/app/interfaces/userApplicationValues';
 import { AdminService } from 'src/app/services/admin.service';
 
@@ -18,7 +19,6 @@ export class UserPreviewComponent {
   ) {
     this.partner =
       data.financialInformation.coBorrowed === 'true' ? 'Yes' : 'No';
-    console.log(data);
   }
 
   approve(data: UserApplicationValues) {

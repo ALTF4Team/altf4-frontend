@@ -34,7 +34,7 @@ export interface UserApplicationValues {
     name: string | null;
     surname: string | null;
     countryOfCitizenship: string | null;
-    yearOfBirth: Date | null;
+    birthDate: Date | null;
     mobileNumber: string | null;
     email: string | null;
   };
