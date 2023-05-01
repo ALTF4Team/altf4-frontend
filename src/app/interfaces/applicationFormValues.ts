@@ -3,7 +3,7 @@ export interface ApplicationFormValues {
     name: string;
     surname: string;
     countryOfCitizenship: string;
-    yearOfBirth: Date;
+    birthDate: Date;
     mobileNumber: string;
     email: string;
   };
@@ -11,7 +11,7 @@ export interface ApplicationFormValues {
     loanPurpose: string;
     totalAmount: number;
     downPayment: number;
-    loanTerm: number;
+    termYears: number;
   };
   financialInformation: {
     employmentStatus: string;
@@ -26,6 +26,14 @@ export interface ApplicationFormValues {
     maritalStatus: string;
     underageDependentsCount: number;
     monthlyIncome: number;
-    coBorrower: string;
+    coBorrowed: string;
+  };
+  coBorrower: {
+    name: string | null;
+    surname: string | null;
+    countryOfCitizenship: string | null;
+    birthDate: Date | null;
+    mobileNumber: string | null;
+    email: string | null;
   };
 }

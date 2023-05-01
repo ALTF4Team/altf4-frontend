@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ApplicationFormService {
   countriesdApiURL: string = 'https://restcountries.com/v3.1/all?fields=name';
-  apiURL: string = environment.apiURL + '/api/loan-application';
+  apiURL: string = environment.apiURL + 'api/loan-application';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -18,7 +18,8 @@ export class ApplicationFormService {
   }
 
   postFormData(applicationFormParameters: ApplicationFormValues) {
-    console.log('posting...');
-    return this.httpClient.post(this.apiURL, applicationFormParameters);
+    return this.httpClient.post(this.apiURL, applicationFormParameters, {
+      observe: 'response',
+    });
   }
 }

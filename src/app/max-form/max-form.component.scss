@@ -4,14 +4,13 @@
   width: 100%;
   min-height: 700px;
   align-items: center;
-  justify-content: space-evenly;
   overflow-x: hidden;
   margin-inline: auto;
   background-color: rgb(164, 209, 233, 0.8);
 }
 
 .form-container {
-  padding: 30px 30px 50px;
+  padding: 70px 30px 50px;
   display: flex;
   column-gap: 20px;
   justify-content: center;
@@ -25,38 +24,43 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 80%;
-
   h1 {
     font-size: 32px;
     z-index: 2;
     font-weight: 500;
     padding-bottom: 16px;
+    color: var(--navy-blue);
   }
 }
 
-@media (min-width: 900px) {
-  .max_calculation_page {
-    flex-direction: row;
-    overflow-y: hidden;
-  }
-  .vl {
-    border-left: 1px solid var(--black);
-    height: 500px;
-  }
+.calculation-container {
+  padding: 30px 30px 50px;
+  display: flex;
+  flex-direction: column;
+  column-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: var(--main-white);
+  height: 100%;
+  min-width: min(40%, 65em);
 }
 
 .max_amount_img {
   height: 100px;
   width: auto;
+  margin-bottom: 10px;
 }
 
 .calc-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
+  margin-top: 50px;
+  z-index: 2;
+  font-size: 14px;
+  width: 100%;
+  font-weight: 400;
+  > * {
+    padding-bottom: 10px;
+  }
 }
 
 mat-error {
@@ -67,7 +71,7 @@ mat-error {
 .max_form_btn_box {
   padding-top: 28px;
   display: flex;
-  gap: 32px;
+  gap: 40px;
 }
 
 .text-group {
@@ -79,12 +83,45 @@ mat-error {
   order: 1;
   font-size: 18px;
   color: #ffffff;
+  color: var(--dark-green);
+}
+.amount {
+  color: var(--black);
+  font-size: 16px;
+  order: 2;
 }
 
-@media (max-width: 500px) {
+@media (min-width: 900px) {
+  .max_calculation_page {
+    flex-direction: row;
+    overflow-y: hidden;
+  }
   .form-container {
-    padding: 0;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    width: 49%;
+  }
+  .vl {
+    width: 1%;
+  }
+  .calculation-container {
+    width: 50%;
+  }
+  .vl {
+    border-left: 1px solid var(--black);
+    height: 500px;
+  }
+  .calc-text {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .calc-text {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .calc-text {
+    width: 60%;
   }
 }

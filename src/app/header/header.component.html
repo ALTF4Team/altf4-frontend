@@ -1,6 +1,27 @@
 <div class="header-container">
-  <img src="assets/img/logo_img.svg" alt="logo" class="logo-img" />
-  <span routerLink="/">ALT+F4</span>
-  <a class="nav-link" routerLink="/calculate">Calculate</a>
-  <a class="nav-link" routerLink="/apply">Apply</a>
+  <div class="nav-info">
+    <img src="assets/img/logo_img.svg" alt="logo" class="logo-img" />
+    <span routerLink="/">ALT+F4</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" routerLink="/calculate">Calculate</a>
+    <a class="nav-link" routerLink="/apply">Apply</a>
+  </div>
+  <div class="nav-links-icon">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>density_medium</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" class="customize">
+      <button mat-menu-item>
+        <a class="nav-link" routerLink="/calculate">Calculate</a>
+      </button>
+      <button mat-menu-item>
+        <a class="nav-link" routerLink="/apply">Apply</a>
+      </button>
+    </mat-menu>
+  </div>
 </div>

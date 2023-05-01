@@ -1,0 +1,118 @@
+<mat-dialog-content class="preview_container">
+  <div class="preview_section preview_section_1">
+    <h3 class="preview_header">Personal information</h3>
+    <ul>
+      <li><span>Name:</span> {{ data.customer.name }}</li>
+      <li><span>Surname:</span> {{ data.customer.surname }}</li>
+      <li>
+        <span> Country of citizenship:</span>
+        {{ data.customer.countryOfCitizenship }}
+      </li>
+      <li>
+        <span>Date of Birth:</span>
+        {{ data.customer.birthDate | date : "longDate" }}
+      </li>
+      <li><span>Mobile number:</span> {{ data.customer.mobileNumber }}</li>
+      <li><span>Email:</span> {{ data.customer.email }}</li>
+    </ul>
+  </div>
+  <div class="preview_section preview_section_2">
+    <h3 class="preview_header">Loan information</h3>
+    <ul>
+      <li><span>Loan purpose:</span> {{ data.loan.loanPurpose }}</li>
+      <li><span>Total amount:</span> {{ data.loan.totalAmount }}</li>
+      <li>
+        <span> Down payment:</span>
+        {{ data.loan.downPayment }}
+      </li>
+      <li><span>Loan term:</span> {{ data.loan.termYears }}</li>
+    </ul>
+  </div>
+  <div class="preview_section preview_section_3">
+    <h3 class="preview_header">Financial information</h3>
+    <ul>
+      <li>
+        <span> Employment status:</span>
+        {{ data.financialInformation.employmentStatus }}
+      </li>
+      <li *ngIf="data.financialInformation.sourceOfIncome">
+        <span> Source of income:</span>
+        {{ data.financialInformation.sourceOfIncome }}
+      </li>
+      <li *ngIf="data.financialInformation.yearsSelfEmployment">
+        <span> Years of self employment:</span>
+        {{ data.financialInformation.yearsSelfEmployment }}
+      </li>
+      <li *ngIf="data.financialInformation.currentEmployer">
+        <span> Current employer:</span>
+        {{ data.financialInformation.currentEmployer }}
+      </li>
+      <li *ngIf="data.financialInformation.employmentContractType">
+        <span> Contract type:</span>
+        {{ data.financialInformation.employmentContractType }}
+      </li>
+      <li *ngIf="data.financialInformation.yearsCurrentEmployer">
+        <span> Years with current employer:</span>
+        {{ data.financialInformation.yearsCurrentEmployer }}
+      </li>
+      <li *ngIf="data.financialInformation.position">
+        <span> Position:</span> {{ data.financialInformation.position }}
+      </li>
+      <li *ngIf="data.financialInformation.industry">
+        <span> Industry:</span> {{ data.financialInformation.industry }}
+      </li>
+      <li><span>Education:</span> {{ data.financialInformation.education }}</li>
+      <li>
+        <span>Marital status:</span>
+        {{ data.financialInformation.maritalStatus }}
+      </li>
+      <li>
+        <span> Number of underage dependents:</span>
+        {{ data.financialInformation.underageDependentsCount }}
+      </li>
+      <li>
+        <span> Monthly income after tax:</span>
+        {{ data.financialInformation.monthlyIncome }}
+      </li>
+      <li><span>Co-borrower?:</span> {{ partner }}</li>
+    </ul>
+  </div>
+  <div
+    *ngIf="data.financialInformation.coBorrowed === 'true'"
+    class="preview_section preview_section_4"
+  >
+    <h3 class="preview_header">Co borrower's information</h3>
+    <ul>
+      <li><span>Name:</span> {{ data.coBorrower.name }}</li>
+      <li><span>Surname:</span> {{ data.coBorrower.surname }}</li>
+      <li>
+        <span> Country of citizenship:</span>
+        {{ data.coBorrower.countryOfCitizenship }}
+      </li>
+      <li>
+        <span>Date of Birth:</span>
+        {{ data.coBorrower.birthDate | date : "longDate" }}
+      </li>
+      <li><span>Mobile number:</span> {{ data.coBorrower.mobileNumber }}</li>
+      <li><span>Email:</span> {{ data.coBorrower.email }}</li>
+    </ul>
+  </div>
+  <mat-dialog-actions align="end" class="preview_btn_box">
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      (click)="approve(data)"
+      class="approve-btn"
+    >
+      Approve
+    </button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      (click)="deny(data)"
+      class="deny-btn"
+    >
+      Deny
+    </button>
+  </mat-dialog-actions>
+</mat-dialog-content>

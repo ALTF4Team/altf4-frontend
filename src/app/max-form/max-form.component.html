@@ -31,6 +31,9 @@
             <div *ngIf="monthlyIncomeAfterTaxes.errors['required']">
               Monthly income is required
             </div>
+            <div *ngIf="monthlyIncomeAfterTaxes.errors['min']">
+              Monthly income can't be less than 0
+            </div>
           </mat-error>
         </mat-form-field>
         <mat-form-field
@@ -54,6 +57,9 @@
             <div *ngIf="existingLiabilities.errors['required']">
               Monthly payment for liabilities is required
             </div>
+            <div *ngIf="existingLiabilities.errors['min']">
+              Monthly payment for liabilities can't be less than 0
+            </div>
           </mat-error>
         </mat-form-field>
         <mat-form-field
@@ -63,13 +69,20 @@
           <mat-label for="noOfDependents"
             >Number of underage dependents</mat-label
           >
-          <input
-            matInput
-            type="number"
+          <mat-select
             formControlName="noOfDependents"
             id="noOfDependents"
             placeholder="Monthly income after tax"
-          />
+          >
+            <mat-option value="0">0</mat-option>
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="5">5</mat-option>
+            <mat-option value="6">6</mat-option>
+            <mat-option value="7">7</mat-option>
+          </mat-select>
 
           <mat-error *ngIf="noOfDependents.errors && noOfDependents.touched">
             <div *ngIf="noOfDependents.errors['required']">
@@ -100,23 +113,22 @@
     <div *ngIf="maxAmounts$">
       <div class="vl"></div>
     </div>
-    <div class="calculation-container">
-      <div class="calc-text">
-        <img src="../../assets/img/flat.png" class="max_amount_img" />
+    <div class="calculation-container" *ngIf="isLoading">
+      <div class="spinner-7" *ngIf="isLoading"></div>
+    </div>
+    <div class="calculation-container" *ngIf="savedData && !isLoading">
+      <img src="../../assets/img/flat.png" class="max_amount_img" />
+
+      <div class="calc-text" *ngIf="maxAmounts$ | async as results">
         <div class="text-group">
           <span class="imp-text">Maximum Loan Amount: </span>
+          <span class="amount">{{ results.maxLoanAmount }} EUR</span>
+        </div>
+        <div class="text-group">
+          <span class="imp-text">Maximum Monthly Payment: </span>
+          <span class="amount">{{ results.maxMonthlyPayment }} EUR</span>
         </div>
       </div>
     </div>
-    <!-- <div class="calculation-container" *ngIf="savedData">
-      <div class="calc-text" *ngIf="maxAmounts$ | async as results">
-        <img src="../../assets/img/flat.png" />
-        <div class="text-group">
-          <span class="imp-text">Maximum Loan Amount: </span>
-
-          <span class="amount">{{ results.maxLoanAmount }} EUR</span>
-        </div>
-      </div>
-    </div> -->
   </div>
 </div>

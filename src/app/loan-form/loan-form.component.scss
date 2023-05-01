@@ -4,15 +4,14 @@
   width: 100%;
   min-height: 700px;
   align-items: center;
-  justify-content: space-evenly;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   overflow-x: hidden;
   margin-inline: auto;
   background-color: rgb(164, 209, 233, 0.8);
 }
 
 .form-container {
-  padding: 30px 30px 50px;
+  padding: 70px 30px 50px;
   display: flex;
   column-gap: 20px;
   justify-content: center;
@@ -24,7 +23,6 @@
 
 .loan_form {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   gap: 12px;
   h1 {
@@ -32,6 +30,7 @@
     z-index: 2;
     font-weight: 500;
     padding-bottom: 16px;
+    color: var(--navy-blue);
   }
 }
 
@@ -47,24 +46,13 @@
   height: 100%;
   min-width: min(40%, 65em);
 }
+
 .calc-text {
   margin-top: 50px;
   z-index: 2;
   font-size: 14px;
-  width: 70%;
-  color: var(--black);
+  width: 90%;
   font-weight: 400;
-}
-
-@media (min-width: 900px) {
-  .loan_calculation_page {
-    flex-direction: row;
-    overflow-y: hidden;
-  }
-  .vl {
-    border-left: 1px solid var(--black);
-    height: 500px;
-  }
 }
 
 mat-error {
@@ -76,18 +64,6 @@ mat-error {
   padding-top: 28px;
   display: flex;
   gap: 40px;
-  // > * {
-  //   border-radius: 16px;
-  //   padding: 16px;
-  // }
-  // .btn-calc {
-  //   background-color: var(--main-white);
-  //   color: var(--main-purple);
-  // }
-  // .btn-reset {
-  //   background-color: var(--main-purple);
-  //   color: var(--main-white);
-  // }
 }
 
 .text-group {
@@ -98,10 +74,35 @@ mat-error {
 .imp-text {
   order: 1;
   font-size: 18px;
-  color: #ffffff;
+  color: var(--dark-green);
 }
 .amount {
   color: var(--black);
   font-size: 16px;
   order: 2;
+}
+
+@media (min-width: 900px) {
+  .loan_calculation_page {
+    flex-direction: row;
+    overflow-y: hidden;
+
+    .form-container {
+      width: 49%;
+    }
+    .vl {
+      width: 1%;
+    }
+
+    .calculation-container {
+      width: 50%;
+    }
+  }
+  .vl {
+    border-left: 1px solid var(--black);
+    height: 500px;
+  }
+  .calc-text {
+    width: 60%;
+  }
 }

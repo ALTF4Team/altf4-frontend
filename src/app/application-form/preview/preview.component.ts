@@ -1,8 +1,15 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog,
+} from '@angular/material/dialog';
 import { ApplicationFormValues } from '../../interfaces/applicationFormValues';
 import { ApplicationFormService } from 'src/app/services/application-form-service.service';
 import { Router } from '@angular/router';
+import { ErrorComponent } from '../../error/error.component';
+import { HttpResponse } from '@angular/common/http';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-preview',
@@ -11,21 +18,51 @@ import { Router } from '@angular/router';
 })
 export class PreviewComponent {
   partner: string;
+  contractType: string;
+  employmentStatus: string;
+  isLoading: boolean = false;
 
   constructor(
+    private dialogRef: MatDialogRef<PreviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ApplicationFormValues,
     private applicationFormService: ApplicationFormService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.partner =
-      data.financialInformation.coBorrower === 'true' ? 'Yes' : 'No';
+      data.financialInformation.coBorrowed === 'true' ? 'Yes' : 'No';
+    this.contractType =
+      data.financialInformation.employmentContractType === 'OPEN_ENDED'
+        ? 'Open-ended'
+        : 'Fixed-term';
+    if (data.financialInformation.employmentStatus === 'CONTRACT_EMPLOYMENT') {
+      this.employmentStatus = 'Contract employment';
+    } else if (data.financialInformation.employmentStatus === 'SELF_EMPLOYED') {
+      this.employmentStatus = 'Self employed';
+    } else {
+      this.employmentStatus = 'Unemployed';
+    }
   }
 
   onApplicationFormSubmit() {
-    console.log(this.data);
-    this.applicationFormService.postFormData(this.data).subscribe((res) => {
-      console.log(res);
-      this.router.navigate(['submitted']);
-    });
+    this.isLoading = true;
+    this.applicationFormService
+      .postFormData(this.data)
+      .pipe(
+        tap((res: HttpResponse<any>) => {
+          this.router.navigate(['submitted']);
+          this.isLoading = false;
+          this.dialogRef.close();
+        }),
+        catchError((error) => {
+          const dialogRef = this.dialog.open(ErrorComponent, {
+            width: '400px',
+            height: '160px',
+            data: { message: 'Error: ' + error.error.message },
+          });
+          return of(null);
+        })
+      )
+      .subscribe();
   }
 }

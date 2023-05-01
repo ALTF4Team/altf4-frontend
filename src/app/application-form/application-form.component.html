@@ -9,6 +9,9 @@
       <mat-stepper orientation="vertical" linear #stepper class="green-theme">
         <mat-step [stepControl]="customer">
           <div formGroupName="customer" class="form-section">
+            <ng-template matStepLabel class="section-label"
+              >Personal Information</ng-template
+            >
             <mat-form-field
               [floatLabel]="getPersonalInformationFloatLabelValue()"
             >
@@ -143,7 +146,14 @@
               </mat-error>
             </mat-form-field>
             <div>
-              <button mat-button matStepperNext type="button">Next</button>
+              <button
+                mat-raised-button
+                color="accent"
+                matStepperNext
+                type="button"
+              >
+                Next
+              </button>
             </div>
           </div>
         </mat-step>
@@ -151,6 +161,9 @@
         <!-- ------------------------------------------------------------------------------------------- -->
         <mat-step [stepControl]="loan">
           <div [formGroup]="loan" class="form-section">
+            <ng-template matStepLabel class="section-label"
+              >Loan Information</ng-template
+            >
             <mat-form-field
               appearance="fill"
               [floatLabel]="getLoanFormFloatLabelValue()"
@@ -220,7 +233,7 @@
                 <mat-error
                   *ngIf="loan?.errors?.['downPaymentTooSmall'] && downPayment.touched"
                 >
-                  <div>Down payment should be at least 15 %</div>
+                  <div>Must be at least 15 %</div>
                 </mat-error>
               </mat-form-field>
               <mat-form-field
@@ -266,8 +279,17 @@
               </mat-error>
             </mat-form-field>
             <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext type="button">Next</button>
+              <button mat-raised-button color="accent" matStepperPrevious>
+                Back
+              </button>
+              <button
+                mat-raised-button
+                color="accent"
+                matStepperNext
+                type="button"
+              >
+                Next
+              </button>
             </div>
           </div>
         </mat-step>
@@ -275,6 +297,9 @@
         <!-- ------------------------------------------------------------------------------------------- -->
         <mat-step [stepControl]="financialInformation">
           <div formGroupName="financialInformation" class="form-section">
+            <ng-template matStepLabel class="section-label"
+              >Financial Information</ng-template
+            >
             <mat-form-field
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
@@ -539,7 +564,7 @@
               [floatLabel]="getFinancialInformationFloatLabelValue()"
             >
               <mat-label for="monthlyIncome"
-                >Monthly income after tax</mat-label
+                >Household's monthly income after tax</mat-label
               >
               <input
                 matInput
@@ -564,27 +589,196 @@
               appearance="fill"
               [floatLabel]="getFinancialInformationFloatLabelValue()"
             >
-              <mat-label for="coBorrower">Co-borrower?</mat-label>
-              <mat-select formControlName="coBorrower" id="coBorrower" required>
+              <mat-label for="coBorrowed">Co-borrower?</mat-label>
+              <mat-select formControlName="coBorrowed" id="coBorrowed" required>
                 <mat-option value="true">Yes</mat-option>
                 <mat-option value="false">No</mat-option>
               </mat-select>
-              <mat-error *ngIf="coBorrower.errors && coBorrower.touched">
-                <div *ngIf="coBorrower.errors['required']">
+              <mat-error *ngIf="coBorrowed.errors && coBorrowed.touched">
+                <div *ngIf="coBorrowed.errors['required']">
                   Field is required
                 </div>
               </mat-error>
             </mat-form-field>
+          </div>
 
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="onPreview()" (click)="openDialog()">
-                Next
-              </button>
-              <button mat-button (click)="stepper.reset()" type="reset">
-                Reset
-              </button>
-            </div>
+
+          <div>
+            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+            <button
+              *ngIf="coBorrowed.value === 'false' || coBorrowed.value === ''"
+              mat-button
+              (click)="onPreview()"
+            >
+              Next
+            </button>
+            <button
+              *ngIf="coBorrowed.value === 'true'"
+              mat-raised-button color="accent"
+              matStepperNext
+              type="button"
+            >
+              Next
+            </button>
+          </div>
+        </mat-step>
+        <!-- ------------------------------------------------------------------------------------ -->
+        <mat-step
+          *ngIf="coBorrowed.value === 'true'"
+          [stepControl]="coBorrower"
+        >
+          <div formGroupName="coBorrower" class="form-section">
+            <ng-template matStepLabel class="section-label"
+              >Co borrower Information</ng-template
+            >
+            <mat-form-field
+              [floatLabel]="getCoBorrowerInformationFloatLabelValue()"
+            >
+              <mat-label for="coName">Name of co-borrower</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="name"
+                id="coName"
+                placeholder="Name"
+              />
+              <mat-error *ngIf="coName.errors && coName.touched">
+                <div *ngIf="coName.errors['required']" class="error-div">
+                  Name is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getCoBorrowerInformationFloatLabelValue()"
+            >
+              <mat-label for="coSurname">Surname of co-borrower</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="surname"
+                id="coSurname"
+                placeholder="Surname"
+              />
+              <mat-error *ngIf="coSurname.errors && coSurname.touched">
+                <div *ngIf="coSurname.errors['required']">
+                  Surname is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getCoBorrowerInformationFloatLabelValue()"
+            >
+              <mat-label for="coCountryOfCitizenship"
+                >Country of citizenship of co-borrower</mat-label
+              >
+              <input
+                type="text"
+                matInput
+                formControlName="countryOfCitizenship"
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of filteredCountries | async"
+                  [value]="option.name.common"
+                >
+                  {{ option.name.common }}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="
+                  coCountryOfCitizenship.errors &&
+                  coCountryOfCitizenship.touched
+                "
+              >
+                <div *ngIf="coCountryOfCitizenship.errors['required']">
+                  Country of citizenship is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getCoBorrowerInformationFloatLabelValue()"
+              class="date_picker"
+            >
+              <mat-label for="coBirthDate"
+                >Date of birth of co-borrower</mat-label
+              >
+              <input
+                matInput
+                [max]="maxDate"
+                [matDatepicker]="picker"
+                formControlName="birthDate"
+              />
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+              <mat-error *ngIf="coBirthDate.errors && coBirthDate.touched">
+                <div *ngIf="coBirthDate.errors['required']">
+                  Date of birth is required
+                </div>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getCoBorrowerInformationFloatLabelValue()"
+            >
+              <mat-label for="coMobileNumber"
+                >Mobile number of co-borrower</mat-label
+              >
+              <input
+                matInput
+                type="string"
+                formControlName="mobileNumber"
+                id="coMobileNumber"
+                placeholder="+370"
+              />
+              <mat-error
+                *ngIf="coMobileNumber.errors && coMobileNumber.touched"
+              >
+                <div *ngIf="coMobileNumber.errors['required']">
+                  Mobile number is required
+                </div>
+                <div *ngIf="coMobileNumber.errors['pattern']">
+                  Wrong mobile number format
+                </div>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="fill"
+              [floatLabel]="getCoBorrowerInformationFloatLabelValue()"
+            >
+              <mat-label for="coEmail">E-mail of co-borrower</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                id="coEmail"
+                ngModel
+                email
+                placeholder="E-mail"
+              />
+              <mat-error *ngIf="coEmail.errors && coEmail.touched">
+                <div *ngIf="coEmail.errors['required']">E-mail is required</div>
+                <div *ngIf="coEmail.errors['email']">
+                  Email must be a valid email address
+                </div>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-raised-button color="accent" matStepperPrevious>
+              Back
+            </button>
+            <button mat-raised-button color="accent" (click)="onPreview()">
+              Next
+            </button>
           </div>
         </mat-step>
       </mat-stepper>

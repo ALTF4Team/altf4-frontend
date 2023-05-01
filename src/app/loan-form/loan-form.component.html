@@ -120,7 +120,10 @@
     <div *ngIf="monthlyInterest$">
       <div class="vl"></div>
     </div>
-    <div class="calculation-container" *ngIf="savedData">
+    <div class="calculation-container" *ngIf="isLoading">
+      <div class="spinner-7" *ngIf="isLoading"></div>
+    </div>
+    <div class="calculation-container" *ngIf="savedData && !isLoading">
       <div class="calc-data" *ngIf="monthlyInterest$ | async">
         <app-pie-loan [loanInfo]="monthlyInterest$ | async"></app-pie-loan>
       </div>

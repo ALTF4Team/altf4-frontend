@@ -22,10 +22,18 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { PreviewComponent } from './application-form/preview/preview.component';
 import { CalculatorsPageComponent } from './calculators-page/calculators-page.component';
 import { MaxFormComponent } from './max-form/max-form.component';
 import { SubmittedComponent } from './submitted/submitted.component';
+import { ErrorComponent } from './error/error.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserPreviewComponent } from './admin/user-preview/user-preview.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +48,11 @@ import { SubmittedComponent } from './submitted/submitted.component';
     CalculatorsPageComponent,
     MaxFormComponent,
     SubmittedComponent,
+    ErrorComponent,
+    NotFoundComponent,
+    AdminComponent,
+    UserPreviewComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +72,9 @@ import { SubmittedComponent } from './submitted/submitted.component';
     MatNativeDateModule,
     MatDialogModule,
     MatTabsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

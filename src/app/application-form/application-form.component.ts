@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -99,19 +98,13 @@ export class ApplicationFormComponent implements OnInit {
       ),
       financialInformation: this.fb.group({
         employmentStatus: ['', Validators.required],
-        sourceOfIncome: new FormControl(null, Validators.required),
-        yearsSelfEmployment: new FormControl(null, [
-          Validators.required,
-          Validators.min(0),
-        ]),
-        currentEmployer: new FormControl(null, Validators.required),
-        employmentContractType: new FormControl(null, Validators.required),
-        yearsCurrentEmployer: new FormControl(null, [
-          Validators.required,
-          Validators.min(0),
-        ]),
-        position: new FormControl(null, Validators.required),
-        industry: new FormControl(null, Validators.required),
+        sourceOfIncome: new FormControl(null),
+        yearsSelfEmployment: new FormControl(null, [Validators.min(0)]),
+        currentEmployer: new FormControl(null),
+        employmentContractType: new FormControl(null),
+        yearsCurrentEmployer: new FormControl(null, [Validators.min(0)]),
+        position: new FormControl(null),
+        industry: new FormControl(null),
         education: ['', Validators.required],
         maritalStatus: ['', Validators.required],
         underageDependentsCount: [
@@ -122,7 +115,7 @@ export class ApplicationFormComponent implements OnInit {
           '',
           [Validators.required, Validators.min(0), Validators.max(100000)],
         ],
-        coBorrower: ['', Validators.required],
+        coBorrowed: ['', Validators.required],
       }),
     });
 
@@ -130,6 +123,8 @@ export class ApplicationFormComponent implements OnInit {
     this.setDownPaymentOnTotalAmountChange();
     this.setDownPaymentOnPercentageChange();
     this.setPercentage();
+    this.setCoBorrower();
+    this.setRequiredValidators();
   }
 
   ngOnInit() {
@@ -140,7 +135,6 @@ export class ApplicationFormComponent implements OnInit {
           (a, b) => a.name.common.charCodeAt(0) - b.name.common.charCodeAt(0)
         );
       });
-
     this.filteredCountries = this.countryOfCitizenship.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || ''))
@@ -174,7 +168,7 @@ export class ApplicationFormComponent implements OnInit {
       panelClass: 'preview_container',
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      dialogRef.close();
     });
   }
 
@@ -188,6 +182,14 @@ export class ApplicationFormComponent implements OnInit {
 
   get financialInformation() {
     return this.applicationForm.get('financialInformation') as FormControl<any>;
+  }
+
+  get coBorrower() {
+    return this.applicationForm.get('coBorrower') as FormControl<any>;
+  }
+
+  get coBorrowed() {
+    return this.financialInformation.get('coBorrowed') as FormControl<string>;
   }
 
   get name() {
@@ -304,8 +306,32 @@ export class ApplicationFormComponent implements OnInit {
     ) as FormControl<string>;
   }
 
-  get coBorrower() {
-    return this.financialInformation.get('coBorrower') as FormControl<string>;
+  get coName() {
+    return this.coBorrower.get('name') as FormControl<string | null>;
+  }
+
+  get coSurname() {
+    return this.coBorrower.get('surname') as FormControl<string | null>;
+  }
+
+  get coCountryOfCitizenship() {
+    return this.coBorrower.get('countryOfCitizenship') as FormControl<
+      string | null
+    >;
+  }
+
+  get coBirthDate() {
+    return this.coBorrower.get('birthDate') as FormControl<
+      string | Date | null
+    >;
+  }
+
+  get coMobileNumber() {
+    return this.coBorrower.get('mobileNumber') as FormControl<string | null>;
+  }
+
+  get coEmail() {
+    return this.coBorrower.get('email') as FormControl<string | null>;
   }
 
   getPersonalInformationFloatLabelValue(): FloatLabelType {
@@ -316,6 +342,9 @@ export class ApplicationFormComponent implements OnInit {
   }
   getFinancialInformationFloatLabelValue(): FloatLabelType {
     return this.financialInformation.value || 'auto';
+  }
+  getCoBorrowerInformationFloatLabelValue(): FloatLabelType {
+    return this.coBorrower?.value || 'auto';
   }
 
   setDownPaymentOnTotalAmountChange(): void {
@@ -338,7 +367,7 @@ export class ApplicationFormComponent implements OnInit {
     this.percentage.valueChanges.subscribe((percentage) => {
       if (percentage >= 0) {
         const downPayment = totalAmountControl.value * (percentage / 100);
-        downPaymentControl?.setValue(Math.round(downPayment), {
+        downPaymentControl?.setValue(downPayment, {
           emitEvent: false,
         });
       }
@@ -352,11 +381,69 @@ export class ApplicationFormComponent implements OnInit {
       const totalAmountControl = this.totalAmount;
       if (totalAmountControl?.value >= 0) {
         percentageControl.setValue(
-          Math.round(
-            (downPaymentControl.value * 100) / totalAmountControl?.value
-          ),
+          (downPaymentControl.value * 100) / totalAmountControl?.value,
           { emitEvent: false }
         );
+      }
+    });
+  }
+
+  setCoBorrower(): void {
+    this.coBorrowed.valueChanges.subscribe((coBorrowed) => {
+      const coBorrowedControl = this.coBorrowed;
+      if (coBorrowedControl.value === 'true') {
+        this.applicationForm.addControl(
+          'coBorrower',
+          this.fb.group({
+            name: new FormControl(null, Validators.required),
+            surname: new FormControl(null, Validators.required),
+            countryOfCitizenship: new FormControl(null, Validators.required),
+            birthDate: new FormControl(null, Validators.required),
+            mobileNumber: new FormControl(null, [
+              Validators.required,
+              Validators.pattern(
+                '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$'
+              ),
+            ]),
+            email: new FormControl(null, [
+              Validators.required,
+              Validators.email,
+              Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+            ]),
+          })
+        );
+      } else if (coBorrowedControl.value === 'false') {
+        this.applicationForm.removeControl('coBorrower');
+      }
+    });
+  }
+
+  setRequiredValidators(): void {
+    this.employmentStatus.valueChanges.subscribe((employmentStatus) => {
+      if (employmentStatus === 'CONTRACT_EMPLOYMENT') {
+        this.currentEmployer.setValidators(Validators.required);
+        this.employmentContractType.setValidators(Validators.required);
+        this.yearsCurrentEmployer.setValidators(Validators.required);
+        this.position.setValidators(Validators.required);
+        this.industry.setValidators(Validators.required);
+        this.yearsSelfEmployment.removeValidators(Validators.required);
+        this.sourceOfIncome.removeValidators(Validators.required);
+      } else if (employmentStatus === 'SELF_EMPLOYED') {
+        this.yearsSelfEmployment.setValidators(Validators.required);
+        this.currentEmployer.removeValidators(Validators.required);
+        this.employmentContractType.removeValidators(Validators.required);
+        this.yearsCurrentEmployer.removeValidators(Validators.required);
+        this.position.removeValidators(Validators.required);
+        this.industry.removeValidators(Validators.required);
+        this.sourceOfIncome.removeValidators(Validators.required);
+      } else if (employmentStatus === 'UNEMPLOYED') {
+        this.sourceOfIncome.setValidators(Validators.required);
+        this.currentEmployer.removeValidators(Validators.required);
+        this.employmentContractType.removeValidators(Validators.required);
+        this.yearsCurrentEmployer.removeValidators(Validators.required);
+        this.position.removeValidators(Validators.required);
+        this.industry.removeValidators(Validators.required);
+        this.yearsSelfEmployment.removeValidators(Validators.required);
       }
     });
   }

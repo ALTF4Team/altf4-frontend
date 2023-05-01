@@ -20,26 +20,32 @@ export class MaxFormComponent {
   maxForm: FormGroup;
   savedData?: MaxFormValues;
   maxAmounts$?: Observable<MaxAmounts>;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private maxAmountService: MaxAmountCalculatorService
   ) {
     this.maxForm = this.fb.group({
-      monthlyIncomeAfterTaxes: ['', [Validators.required]],
-      existingLiabilities: ['', [Validators.required]],
+      monthlyIncomeAfterTaxes: ['', [Validators.required, Validators.min(0)]],
+      existingLiabilities: ['', [Validators.required, Validators.min(0)]],
       noOfDependents: ['', [Validators.required]],
     });
   }
 
   onMaxFormSubmit() {
-    if (this.maxForm.valid) {
-      this.savedData = this.maxForm.value;
-      // this.maxAmounts$ = this.maxAmountService.getMaxAmounts(
-      //   this.maxForm.value
-      // );
-    }
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+      if (this.maxForm.valid) {
+        this.savedData = this.maxForm.value;
+        this.maxAmounts$ = this.maxAmountService.getMaxAmounts(
+          this.maxForm.value
+        );
+      }
+    }, 1500);
   }
+
   onMaxFormReset() {
     this.maxForm.reset();
   }
