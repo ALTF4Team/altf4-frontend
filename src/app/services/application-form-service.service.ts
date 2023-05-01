@@ -18,7 +18,6 @@ export class ApplicationFormService {
   }
 
   postFormData(applicationFormParameters: ApplicationFormValues) {
-    console.log('posting...');
     return this.httpClient.post(this.apiURL, applicationFormParameters, {
       observe: 'response',
     });

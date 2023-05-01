@@ -22,12 +22,12 @@ export class UserPreviewComponent {
   }
 
   approve(data: UserApplicationValues) {
-    data.applicationStatus = 'approved';
+    data.applicationStatus = 'APPROVED';
     this.adminService.updateApplicationStatus(data).subscribe();
   }
 
   deny(data: UserApplicationValues) {
-    data.applicationStatus = 'denied';
+    data.applicationStatus = 'DENIED';
     this.adminService.updateApplicationStatus(data).subscribe();
   }
 }

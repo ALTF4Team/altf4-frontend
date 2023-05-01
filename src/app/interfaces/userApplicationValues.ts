@@ -1,4 +1,5 @@
 export interface UserApplicationValues {
+  timeCreated: Date;
   id: number;
   applicationStatus: string;
   customer: {

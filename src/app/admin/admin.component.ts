@@ -30,7 +30,7 @@ export class AdminComponent {
 
   onPreview(application: UserApplicationValues) {
     this.formData = application;
-    console.log(this.formData);
+
     this.openDialog();
   }
 
