@@ -74,7 +74,6 @@ mat-error {
 .imp-text {
   order: 1;
   font-size: 18px;
-  color: #ffffff;
   color: var(--dark-green);
 }
 .amount {
@@ -94,6 +93,7 @@ mat-error {
     .vl {
       width: 1%;
     }
+
     .calculation-container {
       width: 50%;
     }
@@ -103,6 +103,6 @@ mat-error {
     height: 500px;
   }
   .calc-text {
-    width: 70%;
+    width: 60%;
   }
 }
