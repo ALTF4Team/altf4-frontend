@@ -77,10 +77,7 @@
       <li><span>Co-borrower?:</span> {{ partner }}</li>
     </ul>
   </div>
-  <div
-    *ngIf="data.financialInformation.coBorrowed === 'true'"
-    class="preview_section preview_section_4"
-  >
+  <div *ngIf="data.coBorrower" class="preview_section preview_section_4">
     <h3 class="preview_header">Co borrower's information</h3>
     <ul>
       <li><span>Name:</span> {{ data.coBorrower.name }}</li>
