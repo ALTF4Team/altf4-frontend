@@ -112,6 +112,6 @@ export class LoanFormComponent {
   }
 
   covertToPercent(interestRate: string) {
-    return parseFloat(interestRate) * 100;
+    return (parseFloat(interestRate) * 100).toFixed(3);
   }
 }
