@@ -54,7 +54,7 @@ export class AdminComponent {
 
   sortByID() {
     this.applicationList$?.subscribe((items) => {
-      this.dataSource = items.sort((a, b) => a.id - b.id);
+      this.dataSource = items.sort((a, b) => b.id - a.id);
     });
   }
 
